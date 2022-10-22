@@ -1,3 +1,7 @@
+# Ide'S
+# Intellij
+.idea/
+
 # Logs
 logs
 *.log
