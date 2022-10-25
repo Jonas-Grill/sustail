@@ -11,6 +11,8 @@ module.exports = {
     extend: {
       colors: {
         'sustail': '#25995c',
+        'sustail-dark': '#1a663d',
+        'sustail-light': '#addec4',
       },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
