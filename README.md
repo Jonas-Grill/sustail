@@ -26,7 +26,7 @@ TODO
 - Tailwind UI   
 
 **Backend:**
-- Node.js with express
+- Node.js with Express
 - MongoDB   
 
 **Deployment:**
