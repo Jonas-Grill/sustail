@@ -2,6 +2,7 @@ import {Fragment, useState} from "react";
 import {Dialog, Popover, Transition} from "@headlessui/react";
 import {Bars3Icon, ShoppingBagIcon, UserCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Image from "next/image";
 
 const navigation = {
     pages: [
@@ -56,26 +57,29 @@ export default function Navbar() {
                                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                                     {navigation.pages.map((page) => (
                                         <div key={page.name} className="flow-root">
-                                            <a href={page.href}
-                                               className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
-                                                {page.name}
-                                            </a>
+                                            <Link href={page.href}>
+                                                <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
+                                                    {page.name}
+                                                </a>
+                                            </Link>
                                         </div>
                                     ))}
                                 </div>
 
                                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                                     <div className="flow-root">
-                                        <a href="#"
-                                           className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
-                                            Sign in
-                                        </a>
+                                        <Link href="#">
+                                            <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
+                                                Sign in
+                                            </a>
+                                        </Link>
                                     </div>
                                     <div className="flow-root">
-                                        <a href="#"
-                                           className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
-                                            Create account
-                                        </a>
+                                        <Link href="#">
+                                            <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
+                                                Create account
+                                            </a>
+                                        </Link>
                                     </div>
                                 </div>
                             </Dialog.Panel>
@@ -100,11 +104,14 @@ export default function Navbar() {
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
                                 <Link href="/">
-                                    <img
-                                        className="h-8 w-auto"
-                                        src="/Sustail.png"
-                                        alt=""
-                                    />
+                                    <a>
+                                        <Image
+                                            className="h-8 w-auto"
+                                            src="/Sustail.png"
+                                            alt=""
+                                            width="30" height="30"
+                                        />
+                                    </a>
                                 </Link>
                             </div>
 
@@ -112,10 +119,7 @@ export default function Navbar() {
                             <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                                 <div className="flex h-full space-x-8">
                                     {navigation.pages.map((page) => (
-                                        <Link
-                                            key={page.name}
-                                            href={page.href}
-                                        >
+                                        <Link key={page.name} href={page.href}>
                                             <a className="flex items-center text-sm font-medium text-gray-700 hover:text-sustail">
                                                 {page.name}
                                             </a>
@@ -125,37 +129,44 @@ export default function Navbar() {
                             </Popover.Group>
 
                             <div className="ml-auto flex items-center">
-                                <div
-                                    className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-sustail">
-                                        Sign in
-                                    </a>
+                                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                                    <Link href="#">
+                                        <a className="text-sm font-medium text-gray-700 hover:text-sustail">
+                                            Sign in
+                                        </a>
+                                    </Link>
                                     <span className="h-6 w-px bg-gray-200" aria-hidden="true"/>
-                                    <a href="#" className="text-sm font-medium text-gray-700 hover:text-sustail">
-                                        Create account
-                                    </a>
+                                    <Link href="#">
+                                        <a className="text-sm font-medium text-gray-700 hover:text-sustail">
+                                            Create account
+                                        </a>
+                                    </Link>
                                 </div>
 
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <a href="#" className="group -m-2 flex items-center p-2">
-                                        <ShoppingBagIcon
-                                            className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
-                                            aria-hidden="true"
-                                        />
-                                        <span
-                                            className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                                        <span className="sr-only">items in cart, view bag</span>
-                                    </a>
+                                    <Link href="#">
+                                        <a className="group -m-2 flex items-center p-2">
+                                            <ShoppingBagIcon
+                                                className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
+                                                aria-hidden="true"
+                                            />
+                                            <span
+                                                className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                            <span className="sr-only">items in cart, view bag</span>
+                                        </a>
+                                    </Link>
                                 </div>
                                 {/* Profile */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <a href="#" className="group -m-2 flex items-center p-2">
-                                        <UserCircleIcon
-                                            className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
-                                            aria-hidden="true"
-                                        />
-                                    </a>
+                                    <Link href="/profile">
+                                        <a className="group -m-2 flex items-center p-2">
+                                            <UserCircleIcon
+                                                className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
+                                                aria-hidden="true"
+                                            />
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

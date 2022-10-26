@@ -1,7 +1,4 @@
-import {useState} from "react";
-
 export default function ProducerProfile() {
-    const [open, setOpen] = useState(false)
     return (
         <div className="bg-white">
             <div className="overflow-hidden bg-white shadow sm:rounded-lg">

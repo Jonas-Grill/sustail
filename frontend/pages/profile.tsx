@@ -3,16 +3,11 @@ import Navbar from "../components/Navbar";
 import UserProfile from "../components/UserProfile";
 import ProducerProfile from "../components/ProducerProfile";
 
-const user = {
-    type: "Producer"
-}
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
-
 export default function profile() {
-    const [open, setOpen] = useState(false)
+    const [user, setUser] = useState({
+        type: "Producer"
+    })
+
     return (
         <div className="flex-col">
             <Navbar/>

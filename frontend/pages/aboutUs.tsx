@@ -1,4 +1,3 @@
-import {useState} from "react";
 import Navbar from "../components/Navbar";
 
 const features = [
@@ -10,12 +9,7 @@ const features = [
     {name: 'Community', description: 'description'},
 ]
 
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
-
 export default function aboutUs() {
-    const [open, setOpen] = useState(false)
     return (
         <div className="flex-col">
             <Navbar/>
