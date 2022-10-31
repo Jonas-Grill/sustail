@@ -32,7 +32,7 @@ export default function productDetail() {
     return (
         <div className="bg-white">
             <Navbar/>
-            <div className="pt-6">
+            <div className="pt-6 m-2">
 
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                     {/* Images */}
