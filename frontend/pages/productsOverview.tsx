@@ -1,5 +1,7 @@
 import Navbar from "../components/Navbar";
 import Link from "next/link";
+import SearchBar from "../components/SearchBar";
+import Filter from "../components/Filter";
 
 const products = [
     {
@@ -40,6 +42,12 @@ export default function productsOverview() {
     return (
         <div className="flex-col">
             <Navbar/>
+            <div className="flex justify-center items-center">
+                <SearchBar/>
+            </div>
+            <div className="flex justify-center items-center">
+                <Filter/>
+            </div>
             <div className="bg-white">
                 <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
                     <h2 className="sr-only">Products</h2>
