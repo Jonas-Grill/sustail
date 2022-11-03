@@ -1,7 +1,7 @@
 import {CheckIcon, ChevronUpDownIcon, GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
 import Navbar from "../components/Navbar";
 import {Fragment, useRef, useState} from "react";
-import {EditText, onSaveProps} from "react-edit-text";
+import {EditText, EditTextarea, onSaveProps} from "react-edit-text";
 import {Listbox, Transition} from '@headlessui/react'
 
 const product = {
@@ -52,7 +52,7 @@ function onSaveHighlight({name, value}: onSaveProps) {
 }
 
 export default function productDetail() {
-    
+
     const [selectedTransportationMethod, setSelectedTransportationMethod] = useState(product.transportationMethods[0]);
     const [selectedPackaging, setSelectedPackaging] = useState(product.packaging[0]);
 
@@ -79,14 +79,13 @@ export default function productDetail() {
                                       inline
                                       onSave={onSave}/>
                         </div>
-                        <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
-                            <EditText className="mt-5 space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
-                                      name="name" type="text" defaultValue={product.description}
-                                      inline
+                        <div className="mt-5 lg:border-r lg:border-gray-200 lg:pr-8">
+                            <EditTextarea className="w-fit space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
+                                      name="name" rows={4} defaultValue={product.description}
                                       onSave={onSave}/>
                         </div>
-                        <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
-                            <h3 className="mt-7 text-sm font-medium text-gray-900">Transportation method</h3>
+                        <div className="lg:border-r lg:border-gray-200 lg:pr-8">
+                            <h3 className="text-sm font-medium text-gray-900">Transportation method</h3>
                             <Listbox value={selectedTransportationMethod} onChange={setSelectedTransportationMethod}>
                                 <div className="relative mt-1">
                                     <Listbox.Button
@@ -256,15 +255,16 @@ export default function productDetail() {
                                 Add to cart
                             </button>
                         </form>
-                        <form className="mt-20 mb-10">
-                            <button
-                                type="submit"
-                                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-sustail py-3 px-8 text-base font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                                Save product
-                            </button>
-                        </form>
                     </div>
+                    <div></div>
+                    <form className="mt-20 mb-10">
+                        <button
+                            type="submit"
+                            className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-sustail py-3 px-8 text-base font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                            Save product
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
