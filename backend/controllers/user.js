@@ -1,7 +1,6 @@
 const ReasonPhrases = require('http-status-codes').ReasonPhrases;
 const StatusCodes = require('http-status-codes').StatusCodes;
 const User = require('../models/user');
-const e = require("express");
 
 // Handle index actions
 exports.index = function (req, res) {
