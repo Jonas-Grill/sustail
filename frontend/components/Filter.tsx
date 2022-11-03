@@ -26,37 +26,48 @@ export default function Filter() {
             </div>
 
             <div>
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-                    <select
-                        className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-                        <option value="">Category</option>
-                        <option value="for-rent">Fruits</option>
-                        <option value="for-sale">Vegetables</option>
-                        <option value="for-sale">Meat</option>
-                        <option value="for-sale">Fish</option>
-                        <option value="for-sale">Drinks</option>
-                    </select>
-
-                    <select
-                        className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-                        <option value="">Price</option>
-                        <option value="fully-furnished">0 to 10</option>
-                        <option value="partially-furnished">10 to 20</option>
-                        <option value="not-furnished">20 + </option>
-                    </select>
-
-                    <select
-                        className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-                        <option value="">Sustainability</option>
-                        <option value="1000">5</option>
-                        <option value="2000">4+</option>
-                        <option value="3000">3+</option>
-                        <option value="4000">2+</option>
-                    </select>
-
-
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
+                    <div>
+                        <p className="text-gray-800 text-sm ">
+                            Category
+                        </p>
+                        <select
+                            className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                            <option value="all">All</option>
+                            <option value="fruit">Fruits</option>
+                            <option value="vegetable">Vegetables</option>
+                            <option value="meat">Meat</option>
+                            <option value="fish">Fish</option>
+                            <option value="drink">Drinks</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p className="text-gray-800 text-sm ">
+                            Price
+                        </p>
+                        <select
+                            className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                            <option value="all">All</option>
+                            <option value="0-10">0 to 10</option>
+                            <option value="10-20">10 to 20</option>
+                            <option value="20+">20 +</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p className="text-gray-800 text-sm ">
+                            Sustainability
+                        </p>
+                        <select
+                            className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                            <option value="all">All</option>
+                            <option value="5">5</option>
+                            <option value="4+">4+</option>
+                            <option value="3+">3+</option>
+                            <option value="2+">2+</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
-)
+    )
 }
