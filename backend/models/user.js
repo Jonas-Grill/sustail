@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
     banking_info: {
         iban: {
             type: String,
+            length: 24
         }
     },
     address: {
@@ -36,7 +37,8 @@ const userSchema = mongoose.Schema({
         },
         street_number: {
             type: String,
-            required: true
+            required: true,
+            min: 1
         },
         city: {
             type: String,
@@ -44,7 +46,8 @@ const userSchema = mongoose.Schema({
         },
         postal_code: {
             type: String,
-            required: true
+            required: true,
+            length: 5
         }
     },
     type: {
