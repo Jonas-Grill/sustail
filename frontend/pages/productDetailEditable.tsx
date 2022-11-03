@@ -2,6 +2,7 @@ import {CheckIcon, ChevronUpDownIcon, GlobeEuropeAfricaIcon} from '@heroicons/re
 import Navbar from "../components/Navbar";
 import {Fragment, useRef, useState} from "react";
 import {EditText, EditTextarea, onSaveProps} from "react-edit-text";
+// import 'react-edit-text/dist/index.css';
 import {Listbox, Transition} from '@headlessui/react'
 
 const product = {
@@ -76,21 +77,26 @@ export default function productDetail() {
                         <div>
                             <EditText className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl hover:text-sustail"
                                       name="name" type="text" defaultValue={product.name}
+                                      inputClassName={"text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"}
                                       inline
                                       onSave={onSave}/>
                         </div>
                         <div className="mt-5 lg:border-r lg:border-gray-200 lg:pr-8">
-                            <EditTextarea className="w-fit space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
-                                      name="name" rows={4} defaultValue={product.description}
-                                      onSave={onSave}/>
+                                <EditTextarea className="w-fit space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
+                                              name="name" rows={3} defaultValue={product.description}
+                                              inputClassName={"w-fit space-y-6 text-base tracking-tight text-gray-900"}
+                                              style={{
+                                                  width: "100%",
+                                              }}
+                                              onSave={onSave}/>
                         </div>
-                        <div className="lg:border-r lg:border-gray-200 lg:pr-8">
+                        <div className="z-5 lg:border-r lg:border-gray-200 lg:pr-8">
                             <h3 className="text-sm font-medium text-gray-900">Transportation method</h3>
                             <Listbox value={selectedTransportationMethod} onChange={setSelectedTransportationMethod}>
                                 <div className="relative mt-1">
                                     <Listbox.Button
-                                        className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                                        <span className="block truncate">{selectedTransportationMethod}</span>
+                                        className="z-5 relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                                        <span className="z-5 block truncate">{selectedTransportationMethod}</span>
                                         <span
                                             className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                           <ChevronUpDownIcon
@@ -106,12 +112,13 @@ export default function productDetail() {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options
-                                            className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                            className="z-5 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                        >
                                             {product.transportationMethods.map((method, methodIdx) => (
                                                 <Listbox.Option
                                                     key={methodIdx}
                                                     className={({active}) =>
-                                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                        `z-5 relative cursor-default select-none py-2 pl-10 pr-4 ${
                                                             active ? 'bg-sustail-light text-sustail' : 'text-gray-900'
                                                         }`
                                                     }
@@ -120,7 +127,7 @@ export default function productDetail() {
                                                     {({selected}) => (
                                                         <>
                                                   <span
-                                                      className={`block truncate ${
+                                                      className={`z-5 block truncate ${
                                                           selected ? 'font-medium' : 'font-normal'
                                                       }`}
                                                   >
@@ -128,8 +135,8 @@ export default function productDetail() {
                                                   </span>
                                                             {selected ? (
                                                                 <span
-                                                                    className="absolute inset-y-0 left-0 flex items-center pl-3 text-sustail">
-                                                                  <CheckIcon className="h-5 w-5" aria-hidden="true"/>
+                                                                    className="z-5 absolute inset-y-0 left-0 flex items-center pl-3 text-sustail">
+                                                                  <CheckIcon className="z-5 h-5 w-5" aria-hidden="true"/>
                                                                 </span>
                                                             ) : null}
                                                         </>
@@ -142,17 +149,17 @@ export default function productDetail() {
                             </Listbox>
                         </div>
 
-                        <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
-                            <h3 className="mt-7 text-sm font-medium text-gray-900">Packaging</h3>
+                        <div className="z-1 mt-36 lg:border-r lg:border-gray-200 lg:pr-8">
+                            <h3 className="z-1 mt-7 text-sm font-medium text-gray-900">Packaging</h3>
                             <Listbox value={selectedPackaging} onChange={setSelectedPackaging}>
-                                <div className="relative mt-1">
+                                <div className="z-1 relative mt-1 z-1">
                                     <Listbox.Button
-                                        className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                                        <span className="block truncate">{selectedPackaging}</span>
+                                        className="z-1 relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                                        <span className="z-1 block truncate">{selectedPackaging}</span>
                                         <span
-                                            className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                            className="z-1 pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                           <ChevronUpDownIcon
-                                              className="h-5 w-5 text-gray-400"
+                                              className="z-1 h-5 w-5 text-gray-400"
                                               aria-hidden="true"
                                           />
                                         </span>
@@ -164,7 +171,7 @@ export default function productDetail() {
                                         leaveTo="opacity-0"
                                     >
                                         <Listbox.Options
-                                            className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                            className="z-1 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                             {product.packaging.map((method, methodIdx) => (
                                                 <Listbox.Option
                                                     key={methodIdx}
@@ -208,6 +215,7 @@ export default function productDetail() {
                                     <EditText className="text-gray-600 hover:text-sustail"
                                               name={index.toString()} type="text" style={{width: '200px'}}
                                               defaultValue={highlight} inline
+                                              inputClassName={"text-gray-600"}
                                               onSave={onSaveHighlight}/>
                                 ))}
                             </ul>
@@ -221,6 +229,7 @@ export default function productDetail() {
                         <div>
                             <EditText className="text-3xl tracking-tight text-gray-900 hover:text-sustail"
                                       name="name" type="text" defaultValue={product.price}
+                                      inputClassName={"text-3xl tracking-tight text-gray-900"}
                                       inline
                                       onSave={onSave}/>
                         </div>
