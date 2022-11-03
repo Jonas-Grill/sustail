@@ -1,7 +1,8 @@
-import {GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
+import {CheckIcon, ChevronUpDownIcon, GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
 import Navbar from "../components/Navbar";
-import Editable from "../components/Editable";
-import {useRef, useState} from "react";
+import {Fragment, useRef, useState} from "react";
+import {EditText, onSaveProps} from "react-edit-text";
+import {Listbox, Transition} from '@headlessui/react'
 
 const product = {
     name: '1kg Apples',
@@ -15,13 +16,23 @@ const product = {
     ],
     description:
         'Those are the most beautiful apples you will ever see.',
+    transportationMethods: [
+        'electric car',
+        'train',
+        'car',
+        'DHL',
+    ],
+    packaging: [
+        'paper',
+        'plastic',
+        'aluminum',
+        'reusable container',
+    ],
     highlights: [
-        'Transportation method: electric vehicle \n',
-        'Packaging: Paper \n',
-        'local product \n',
-        'no pesticides used \n',
-        'no chemicals used \n',
-        'fair trade \n',
+        'local product',
+        'no pesticides used',
+        'no chemicals used',
+        'fair trade',
     ],
 }
 const score = {href: '#', average: 4, totalCount: 117}
@@ -30,13 +41,20 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
+function onSave({name, value}: onSaveProps) {
+    // @ts-ignore
+    product[name] = value;
+}
+
+function onSaveHighlight({name, value}: onSaveProps) {
+    // @ts-ignore
+    product.highlights[name] = value;
+}
+
 export default function productDetail() {
-
-    const inputRef = useRef();
-    const textareaRef = useRef();
-    const [task, setTask] = useState("");
-    const [description, setDescription] = useState("");
-
+    
+    const [selectedTransportationMethod, setSelectedTransportationMethod] = useState(product.transportationMethods[0]);
+    const [selectedPackaging, setSelectedPackaging] = useState(product.packaging[0]);
 
     return (
         <div className="bg-white">
@@ -56,67 +74,142 @@ export default function productDetail() {
                     {/* product info */}
                     <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
                         <div>
-                            <Editable className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"
-                                      text={task}
-                                      placeholder={product.name}
-                                      childRef={inputRef}
-                                      type="input"
-                            >
-                                <input
-                                    ref={inputRef}
-                                    type="text"
-                                    name="task"
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                                    placeholder={product.name}
-                                    value={task}
-                                    onChange={e => setTask(e.target.value)}
-                                />
-                            </Editable>
+                            <EditText className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl hover:text-sustail"
+                                      name="name" type="text" defaultValue={product.name}
+                                      inline
+                                      onSave={onSave}/>
                         </div>
-                        <div className="mt-5 space-y-6">
-                            <Editable
-                                text={description}
-                                placeholder={product.description}
-                                childRef={textareaRef}
-                                type="textarea">
-                        <textarea
-                            ref={textareaRef}
-                            name="description"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                            placeholder={product.description}
-                            rows="5"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        />
+                        <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
+                            <EditText className="mt-5 space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
+                                      name="name" type="text" defaultValue={product.description}
+                                      inline
+                                      onSave={onSave}/>
+                        </div>
+                        <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
+                            <h3 className="mt-7 text-sm font-medium text-gray-900">Transportation method</h3>
+                            <Listbox value={selectedTransportationMethod} onChange={setSelectedTransportationMethod}>
+                                <div className="relative mt-1">
+                                    <Listbox.Button
+                                        className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                                        <span className="block truncate">{selectedTransportationMethod}</span>
+                                        <span
+                                            className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                          <ChevronUpDownIcon
+                                              className="h-5 w-5 text-gray-400"
+                                              aria-hidden="true"
+                                          />
+                                        </span>
+                                    </Listbox.Button>
+                                    <Transition
+                                        as={Fragment}
+                                        leave="transition ease-in duration-100"
+                                        leaveFrom="opacity-100"
+                                        leaveTo="opacity-0"
+                                    >
+                                        <Listbox.Options
+                                            className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                            {product.transportationMethods.map((method, methodIdx) => (
+                                                <Listbox.Option
+                                                    key={methodIdx}
+                                                    className={({active}) =>
+                                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                            active ? 'bg-sustail-light text-sustail' : 'text-gray-900'
+                                                        }`
+                                                    }
+                                                    value={method}
+                                                >
+                                                    {({selected}) => (
+                                                        <>
+                                                  <span
+                                                      className={`block truncate ${
+                                                          selected ? 'font-medium' : 'font-normal'
+                                                      }`}
+                                                  >
+                                                    {method}
+                                                  </span>
+                                                            {selected ? (
+                                                                <span
+                                                                    className="absolute inset-y-0 left-0 flex items-center pl-3 text-sustail">
+                                                                  <CheckIcon className="h-5 w-5" aria-hidden="true"/>
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Transition>
+                                </div>
+                            </Listbox>
+                        </div>
 
-                            </Editable>
+                        <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
+                            <h3 className="mt-7 text-sm font-medium text-gray-900">Packaging</h3>
+                            <Listbox value={selectedPackaging} onChange={setSelectedPackaging}>
+                                <div className="relative mt-1">
+                                    <Listbox.Button
+                                        className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                                        <span className="block truncate">{selectedPackaging}</span>
+                                        <span
+                                            className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                          <ChevronUpDownIcon
+                                              className="h-5 w-5 text-gray-400"
+                                              aria-hidden="true"
+                                          />
+                                        </span>
+                                    </Listbox.Button>
+                                    <Transition
+                                        as={Fragment}
+                                        leave="transition ease-in duration-100"
+                                        leaveFrom="opacity-100"
+                                        leaveTo="opacity-0"
+                                    >
+                                        <Listbox.Options
+                                            className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                            {product.packaging.map((method, methodIdx) => (
+                                                <Listbox.Option
+                                                    key={methodIdx}
+                                                    className={({active}) =>
+                                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                            active ? 'bg-sustail-light text-sustail' : 'text-gray-900'
+                                                        }`
+                                                    }
+                                                    value={method}
+                                                >
+                                                    {({selected}) => (
+                                                        <>
+                                                  <span
+                                                      className={`block truncate ${
+                                                          selected ? 'font-medium' : 'font-normal'
+                                                      }`}
+                                                  >
+                                                    {method}
+                                                  </span>
+                                                            {selected ? (
+                                                                <span
+                                                                    className="absolute inset-y-0 left-0 flex items-center pl-3 text-sustail">
+                                                                  <CheckIcon className="h-5 w-5" aria-hidden="true"/>
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Transition>
+                                </div>
+                            </Listbox>
                         </div>
+
                         <h3 className="mt-7 text-sm font-medium text-gray-900">Highlights</h3>
-                        <div className="mt-5 space-y-6">
-                            <Editable
-                                text={description}
-                                placeholder={product.highlights}
-                                childRef={textareaRef}
-                                type="textarea">
-                        <textarea
-                            ref={textareaRef}
-                            name="description"
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                            placeholder={product.highlights}
-                            rows="5"
-                            value={description}
-                            onChange={e => setDescription(e.target.value)}
-                        />
-
-                            </Editable>
-                        </div>
 
                         <div className="mt-4">
                             <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                                {product.highlights.map((highlight) => (
-                                    <li key={highlight} className="text-gray-400">
-                                        <span className="text-gray-600">{highlight}</span>
-                                    </li>
+                                {product.highlights.map((highlight, index) => (
+                                    <EditText className="text-gray-600 hover:text-sustail"
+                                              name={index.toString()} type="text" style={{width: '200px'}}
+                                              defaultValue={highlight} inline
+                                              onSave={onSaveHighlight}/>
                                 ))}
                             </ul>
                         </div>
@@ -127,24 +220,11 @@ export default function productDetail() {
                     <div className="mt-5 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
                         <div>
-                            <Editable className="text-3xl tracking-tight text-gray-900"
-                                      text={task}
-                                      placeholder={product.price}
-                                      childRef={inputRef}
-                                      type="input"
-                            >
-                                <input
-                                    ref={inputRef}
-                                    type="text"
-                                    name="task"
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-blue-300"
-                                    placeholder={product.price}
-                                    value={task}
-                                    onChange={e => setTask(e.target.value)}
-                                />
-                            </Editable>
+                            <EditText className="text-3xl tracking-tight text-gray-900 hover:text-sustail"
+                                      name="name" type="text" defaultValue={product.price}
+                                      inline
+                                      onSave={onSave}/>
                         </div>
-
                         {/* Score */}
                         <div className="mt-4">
                             <h3 className="sr-only">Score</h3>
@@ -174,6 +254,14 @@ export default function productDetail() {
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-sustail py-3 px-8 text-base font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 Add to cart
+                            </button>
+                        </form>
+                        <form className="mt-20 mb-10">
+                            <button
+                                type="submit"
+                                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-sustail py-3 px-8 text-base font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
+                                Save product
                             </button>
                         </form>
                     </div>
