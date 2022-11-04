@@ -19,7 +19,7 @@ router.route('/users/:user_id')
 
 const productController = require('./controllers/product');
 
-// Order Routes
+// Product Routes
 router.route('/products')
   .get(productController.index)
   .post(productController.new);
