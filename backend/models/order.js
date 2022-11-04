@@ -42,17 +42,18 @@ const orderSchema = mongoose.Schema({
   },
   timestamp: {
     created: {
-      type: String,
+      type: Date,
+      default: Date.now,
       required: true
     },
     fulfilled: {
-      type: String
+      type: Date
     },
     in_process: {
-      type: String
+      type: Date
     },
     cancelled: {
-      type: String
+      type: Date
     }
   }
 });
