@@ -10,12 +10,12 @@ const userController = require('./controllers/user');
 
 // User routes
 router.route('/users')
-  .get(userController.index)
-  .post(userController.new);
+    .get(userController.index)
+    .post(userController.new);
 router.route('/users/:user_id')
-  .get(userController.view)
-  .patch(userController.update)
-  .delete(userController.delete);
+    .get(userController.view)
+    .patch(userController.update)
+    .delete(userController.delete);
 
 const productController = require('./controllers/product');
 
@@ -38,5 +38,5 @@ router.route('/orders/:order_id')
   .get(orderController.view)
   .patch(orderController.update)
   .delete(orderController.delete);
-
+  
 module.exports = router;
