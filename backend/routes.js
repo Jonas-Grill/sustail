@@ -6,4 +6,15 @@ router.get('/', (req, res) => {
     })
 })
 
+const userController = require('./controllers/user');
+
+// User routes
+router.route('/users')
+    .get(userController.index)
+    .post(userController.new);
+router.route('/users/:user_id')
+    .get(userController.view)
+    .patch(userController.update)
+    .delete(userController.delete);
+
 module.exports = router;
