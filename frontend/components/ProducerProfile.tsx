@@ -2,9 +2,6 @@ export default function ProducerProfile() {
     return (
         <div className="bg-white">
             <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-                {/* <div className="px-4 py-4 sm:px-6">
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">Producer Profile</h3>
-                </div> */}
                 <div className="container">
                         <div className="main-body">
 
@@ -15,7 +12,7 @@ export default function ProducerProfile() {
                                 <li className="breadcrumb-item active" aria-current="page">Producer Profile</li>
                                 </ol>
                             </nav>
-                        
+
                             <div className="row gutters-sm">
                                 <div className="col-md-4 mb-3">
                                     <div className="card">
@@ -42,7 +39,7 @@ export default function ProducerProfile() {
                                                                 yr@gmail.com
                                                             </div>
                                                         </div>
-                                                        
+
                                                         <div className="row">
                                                             <div className="col-sm-4 text-left">
                                                                 <h6 className="mb-0">Phone</h6>
@@ -202,7 +199,7 @@ export default function ProducerProfile() {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="card-footer text-muted text-right">
                                             <a href="#!">View All Products</a>
                                         </div>
@@ -211,8 +208,7 @@ export default function ProducerProfile() {
                                 </div>
                             </div>
                         </div>
-                        
-                    </div>     
+                    </div>
             </div>
         </div>
     )
