@@ -29,10 +29,6 @@ exports.new = function (req, res) {
         street_number: req.body.address.street_number,
         city: req.body.address.city,
         postal_code: req.body.address.postal_code,
-      },
-      state: req.body.type,
-      timestamp: {
-        created: req.body.timestamp.created
       }
     }
   );
