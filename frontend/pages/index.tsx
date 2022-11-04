@@ -5,7 +5,7 @@ const products = [
     {
         id: 1,
         name: 'Apple',
-        href: '#',
+        href: '/productDetail',
         price: '$2',
         imageSrc: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
         imageAlt: 'An apple.',
