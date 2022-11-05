@@ -1,214 +1,250 @@
+import Link from "next/link";
+
+const products = [
+    {
+        id: 1,
+        name: 'Apple',
+        href: '/productDetail',
+        price: '$2',
+        imageSrc: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
+        imageAlt: 'An apple.',
+    },
+    {
+        id: 2,
+        name: 'Banana',
+        href: '#',
+        price: '$3',
+        imageSrc: 'https://cdn1.sph.harvard.edu/wp-content/uploads/sites/30/2018/08/bananas-1354785_1920.jpg',
+        imageAlt: 'A banana.',
+    },
+    {
+        id: 3,
+        name: 'Orange',
+        href: '#',
+        price: '$2',
+        imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Ambersweet_oranges.jpg',
+        imageAlt: 'An orange.',
+    },
+    {
+        id: 4,
+        name: 'Milk',
+        href: '#',
+        price: '$4',
+        imageSrc: 'https://www.thespruceeats.com/thmb/9_VG_uDvGCoqRu1XFIqjpsY8yns=/1000x1000/smart/filters:no_upscale()/potato-milk-5218684-hero-03-9bd26d6a5fd34025b072f6256e039652.jpg',
+        imageAlt: '500 ml milk.',
+    }
+]
+
+
 export default function ProducerProfile() {
     return (
         <div className="bg-white">
-            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-                <div className="container">
-                        <div className="main-body">
+            <div
+                className="overflow-hidden bg-slate-100 shadow sm:rounded-lg mx-auto max-w-2xl py-16 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
+                <div className="grid grid-cols-2 grid-rows-2 auto-cols-max gap-4">
 
-                            <nav aria-label="breadcrumb" className="main-breadcrumb">
-                                <ol className="breadcrumb">
-                                <li className="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li className="breadcrumb-item"><a href="javascript:void(0)">Account</a></li>
-                                <li className="breadcrumb-item active" aria-current="page">Producer Profile</li>
-                                </ol>
-                            </nav>
-
-                            <div className="row gutters-sm">
-                                <div className="col-md-4 mb-3">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <div className="d-flex flex-column align-items-center text-center">
-                                                <img src="/temp_producer_img.png" alt="Producer Photo" className="rounded-b-full"></img>
-                                                <div className="mt-3">
-                                                    <h4>Sophie</h4>
-                                                    <p className="text-muted font-size-sm">Hi, I am selling organic vegetables!</p>
-                                                    <div className="card-body">
-                                                        <div className="row">
-                                                            <div className="col-sm-4 text-left">
-                                                                <h6 className="mb-0">Full Name</h6>
-                                                            </div>
-                                                            <div className="col-sm-8 text-secondary text-right">
-                                                                Yu-Ru, Hsiao
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-sm-4 text-left">
-                                                                <h6 className="mb-0">Email</h6>
-                                                            </div>
-                                                            <div className="col-sm-8 text-secondary text-right">
-                                                                yr@gmail.com
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="row">
-                                                            <div className="col-sm-4 text-left">
-                                                                <h6 className="mb-0">Phone</h6>
-                                                            </div>
-
-                                                            <div className="col-sm-8 text-secondary text-right">
-                                                                (49) 123-456
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-sm-4 text-left">
-                                                                <h6 className="mb-0">Address</h6>
-                                                            </div>
-
-                                                            <div className="col-sm-8 text-secondary text-right">
-                                                                Ulmenweg 55, Mannheim, Germany
-                                                            </div>
-                                                        </div>
-                                                        <div className="row">
-                                                            <div className="col-sm-4 text-left">
-                                                                <h6 className="mb-0">Bank Account</h6>
-                                                            </div>
-
-                                                            <div className="col-sm-8 text-secondary text-right">
-                                                                LLXX XXXX XXXX XXXX 6666
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button className="btn btn-outline-primary float-right">Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="card mt-3">
-                                        <ul className="list-group list-group-flush">
-                                        <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <h6 className="mb-0">Total Sales this month</h6>
-                                            <span className="text-secondary">€ 9,743</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <h6 className="mb-0">Total Volume sold this month</h6>
-                                            <span className="text-secondary">1349</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <h6 className="mb-0">Average Purchase Value</h6>
-                                            <span className="text-secondary">€ 9.45</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <h6 className="mb-0">New Customers</h6>
-                                            <span className="text-secondary">13</span>
-                                        </li>
-                                        <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <h6 className="mb-0">Ratings</h6>
-                                            <span className="text-secondary">4.7 /5 (257 Reviews)</span>
-                                        </li>
-                                        </ul>
-                                    </div>
+                    <div className="row-span-2 d-flex flex-column align-items-center text-center shadow-lg shadow-2xl">
+                        <img src="/Paul.png" alt="Producer Photo" className="rounded-b-full"></img>
+                        <div className="mt-3">
+                            <h4>Paul Producer</h4>
+                            <div className="grid grid-cols-2 m-4">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Full Name</h6>
                                 </div>
+                                <div className="sm-4 text-left">
+                                    Paul Producer
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Email</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    paul.producer@gmail.com
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Phone</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    (49) 123-456
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Address</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    Musterstraße 1, Muserstadt, Germany
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Bank Account</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    LLXX XXXX XXXX XXXX 6666
+                                </div>
+                            </div>
+                        </div>
+                        <Link href="#">
+                            <a className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
+                                Edit
+                            </a>
+                        </Link>
+                    </div>
 
-                                <div className="col-md-8">
-                                    <div className="card">
-                                        <div className="card-header">
-                                            <h5 className="text-gray-900 text-xl font-medium mb-1">Orders List</h5>
-                                        </div>
 
-                                        <div className="card-body">
-                                            <table className="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Progress</th>
-                                                    <th scope="col">Order_ID</th>
-                                                    <th scope="col">User_ID</th>
-                                                    <th scope="col">User_Name</th>
-                                                    <th scope="col">Products Sold</th>
-                                                    <th scope="col">Total Price(EUR)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                    <th scope="row">1</th>
-                                                        <td>Pending</td>
-                                                        <td>1000</td>
-                                                        <td>0301</td>
-                                                        <td>Mark</td>
-                                                        <td>Carrot, Apples, Grapes</td>
-                                                        <td>10.1</td>
-                                                    </tr>
+                    <div className="shadow-lg shadow-2xl">
+                        <div>
+                            <h5 className="text-gray-900 text-xl font-medium mb-1 ml-3">Current Orders</h5>
+                        </div>
 
-                                                    <tr>
-                                                    <th scope="row">2</th>
-                                                        <td>Shipping</td>
-                                                        <td>0978</td>
-                                                        <td>1200</td>
-                                                        <td>Jacob</td>
-                                                        <td>Rice, Banana, Kiwis</td>
-                                                        <td>12.8</td>
-                                                    </tr>
-                                                    <tr>
-                                                    <th scope="row">3</th>
-                                                        <td>Completed</td>
-                                                        <td>0497</td>
-                                                        <td>0783</td>
-                                                        <td>Grace</td>
-                                                        <td>Spinach, lettuce, broccoli</td>
-                                                        <td>9.4</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                        <div className="divide-y divide-sustail">
+                            <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">Nr.</h6>
+                                </div>
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">Progress</h6>
+                                </div>
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">Order-ID</h6>
+                                </div>
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">User-ID</h6>
+                                </div>
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">User name</h6>
+                                </div>
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">Products sold</h6>
+                                </div>
+                                <div className="sm-4 text-left font-semibold">
+                                    <h6 className="mb-0">Total price (EUR)</h6>
+                                </div>
+                            </div>
 
-                                        <div className="card-footer text-muted text-right">
-                                            <a href="#!">View All Orders</a>
-                                        </div>
-                                    </div>
+                            <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">1</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Pending</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">1000</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">0301</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Mark</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Apples, Carrot, Grapes</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">10,50</h6>
+                                </div>
+                            </div>
 
-                                    <div className="card mt-3">
-                                        <div className="card-header">
-                                            <h5 className="text-gray-900 text-xl font-medium mb-1">Products List</h5>
-                                        </div>
+                            <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">2</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Shipping</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">1020</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">0401</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Jacob</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Apples, Banana, broccoli</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">15,50</h6>
+                                </div>
+                            </div>
+                            <div className="flex justify-center mb-3 mr-3">
+                                <Link href="#">
+                                    <a className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
+                                        View all orders
+                                    </a>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <div className="card-body flex justify-center mb-1 mt-1">
-                                            <div className="rounded-lg shadow-lg bg-white max-w-sm px-1">
-                                                <a href="#!">
-                                                    <img className="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt=""/>
-                                                </a>
-                                                <div className="p-6">
-                                                    <h5 className="text-gray-900 text-xl font-medium mb-2">Product 1</h5>
-                                                    <h6 className="mb-0">Product Description: </h6>
-                                                    <h6 className="mb-2">Price: </h6>
-                                                    <button className="btn btn-outline-primary float-right mb-2">Edit</button>
-                                                </div>
-                                            </div>
-
-                                            <div className="rounded-lg shadow-lg bg-white max-w-sm px-1">
-                                                <a href="#!">
-                                                    <img className="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt=""/>
-                                                </a>
-                                                <div className="p-6">
-                                                    <h5 className="text-gray-900 text-xl font-medium mb-2">Product 2</h5>
-                                                    <h6 className="mb-0">Product Description: </h6>
-                                                    <h6 className="mb-2">Price: </h6>
-                                                    <button className="btn btn-outline-primary float-right mb-2">Edit</button>
-                                                </div>
-                                            </div>
-
-                                            <div className="rounded-lg shadow-lg bg-white max-w-sm px-1">
-                                                <a href="#!">
-                                                    <img className="rounded-t-lg" src="https://mdbootstrap.com/img/new/standard/nature/184.jpg" alt=""/>
-                                                </a>
-                                                <div className="p-6">
-                                                    <h5 className="text-gray-900 text-xl font-medium mb-2">Product 3</h5>
-                                                    <h6 className="mb-0">Product Description: </h6>
-                                                    <h6 className="mb-2">Price: </h6>
-                                                    <button className="btn btn-outline-primary float-right mb-2">Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="card-footer text-muted text-right">
-                                            <a href="#!">View All Products</a>
-                                        </div>
-                                    </div>
-
+                    <div className="mt-4 shadow-lg shadow-2xl">
+                        <div>
+                            <h5 className="text-gray-900 text-xl font-medium mb-4 ml-3">Statistics</h5>
+                        </div>
+                        <div className="grid grid-cols-1 auto-cols-max gap-4 ml-3 divide-y divide-sustail">
+                            <div className="grid grid-cols-2 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Total Sales this month</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">9743</h6>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Total items sold this month</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">1349</h6>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Average purchase value</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">9,45</h6>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 auto-cols-max gap-4 ml-3">
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">Ratings</h6>
+                                </div>
+                                <div className="sm-4 text-left">
+                                    <h6 className="mb-0">4.7/5 (257 reviews)</h6>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div className="col-span-2 mt-4 shadow-lg shadow-2xl">
+                        <div>
+                            <h5 className="text-gray-900 text-xl font-medium mb-3 ml-3">My products</h5>
+                        </div>
+                        <div
+                            className="grid gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ml-3 mr-3 mb-3">
+                            {products.map((product) => (
+                                <div>
+                                    <div
+                                        className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+                                        <img
+                                            src={product.imageSrc}
+                                            alt={product.imageAlt}
+                                            className="h-full w-full object-cover object-center group-hover:opacity-75"
+                                        />
+                                    </div>
+                                    <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+                                    <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+
+                                    <Link href="/productDetailEditable">
+                                        <a className="inline-block rounded-md border border-transparent bg-sustail flex w-full items-center justify-center py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
+                                            Edit product
+                                        </a>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     )
