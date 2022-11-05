@@ -5,7 +5,7 @@ import ProducerProfile from "../components/ProducerProfile";
 
 export default function profile() {
     const [user, setUser] = useState({
-        type: "User"
+        type: "Producer"
     })
 
     return (

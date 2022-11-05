@@ -219,6 +219,13 @@ export default function ProducerProfile() {
                         <div>
                             <h5 className="text-gray-900 text-xl font-medium mb-3 ml-3">My products</h5>
                         </div>
+                        <div className="flex justify-center mb-3 mr-3">
+                            <Link href="/productsOverviewEditable">
+                                <a className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
+                                    View all products
+                                </a>
+                            </Link>
+                        </div>
                         <div
                             className="grid gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ml-3 mr-3 mb-3">
                             {products.map((product) => (
