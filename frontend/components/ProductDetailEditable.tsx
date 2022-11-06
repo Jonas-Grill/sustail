@@ -1,5 +1,5 @@
 import {CheckIcon, ChevronUpDownIcon, GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
-import Navbar from "../components/Navbar";
+import Navbar from "./Navbar";
 import {Fragment, useRef, useState} from "react";
 import {EditText, EditTextarea, onSaveProps} from "react-edit-text";
 // import 'react-edit-text/dist/index.css';
@@ -52,7 +52,7 @@ function onSaveHighlight({name, value}: onSaveProps) {
     product.highlights[name] = value;
 }
 
-export default function productDetail() {
+export default function ProductDetailEditable() {
 
     const [selectedTransportationMethod, setSelectedTransportationMethod] = useState(product.transportationMethods[0]);
     const [selectedPackaging, setSelectedPackaging] = useState(product.packaging[0]);

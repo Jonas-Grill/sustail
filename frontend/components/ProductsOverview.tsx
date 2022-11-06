@@ -1,13 +1,13 @@
-import Navbar from "../components/Navbar";
+import Navbar from "./Navbar";
 import Link from "next/link";
-import SearchBar from "../components/SearchBar";
-import Filter from "../components/Filter";
+import SearchBar from "./SearchBar";
+import Filter from "./Filter";
 
 const products = [
     {
         id: 1,
         name: 'Apple',
-        href: '/productDetail',
+        href: '/products',
         price: '$2',
         imageSrc: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
         imageAlt: 'An apple.',
@@ -38,7 +38,7 @@ const products = [
     }
 ]
 
-export default function productsOverview() {
+export default function ProductsOverview() {
     return (
         <div className="flex-col">
             <Navbar/>
@@ -55,7 +55,7 @@ export default function productsOverview() {
                     <div
                         className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {products.map((product) => (
-                            <Link href={product.href}>
+                            <Link href={"/products/" + product.id}>
                                 <a key={product.id} className="group">
                                     <div
                                         className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">

@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "./Navbar";
 import Link from "next/link";
 
 const products = [
@@ -36,7 +36,7 @@ const products = [
     }
 ]
 
-export default function productsOverviewEditable() {
+export default function ProductsOverviewEditable() {
     return (
         <div className="flex-col">
             <Navbar/>
@@ -68,7 +68,7 @@ export default function productsOverviewEditable() {
                                 <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
                                 <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
 
-                                <Link href="/productDetailEditable">
+                                <Link href={"/products/" + product.id}>
                                     <a className="inline-block rounded-md border border-transparent bg-sustail flex w-full items-center justify-center py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
                                         Edit product
                                     </a>
