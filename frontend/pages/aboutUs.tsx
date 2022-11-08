@@ -9,7 +9,7 @@ const features = [
     {name: 'Community', description: 'description'},
 ]
 
-export default function aboutUs() {
+export default function AboutUs() {
     return (
         <div className="flex-col">
             <Navbar/>

@@ -212,7 +212,7 @@ export default function ProductDetailEditable() {
                         <div className="mt-4">
                             <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
                                 {product.highlights.map((highlight, index) => (
-                                    <EditText className="text-gray-600 hover:text-sustail"
+                                    <EditText key={index} className="text-gray-600 hover:text-sustail"
                                               name={index.toString()} type="text" style={{width: '200px'}}
                                               defaultValue={highlight} inline
                                               inputClassName={"text-gray-600"}

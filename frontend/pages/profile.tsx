@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import UserProfile from "../components/UserProfile";
 import ProducerProfile from "../components/ProducerProfile";
 
-export default function profile() {
+export default function Profile() {
     const [user, setUser] = useState({
         type: "Producer"
     })

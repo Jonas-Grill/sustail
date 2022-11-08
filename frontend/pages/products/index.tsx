@@ -3,9 +3,9 @@ import Navbar from "../../components/Navbar";
 import ProductsOverview from "../../components/ProductsOverview";
 import ProductsOverviewEditable from "../../components/ProductsOverviewEditable";
 
-export default function productsOverview() {
+export default function Products() {
     const [user, setUser] = useState({
-        type: "Producer"
+        type: "User"
     })
 
     return (

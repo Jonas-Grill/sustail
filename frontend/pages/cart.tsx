@@ -35,7 +35,7 @@ const products = [
     }
 ]
 
-export default function cartPage() {
+export default function Cart() {
     return (
         <div className="flex-col">
             <Navbar/>
@@ -55,7 +55,7 @@ export default function cartPage() {
                 </div>
                 <dl>
                     {products.map((product) => (
-                        <div className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
+                        <div key={product.id} className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
                             <img className="overflow-hidden rounded-lg"
                                  src={product.imageSrc}
                                  width="200" height="200"/>
