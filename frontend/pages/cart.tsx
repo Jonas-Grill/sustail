@@ -35,7 +35,7 @@ const products = [
     }
 ]
 
-export default function cartPage() {
+export default function cart() {
     return (
         <div className="flex-col">
             <Navbar/>
