@@ -53,9 +53,9 @@ export default function cart() {
 
                 <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                 </div>
-                <dl>
+                <dl className="divide-y divide-sustail">
                     {products.map((product) => (
-                        <div className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
+                        <div key={product.id} className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
                             <img className="overflow-hidden rounded-lg"
                                  src={product.imageSrc}
                                  width="200" height="200"/>
@@ -93,7 +93,3 @@ export default function cart() {
         </div>
     )
 }
-
-
-
-
