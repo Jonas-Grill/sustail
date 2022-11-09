@@ -1,6 +1,7 @@
 import { GlobeEuropeAfricaIcon } from '@heroicons/react/20/solid'
 import Navbar from "./Navbar";
 
+
 const product = {
     name: '1kg Apples',
     price: '$2',

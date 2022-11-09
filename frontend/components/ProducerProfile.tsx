@@ -41,7 +41,7 @@ export default function ProducerProfile() {
         <div className="bg-white">
             <div
                 className="overflow-hidden bg-slate-100 shadow sm:rounded-lg mx-auto max-w-2xl py-16 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-                <div className="grid grid-cols-2 grid-rows-2 auto-cols-max gap-4">
+                <div className="bg-white grid grid-cols-2 grid-rows-2 auto-cols-max gap-4">
 
                     <div className="row-span-2 d-flex flex-column align-items-center text-center shadow-lg shadow-2xl">
                         <img src="/Paul.png" alt="Producer Photo" className="rounded-b-full"></img>
@@ -88,7 +88,7 @@ export default function ProducerProfile() {
                     </div>
 
 
-                    <div className="shadow-lg shadow-2xl">
+                    <div className="shadow-lg shadow-2xl bg-white">
                         <div>
                             <h5 className="text-gray-900 text-xl font-medium mb-1 ml-3">Current Orders</h5>
                         </div>
@@ -175,7 +175,7 @@ export default function ProducerProfile() {
                         </div>
                     </div>
 
-                    <div className="mt-4 shadow-lg shadow-2xl">
+                    <div className="mt-4 shadow-lg shadow-2xl bg-white">
                         <div>
                             <h5 className="text-gray-900 text-xl font-medium mb-4 ml-3">Statistics</h5>
                         </div>
@@ -215,7 +215,7 @@ export default function ProducerProfile() {
                         </div>
                     </div>
 
-                    <div className="col-span-2 mt-4 shadow-lg shadow-2xl">
+                    <div className="col-span-2 mt-4 shadow-lg shadow-2xl bg-white">
                         <div>
                             <h5 className="text-gray-900 text-xl font-medium mb-3 ml-3">My products</h5>
                         </div>

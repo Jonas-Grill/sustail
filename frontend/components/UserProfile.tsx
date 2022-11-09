@@ -38,7 +38,7 @@ export default function UserProfile() {
                 className="overflow-hidden bg-slate-100 shadow sm:rounded-lg mx-auto max-w-2xl py-16 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div className="grid grid-cols-2 grid-rows-2 auto-cols-max gap-4">
 
-                    <div className="row-span-2 d-flex flex-column align-items-center text-center shadow-lg shadow-2xl">
+                    <div className="bg-white row-span-2 d-flex flex-column align-items-center text-center shadow-lg shadow-2xl">
                         <img src="/Justus.png" alt="User Photo" className="rounded-b-full"></img>
                         <div className="mt-3">
                             <h4>Justus User</h4>
@@ -83,7 +83,7 @@ export default function UserProfile() {
                     </div>
 
 
-                    <div className="shadow-lg shadow-2xl">
+                    <div className="shadow-lg shadow-2xl bg-white">
                         <div>
                             <h5 className="text-gray-900 text-xl font-medium mb-1 ml-3">My orders</h5>
                         </div>
@@ -170,7 +170,7 @@ export default function UserProfile() {
                         </div>
                     </div>
 
-                    <div className="col-span-2 mt-4 shadow-lg shadow-2xl">
+                    <div className="bg-white col-span-2 mt-4 shadow-lg shadow-2xl">
                         <div>
                             <h5 className="text-gray-900 text-xl font-medium mb-3 ml-3">My badges</h5>
                         </div>
