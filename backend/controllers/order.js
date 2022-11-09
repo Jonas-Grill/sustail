@@ -67,22 +67,73 @@ exports.update = function (req, res) {
       res.status(StatusCodes.NOT_FOUND).json({
         message: ReasonPhrases.NOT_FOUND,
       });
-    } else {
-      order.state = req.body.state ? req.body.state : order.state;
-      order.timestamp.fulfilled = req.body.timestamp.fulfilled ? req.body.timestamp.fulfilled : order.timestamp.fulfilled;
-      order.timestamp.cancelled = req.body.timestamp.cancelled ? req.body.timestamp.cancelled : order.timestamp.cancelled;
-      order.timestamp.in_process = req.body.timestamp.in_process ? req.body.timestamp.in_process : order.timestamp.in_process;
-
-      order.save(function (err, order) {
-        if (err) {
-          console.log(err);
-          res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: ReasonPhrases.INTERNAL_SERVER_ERROR,
-          });
-        } else {
-          res.status(StatusCodes.OK).json(order.toJSON());
-        }
+    } else if ((order.state = 'CANCELLED' || 'FULFILLED' || req.body.state) || !req.body.state) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        message: ReasonPhrases.BAD_REQUEST,
       });
+    } else {
+      let invalid_change = false;
+
+      // more complicated but less hardcoding
+      let change_hierarchy = ['NOT FULFILLED', 'IN PROCESS', 'FULFILLED', 'CANCELLED'];
+      for (let i = 0; i < change_hierarchy.length-2; i++) {
+        if (order.state === req.body.state) break;
+        for (let j = i + 1; j < change_hierarchy; j++) {
+          if (order.state === change_hierarchy[i] && req.body.state === change_hierarchy[j]) {
+            order.state = req.body.state;
+            if (j === 1) {
+              order.timestamp.in_process = Date.now;
+            } else if (j === 2) {
+              order.timestamp.fulfilled = Date.now;
+            } else {
+              order.timestamp.cancelled = Date.now;
+            }
+            break;
+          }
+        }
+      }
+      if(order.state !== req.body.state) {
+        invalid_change = true;
+      }
+
+      // Easier but more hardcoding
+      /* if(order.state === 'NOT FULFILLED'){
+        if(req.body.state === 'IN PROCESS'){
+          order.timestamp.in_process = Date.now;
+        } else if(req.body.state === 'FULFILLED'){
+          order.timestamp.fulfilled = Date.now;
+        } else {
+          order.timestamp.cancelled = Date.now;
+        }
+        order.state = req.body.state;
+      } else {
+        if(req.body.state === 'CANCELLED'){
+          order.timestamp.cancelled = Date.now;
+          order.state = req.body.state;
+        } else if(req.body.state === 'FULFILLED'){
+          order.timestamp.fulfilled = Date.now;
+          order.state = req.body.state;
+        } else {
+          invalid_change = true;
+        }
+      } */
+
+      if (invalid_change){
+        res.status(StatusCodes.BAD_REQUEST).json({
+          message: ReasonPhrases.BAD_REQUEST,
+        });
+      } else {
+        order.save(function (err, order) {
+          if (err) {
+            console.log(err);
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+              message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+            });
+          } else {
+            res.status(StatusCodes.OK).json(order.toJSON());
+          }
+        });
+      }
     }
   });
 };

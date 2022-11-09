@@ -36,7 +36,7 @@ const orderSchema = mongoose.Schema({
   },
   state: {
     type: String,
-    enum: ['FULFILLED', 'NOT FULFILLED', 'IN PROCESS', 'CANCELLED'],
+    enum: ['FULFILLED', 'IN PROCESS', 'CANCELLED'],
     default: 'NOT FULFILLED',
     required: true
   },
