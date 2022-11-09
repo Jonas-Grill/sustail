@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import {GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid';
 import React from "react";
+import Link from "next/link";
 
 const products = [
     {
@@ -135,12 +136,11 @@ export default function Checkout() {
                                 </div>
                             </li>
                             <div>
-                                <button
-                                    type="submit"
-                                    className="group m-6 w-auto justify-center rounded-md border border-transparent bg-sustail py-2 px-6 text-3xl font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-sustail focus:ring-offset-2"
-                                >
-                                    Pay now
-                                </button>
+                                <Link href="/afterCheckout">
+                                    <a className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
+                                        Pay now
+                                    </a>
+                                </Link>
                             </div>
                         </div>
 
