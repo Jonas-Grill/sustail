@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "docker": "docker build -t sustail-frontend .",
+    "azure": "az login && az acr login --name sustail.azurecr.io",
+    "deploy": "docker tag sustail-frontend sustail.azurecr.io/sustail-frontend && docker push sustail.azurecr.io/sustail-frontend",
     "start": "next start",
     "lint": "next lint"
   },
