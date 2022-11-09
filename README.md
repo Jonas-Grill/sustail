@@ -7,7 +7,7 @@ A webapp to make logistics information of online grocery shopping more transpare
 ## Team
 
 **Andrea:** Frontend, Mock ups    
-**Franziska:** Backend  
+**Franziska:** Backend, Viability  
 **Gina:** Frontend, Mock ups   
 **Jonas:** Backend, Tech stack  
 **Sophie:** Frontend, Mock ups   
@@ -16,7 +16,7 @@ A webapp to make logistics information of online grocery shopping more transpare
 
 ## Our app
 
-TODO
+http://sustail.fkexckhtaea3cnfb.germanywestcentral.azurecontainer.io:3000/
 
 ## Tech Stack
 
@@ -30,5 +30,5 @@ TODO
 - MongoDB   
 
 **Deployment:**
-- Hyperscaler
-- Docker and Docker Compose
+- Hyperscaler: Microsoft Azure
+- Docker
