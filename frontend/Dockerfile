@@ -6,9 +6,10 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm install
+RUN npm ci
+RUN npm i sharp
 
-ENV PORT=3000
+RUN npm run build
 
 EXPOSE 3000
 
