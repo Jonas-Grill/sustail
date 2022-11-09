@@ -35,7 +35,7 @@ const products = [
     }
 ]
 
-export default function cartPage() {
+export default function cart() {
     return (
         <div className="flex-col">
             <Navbar/>
@@ -53,9 +53,9 @@ export default function cartPage() {
 
                 <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                 </div>
-                <dl>
+                <dl className="divide-y divide-sustail">
                     {products.map((product) => (
-                        <div className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
+                        <div key={product.id} className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
                             <img className="overflow-hidden rounded-lg"
                                  src={product.imageSrc}
                                  width="200" height="200"/>
@@ -82,9 +82,9 @@ export default function cartPage() {
                             <p className=" text-gray-900"> Total Price</p></div>
                         <div><p className="font-bold text-gray-900">9.99$</p>
                             <p className="font-bold text-gray-900">37.99$</p>
-                            <button type="button"
+                            <a href="/checkout"  type="button" 
                                     className="inline-block px-6 py-2.5 bg-sustail text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-sustail-dark hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Checkout
-                            </button>
+                             </a>
                         </div>
                     </div>
 
@@ -93,7 +93,3 @@ export default function cartPage() {
         </div>
     )
 }
-
-
-
-
