@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Link from "next/link";
 
 const products = [
     {
@@ -35,7 +36,7 @@ const products = [
     }
 ]
 
-export default function cart() {
+export default function Cart() {
     return (
         <div className="flex-col">
             <Navbar/>
@@ -82,9 +83,9 @@ export default function cart() {
                             <p className=" text-gray-900"> Total Price</p></div>
                         <div><p className="font-bold text-gray-900">9.99$</p>
                             <p className="font-bold text-gray-900">37.99$</p>
-                            <a href="/checkout"  type="button" 
+                            <Link href="/checkout"  type="button"
                                     className="inline-block px-6 py-2.5 bg-sustail text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-sustail-dark hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Checkout
-                             </a>
+                             </Link>
                         </div>
                     </div>
 

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Navbar from "../components/Navbar";
+import Link from "next/link";
 
 export default function Register() {
 
@@ -23,9 +24,9 @@ export default function Register() {
                         </h2>
                         <p className="mt-2 text-center text-sm text-gray-600">
                             Or{' '}
-                            <a href="/login" className="font-medium text-sustail hover:text-sustail-dark">
+                            <Link href="/login" className="font-medium text-sustail hover:text-sustail-dark">
                                 login with existing account
-                            </a>
+                            </Link>
                         </p>
                     </div>
 
