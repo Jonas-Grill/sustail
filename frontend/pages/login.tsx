@@ -25,9 +25,9 @@ export default function login() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Or{' '}
-              <a href="/register" className="font-medium text-sustail hover:text-sustail-dark">
+              <Link href="/register" className="font-medium text-sustail hover:text-sustail-dark">
                 register as new user
-              </a>
+              </Link>
             </p>
           </div>
           <form className="mt-8 space-y-6" action="#" method="POST">
