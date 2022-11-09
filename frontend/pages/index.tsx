@@ -66,37 +66,14 @@ export default function Home() {
                                                 <div
                                                     className="h-64 w-44 overflow-hidden bg-sustail rounded-lg sm:opacity-0 lg:opacity-100">
                                                     <img
-                                                        src="https://uxwing.com/wp-content/themes/uxwing/download/sport-and-awards/achievement-award-medal-icon.svg"
+                                                        src="/3.png"
                                                         alt=""
                                                         className="h-full w-full object-cover object-center"
                                                     />
                                                 </div>
                                                 <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
                                                     <img
-                                                        src="/Instagram-Logo.wine.svg"
-                                                        alt=""
-                                                        className="h-full w-full object-cover object-center"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                                                <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
-                                                    <img
-                                                        src="/Instagram-Logo.wine.svg"
-                                                        alt=""
-                                                        className="h-full w-full object-cover object-center"
-                                                    />
-                                                </div>
-                                                <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
-                                                    <img
-                                                        src="https://uxwing.com/wp-content/themes/uxwing/download/sport-and-awards/achievement-award-medal-icon.svg"
-                                                        alt=""
-                                                        className="h-full w-full object-cover object-center"
-                                                    />
-                                                </div>
-                                                <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
-                                                    <img
-                                                        src="/Instagram-Logo.wine.svg"
+                                                        src="/4.png"
                                                         alt=""
                                                         className="h-full w-full object-cover object-center"
                                                     />
@@ -105,7 +82,7 @@ export default function Home() {
                                             <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                                                 <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
                                                     <img
-                                                        src="https://uxwing.com/wp-content/themes/uxwing/download/sport-and-awards/achievement-award-medal-icon.svg"
+                                                        src="/5.png"
                                                         alt=""
                                                         className="h-full w-full object-cover object-center"
                                                     />
@@ -113,6 +90,29 @@ export default function Home() {
                                                 <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
                                                     <img
                                                         src="/Instagram-Logo.wine.svg"
+                                                        alt=""
+                                                        className="h-full w-full object-cover object-center"
+                                                    />
+                                                </div>
+                                                <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
+                                                    <img
+                                                        src="/6.png"
+                                                        alt=""
+                                                        className="h-full w-full object-cover object-center"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                                                <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
+                                                    <img
+                                                        src="/5.png"
+                                                        alt=""
+                                                        className="h-full w-full object-cover object-center"
+                                                    />
+                                                </div>
+                                                <div className="h-64 w-44 overflow-hidden bg-sustail rounded-lg">
+                                                    <img
+                                                        src="/4.png"
                                                         alt=""
                                                         className="h-full w-full object-cover object-center"
                                                     />
@@ -121,7 +121,7 @@ export default function Home() {
                                         </div>
                                     </div>
                                 </div>
-                                <Link href="#">
+                                <Link href="/register">
                                     <a className="inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
                                         Create your account
                                     </a>
