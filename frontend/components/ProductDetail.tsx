@@ -1,4 +1,4 @@
-import { GlobeEuropeAfricaIcon } from '@heroicons/react/20/solid'
+import {GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
 import Navbar from "./Navbar";
 
 
@@ -23,21 +23,21 @@ const product = {
         'fair trade',
     ],
 }
-const score = { href: '#', average: 4, totalCount: 117 }
+const score = {href: '#', average: 4, totalCount: 117}
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductDetail() {
+export default function ProductDetail({id}: { id: string }) {
     return (
         <div className="bg-white">
-            <Navbar/>
             <div className="pt-6 m-2">
 
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                     {/* Images */}
-                    <div className="mb-5 aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
+                    <div
+                        className="mb-5 aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
                         <img
                             src={product.images[0].src}
                             alt={product.images[0].alt}

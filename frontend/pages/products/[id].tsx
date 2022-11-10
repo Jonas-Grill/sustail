@@ -6,17 +6,26 @@ import {useRouter} from "next/router";
 
 export default function Product() {
     const [user, setUser] = useState({
-        type: "Producer"
+        type: "USER"
     })
 
     const router = useRouter()
-    const {id} = router.query
+    const {id}= router.query
     // const product = api.getProductById(id)
 
-    return (
-        <div className="flex-col">
-            <Navbar/>
-            {/*{user.type == "User" ? <ProductDetail product={product}/> : <ProductDetailEditable/>}*/}
-        </div>
-    )
+    if (id != undefined) {
+        return (
+            <div className="flex-col">
+                <Navbar/>
+                {user.type == "USER" ? <ProductDetail id={id.toString()}/> : <ProductDetailEditable/>}
+            </div>
+        )
+    } else {
+        return (
+            <div className="flex-col">
+                <Navbar/>
+                <h1>There is no product with the id: {id}</h1>
+            </div>
+        )
+    }
 }
