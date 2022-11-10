@@ -56,7 +56,17 @@ export default function Filter() {
 
 
                 </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+                    <select
+                        className="px-4 py-2 w-20 rounded-md bg-white-200 border-grey-500 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                        <option value="">Sort</option>
+                        <option value="1000">Price</option>
+                        <option value="2000">Score</option>
+                    </select>
+                </div>
             </div>
+
+
         </div>
 )
 }

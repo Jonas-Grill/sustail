@@ -2,6 +2,8 @@ import Navbar from "../components/Navbar";
 import Link from "next/link";
 import SearchBar from "../components/Search bar";
 import Filter from "../components/Filter";
+import Sort_button from "../components/Sort_button";
+import SortButton from "../components/Sort_button";
 
 const products = [
     {
@@ -42,7 +44,7 @@ export default function productsOverview() {
     return (
         <div className="flex-col">
             <Navbar/>
-            <div class="flex justify-center items-center">
+            <div className="flex justify-center items-center">
                 <Filter/>
             </div>
             <div className="bg-white">
