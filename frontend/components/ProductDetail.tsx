@@ -94,13 +94,15 @@ export default function ProductDetail({id}: { id: string }) {
                             </div>
                             <Popup trigger={<button className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark"> Score Calculation Info </button>} 
                                 position="right center">
-                                
                                 {/* Pop Up Content */}
-                                <div>There are three types of metrics we use to analyze and track the sustainability score, including...</div>
-                                <ul>Organic Label (30%)</ul>
-                                <ul>Packaging (20%)</ul>
-                                <ul>Transportation Method (50%)</ul>
-                                {/* <button>Click here</button> */}
+                                <div className="px-4 text-sm">
+                                    <p className="font-medium">Three metrics to analyze the score:</p>
+                                    <ul className="list-disc text-gray-600">
+                                        <li>Organic Label (30%)</li>
+                                        <li>Packaging (20%)</li>
+                                        <li>Transportation Method (50%)</li>
+                                    </ul>
+                                </div>
                             </Popup>
                             {/* <a href='#' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
                                 Score calculation info
