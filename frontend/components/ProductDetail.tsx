@@ -1,5 +1,7 @@
 import {GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
 import Navbar from "./Navbar";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 
 const product = {
@@ -90,9 +92,19 @@ export default function ProductDetail({id}: { id: string }) {
                                 </div>
                                 <p className="sr-only">{score.average} out of 5 stars</p>
                             </div>
-                            <a href='#' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
+                            <Popup trigger={<button className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark"> Score Calculation Info </button>} 
+                                position="right center">
+                                
+                                {/* Pop Up Content */}
+                                <div>There are three types of metrics we use to analyze and track the sustainability score, including...</div>
+                                <ul>Organic Label (30%)</ul>
+                                <ul>Packaging (20%)</ul>
+                                <ul>Transportation Method (50%)</ul>
+                                {/* <button>Click here</button> */}
+                            </Popup>
+                            {/* <a href='#' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
                                 Score calculation info
-                            </a>
+                            </a> */}
                         </div>
                         <form className="mt-10 mb-10">
                             <button
