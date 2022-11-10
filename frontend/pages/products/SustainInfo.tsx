@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-export default function PopUpSusInfo() {
+export default function SustainInfo() {
   const [open, setOpen] = useState(true)
 
   const cancelButtonRef = useRef(null)
