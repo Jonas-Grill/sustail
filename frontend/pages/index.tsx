@@ -5,7 +5,7 @@ const products = [
     {
         id: 1,
         name: 'Apple',
-        href: '/productDetail',
+        href: '/products/1',
         price: '$2',
         imageSrc: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
         imageAlt: 'An apple.',
@@ -13,7 +13,7 @@ const products = [
     {
         id: 2,
         name: 'Banana',
-        href: '#',
+        href: '/products/1',
         price: '$3',
         imageSrc: 'https://cdn1.sph.harvard.edu/wp-content/uploads/sites/30/2018/08/bananas-1354785_1920.jpg',
         imageAlt: 'A banana.',
@@ -21,7 +21,7 @@ const products = [
     {
         id: 3,
         name: 'Orange',
-        href: '#',
+        href: '/products/1',
         price: '$2',
         imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Ambersweet_oranges.jpg',
         imageAlt: 'An orange.',
@@ -29,7 +29,7 @@ const products = [
     {
         id: 4,
         name: 'Milk',
-        href: '#',
+        href: '/products/1',
         price: '$4',
         imageSrc: 'https://www.thespruceeats.com/thmb/9_VG_uDvGCoqRu1XFIqjpsY8yns=/1000x1000/smart/filters:no_upscale()/potato-milk-5218684-hero-03-9bd26d6a5fd34025b072f6256e039652.jpg',
         imageAlt: '500 ml milk.',
