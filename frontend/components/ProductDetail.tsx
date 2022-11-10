@@ -90,7 +90,7 @@ export default function ProductDetail({id}: { id: string }) {
                                 </div>
                                 <p className="sr-only">{score.average} out of 5 stars</p>
                             </div>
-                            <a href='#' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
+                            <a href='./SustainInfo' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
                                 Score calculation info
                             </a>
                         </div>
