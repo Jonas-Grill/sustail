@@ -35,13 +35,14 @@ exports.new = function (req, res) {
         transportation_type: req.body.sustainability_score.transportation_type
       },
       nutrition_per_100g: {
+        energy: req.body.nutrition_per_100g.energy,
         fat: {
           total: req.body.nutrition_per_100g.fat.total,
           saturates: req.body.nutrition_per_100g.fat.saturates
         },
         carbohydrate: {
           total: req.body.nutrition_per_100g.carbohydrate.total,
-          sugar: req.body.nutrition_per_100g.carbohydrate.sugar,
+          sugar: req.body.nutrition_per_100g.carbohydrate.sugar
         },
         protein: req.body.nutrition_per_100g.protein,
         salt: req.body.nutrition_per_100g.salt
