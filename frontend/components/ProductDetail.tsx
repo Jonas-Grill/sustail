@@ -96,7 +96,7 @@ export default function ProductDetail({id}: { id: string }) {
                                 position="right center">
                                 {/* Pop Up Content */}
                                 <div className="px-4 text-sm">
-                                    <p className="font-medium">Three metrics to analyze the score:</p>
+                                    <p className="font-medium">How our score is calculated:</p>
                                     <ul className="list-disc text-gray-600">
                                         <li>Organic Label (30%)</li>
                                         <li>Packaging (20%)</li>
@@ -104,9 +104,6 @@ export default function ProductDetail({id}: { id: string }) {
                                     </ul>
                                 </div>
                             </Popup>
-                            {/* <a href='#' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
-                                Score calculation info
-                            </a> */}
                         </div>
                         <form className="mt-10 mb-10">
                             <button
