@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const navigation = {
     pages: [
-        {name: 'Products', href: '/productsOverview'},
+        {name: 'Products', href: '/products'},
         {name: 'Recipes', href: '/'},
         {name: 'About us', href: '/aboutUs'},
     ],
@@ -130,13 +130,13 @@ export default function Navbar() {
 
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <Link href="#">
+                                    <Link href="/login">
                                         <a className="text-sm font-medium text-gray-700 hover:text-sustail">
                                             Sign in
                                         </a>
                                     </Link>
                                     <span className="h-6 w-px bg-gray-200" aria-hidden="true"/>
-                                    <Link href="#">
+                                    <Link href="/register">
                                         <a className="text-sm font-medium text-gray-700 hover:text-sustail">
                                             Create account
                                         </a>
@@ -145,14 +145,15 @@ export default function Navbar() {
 
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <Link href="#">
+                                    <Link href="/cart">
                                         <a className="group -m-2 flex items-center p-2">
                                             <ShoppingBagIcon
                                                 className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
                                                 aria-hidden="true"
                                             />
                                             <span
-                                                className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                                className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
+                                               >0</span>
                                             <span className="sr-only">items in cart, view bag</span>
                                         </a>
                                     </Link>
