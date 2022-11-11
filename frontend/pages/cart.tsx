@@ -1,5 +1,7 @@
 import Navbar from "../components/Navbar";
 import Link from "next/link";
+import {GlobeEuropeAfricaIcon} from "@heroicons/react/20/solid";
+import React from "react";
 
 const products = [
     {
@@ -36,6 +38,21 @@ const products = [
     }
 ]
 
+const score = [{href: '#', average: 4, totalCount: 117},
+    {href: '#', average: 3, totalCount: 117,},
+    {href: '#', average: 2, totalCount: 117,},
+    {href: '#', average: 5, totalCount: 117,}
+]
+
+function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
+
+function OverallScore() {
+    const overallScore = score.reduce((a, v) => a = a + v.average, 0,);
+    return (overallScore / products.length)
+}
+
 export default function Cart() {
     return (
         <div className="flex-col">
@@ -45,18 +62,20 @@ export default function Cart() {
                     <h3 className="text-lg font-medium leading-6 text-gray-900  grid grid-cols-3 gap-3">Shopping
                         Cart</h3></div>
 
-                <div className="text-lg font-medium leading-6 text-gray-900 px-2 py-2 grid grid-cols-5 gap-5">
+                <div className="text-lg font-medium leading-6 text-gray-900 px-2 py-2 grid grid-cols-6 gap-5">
                     <div></div>
                     <div><h3 className=" text-lg font-medium leading-6 text-gray-900"> Product</h3></div>
                     <div><p className=" text-lg font-medium leading-6 text-gray-900"> Price</p></div>
                     <div><p className=" text-lg font-medium leading-6 text-gray-900"> Quantity</p></div>
+                    <div></div>
+                    <div><p className=" text-lg font-medium leading-6 text-gray-900"> Sustainability score</p></div>
                 </div>
 
                 <div className="overflow-hidden bg-white shadow sm:rounded-lg">
                 </div>
                 <dl className="divide-y divide-sustail">
                     {products.map((product) => (
-                        <div key={product.id} className="bg-gray-50 px-2 py-2 grid grid-cols-5 gap-5">
+                        <div key={product.id} className="bg-gray-50 px-2 py-2 grid grid-cols-6 gap-5">
                             <img className="overflow-hidden rounded-lg"
                                  src={product.imageSrc}
                                  width="200" height="200"/>
@@ -72,6 +91,19 @@ export default function Cart() {
                                     className="bg-red-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full"> Remove
                                 </button>
                             </div>
+                            <div>
+                                <p className="mr-1 flex">
+                                    {[0, 1, 2, 3, 4].map((rating) => (
+                                        <GlobeEuropeAfricaIcon
+                                            key={rating}
+                                            className={classNames(
+                                                OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
+                                                'h-5 w-5 flex-shrink-0'
+                                            )}
+                                            aria-hidden="true"
+                                        />))}
+                                </p>
+                            </div>
                         </div>
                     ))}
 
@@ -80,10 +112,22 @@ export default function Cart() {
                         <div></div>
                         <div></div>
                         <div>
+                            <p className=" text-gray-900">Overall Score</p>
                             <p className=" text-gray-900">Shipping Price</p>
                             <p className=" text-gray-900">Total Price</p>
                         </div>
                         <div>
+                            <p className="mr-4 flex">
+                                {[0, 1, 2, 3, 4].map((rating) => (
+                                    <GlobeEuropeAfricaIcon
+                                        key={rating}
+                                        className={classNames(
+                                            OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
+                                            'h-5 w-5 flex-shrink-0'
+                                        )}
+                                        aria-hidden="true"
+                                    />))}
+                            </p>
                             <p className="font-bold text-gray-900">9.99$</p>
                             <p className="font-bold text-gray-900 mb-2">37.99$</p>
                             <Link href="/checkout">
