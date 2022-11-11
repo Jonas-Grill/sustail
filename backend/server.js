@@ -2,6 +2,7 @@ require('dotenv').config({path:'./.env'});
 
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 
 const {failSafeHandler, errorHandler} = require("./middleware/errorHandler");
 const routes = require('./routes');
@@ -16,7 +17,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(failSafeHandler);
-app.use(express.json());
+app.use(bodyParser.json());
 app.use('/', routes)
 app.use(errorHandler);
 
