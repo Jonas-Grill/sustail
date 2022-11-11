@@ -1,7 +1,7 @@
 export default function Filter() {
     return (
         <div className="w-full md:w-2/3 shadow p-5 rounded-lg bg-white">
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mt-6">
                 <div>
                     <p className="text-gray-800 text-sm ">
                         Category
@@ -47,12 +47,16 @@ export default function Filter() {
                         Reset filters
                     </button>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
+                <div>
+                    <p className="text-gray-800 text-sm ">
+                        Sort
+                    </p>
                     <select
-                        className="px-4 py-2 w-20 rounded-md bg-white-200 border-grey-500 focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
-                        <option value="">Sort</option>
-                        <option value="1000">Price</option>
-                        <option value="2000">Score</option>
+                        className="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                        <option value="">Price descending</option>
+                        <option value="">Price ascending</option>
+                        <option value="">Sustainability score descending</option>
+                        <option value="">Sustainability score ascending</option>
                     </select>
                 </div>
             </div>
