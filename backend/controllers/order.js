@@ -67,7 +67,7 @@ exports.update = function (req, res) {
       res.status(StatusCodes.NOT_FOUND).json({
         message: ReasonPhrases.NOT_FOUND,
       });
-    } else if ((order.state = 'CANCELLED' || 'FULFILLED' || req.body.state) || !req.body.state) {
+    } else if (order.state == ("CANCELLED" || "FULFILLED") || order.state === req.body.state || !req.body.state) {
       res.status(StatusCodes.BAD_REQUEST).json({
         message: ReasonPhrases.BAD_REQUEST,
       });
@@ -75,18 +75,18 @@ exports.update = function (req, res) {
       let invalid_change = false;
 
       // more complicated but less hardcoding
-      let change_hierarchy = ['NOT FULFILLED', 'IN PROCESS', 'FULFILLED', 'CANCELLED'];
-      for (let i = 0; i < change_hierarchy.length-2; i++) {
-        if (order.state === req.body.state) break;
-        for (let j = i + 1; j < change_hierarchy; j++) {
+      let change_hierarchy = ['NOT FULFILLED', 'CANCELLED', 'IN PROCESS', 'FULFILLED'];
+      for (let i = 0; i < change_hierarchy.length-1; i++) {
+        if (order.state === req.body.state) {break}
+        for (let j = i + 1; j < change_hierarchy.length; j++) {
           if (order.state === change_hierarchy[i] && req.body.state === change_hierarchy[j]) {
             order.state = req.body.state;
-            if (j === 1) {
-              order.timestamp.in_process = Date.now;
-            } else if (j === 2) {
-              order.timestamp.fulfilled = Date.now;
+            if (j === 2) {
+              order.timestamp.in_process = Date.now();
+            } else if (j === 3) {
+              order.timestamp.fulfilled = Date.now();
             } else {
-              order.timestamp.cancelled = Date.now;
+              order.timestamp.cancelled = Date.now();
             }
             break;
           }
