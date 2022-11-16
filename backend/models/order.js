@@ -10,6 +10,10 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  quantity: {
+    type: Number,
+    min: 0
+  },
   buyer_id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true

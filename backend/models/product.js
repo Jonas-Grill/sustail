@@ -14,6 +14,10 @@ const productSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  quantity: {
+    type: Number,
+    min: 0
+  },
   price: {
     amount_in_euros: {
       type: Number,
@@ -28,7 +32,7 @@ const productSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['VEGETABLE', 'FRUIT', 'GRAIN', 'ANIMAL PRODUCT', 'BEVERAGE'],
+    enum: ['VEGETABLES', 'FRUITS', 'GRAINS', 'MEAT','FISH', 'DRINKS'],
     required: true
   },
   sustainability_score: {

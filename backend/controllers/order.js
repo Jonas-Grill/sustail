@@ -23,6 +23,7 @@ exports.new = function (req, res) {
   const order = new Order(
     {
       product_id: req.body.product_id,
+      quantity: req.body.quantity,
       buyer_id: req.body.buyer_id,
       address: {
         street: req.body.address.street,
@@ -140,7 +141,7 @@ exports.update = function (req, res) {
 
 // Handle delete order
 exports.delete = function (req, res) {
-  Order.remove({id: req.params.order_id}, function (err) {
+  Order.deleteOne({_id: req.params.order_id}, function (err) {
     if (err) {
       console.log(err);
       res.status(StatusCodes.NOT_FOUND).json({

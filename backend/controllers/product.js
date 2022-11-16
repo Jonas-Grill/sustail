@@ -24,6 +24,7 @@ exports.new = function (req, res) {
     {
       name: req.body.name,
       seller_id: req.body.seller_id,
+      quantity: req.body.quantity,
       price: {
         amount_in_euros: req.body.price.amount_in_euros,
         metric: req.body.price.metric
@@ -87,6 +88,7 @@ exports.update = function (req, res) {
       });
     } else {
       product.name = req.body.name ? req.body.name : product.name;
+      product.quantity = req.body.quantity ? req.body.quantity : product.quantity;
       product.price.amount_in_euros = req.body.price.amount_in_euros ? req.body.price.amount_in_euros : product.price.amount_in_euros;
       product.price.metric = req.body.price.metric ? req.body.price.metric : product.price.metric;
       product.description = req.body.description ? req.body.description : product.description;
@@ -107,7 +109,7 @@ exports.update = function (req, res) {
 
 // Handle delete product
 exports.delete = function (req, res) {
-  Product.remove({id: req.params.product_id}, function (err) {
+  Product.deleteOne({_id: req.params.product_id}, function (err) {
     if (err) {
       console.log(err);
       res.status(StatusCodes.NOT_FOUND).json({
