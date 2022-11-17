@@ -7,13 +7,13 @@ import {Product} from "./[id]";
 
 export default function Products({data}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const [user, setUser] = useState({
-        type: "User"
+        type: "Producer"
     })
 
     return (
         <div className="flex-col">
             <Navbar/>
-            {user.type == "User" ? <ProductsOverview data={data}/> : <ProductsOverviewEditable/>}
+            {user.type == "User" ? <ProductsOverview data={data}/> : <ProductsOverviewEditable data={data}/>}
         </div>
     )
 }

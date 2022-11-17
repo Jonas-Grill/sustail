@@ -33,13 +33,10 @@ export const getStaticProps: GetStaticProps<{ data: Product }> = async (context)
     }
 }
 
-export default function Product({data}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Product({data}: InferGetStaticPropsType<typeof getStaticProps>) {
     const [user, setUser] = useState({
         type: "Producer"
     })
-
-    const router = useRouter()
-    const {id} = router.query
 
     return (
         <div className="flex-col">
@@ -53,16 +50,13 @@ export type Product = {
     _id: string,
     name: string,
     seller_id: string,
-    price: {
-        amount_in_euros: number,
-        metric: string,
-    },
+    price: number,
     type: string,
     sustainability_score: {
-        packaging:string,
-        transportation_type: string,
+        packaging: string,
+        transportation_type: string
     },
-    weight_in_g:number,
+    weight_in_g: number,
     nutrition_per_100g: {
         energy: number,
         fat: {
