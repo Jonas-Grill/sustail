@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "docker": "docker build -t sustail-backend .",
+    "azure": "az login && az acr login --name sustail.azurecr.io",
+    "deploy": "docker tag sustail-backend sustail.azurecr.io/sustail-backend && docker push sustail.azurecr.io/sustail-backend"
   },
   "keywords": [],
   "author": "",
