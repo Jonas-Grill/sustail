@@ -1,36 +1,34 @@
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require("../models/user");
-const {StatusCodes, ReasonPhrases} = require("http-status-codes")
-const accessTokenSecret = 'youraccesstokensecret';
+const {StatusCodes} = require("http-status-codes")
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
-// Handle index actions
-exports.login = function (req, res) {
-    const { username, password } = req.body;
+// Handle login actions
+exports.login = async function (req, res) {
+    const {email, password} = req.body;
 
-    // Filter user from the users array by username and password
-    const user = users.find(u => { return u.username === username && u.password === password });
-
-    if (user) {
-        // Generate an access token
-        const accessToken = jwt.sign({ username: user.username,  role: user.role }, accessTokenSecret);
-
-        res.json({
-            accessToken
-        });
-    } else {
-        res.send('Username or password incorrect');
-    }
-    User.find(function (err, users) {
+    await User.findOne({email: email}, async function (err, user) {
         if (err) {
             console.log(err);
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+            res.status(StatusCodes.BAD_REQUEST).json({
+                message: 'Username or password incorrect',
             });
         } else {
-            res.status(StatusCodes.OK).json(users.map(user => {
-                user.password = undefined;
-                return user;
-            }));
+            if (user && await bcrypt.compare(password, user.password)) {
+                // Generate an access token
+                const accessToken = jwt.sign({
+                    user: user
+                }, accessTokenSecret, {expiresIn: '1h'});
+
+                res.status(StatusCodes.OK).json({
+                    token: accessToken
+                });
+            } else {
+                res.status(StatusCodes.BAD_REQUEST).json({
+                    message: 'Username or password incorrect',
+                });
+            }
         }
     });
 };
