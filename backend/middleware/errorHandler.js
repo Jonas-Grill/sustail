@@ -1,4 +1,4 @@
-async function failSafeHandler(error, req, res, next) {
+exports.failSafeHandler = async function (error, req, res, next) {
     try {
         await next();
     } catch (err) {
@@ -7,8 +7,6 @@ async function failSafeHandler(error, req, res, next) {
     }
 }
 
-function errorHandler(error, req, res, next) {
+exports.errorHandler = function (error, req, res, next) {
     res.status(500).send(error)
 }
-
-module.exports = { errorHandler, failSafeHandler }

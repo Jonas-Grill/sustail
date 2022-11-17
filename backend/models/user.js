@@ -58,4 +58,4 @@ const userSchema = mongoose.Schema({
 });
 
 // Export User model
-const Contact = module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model('user', userSchema);

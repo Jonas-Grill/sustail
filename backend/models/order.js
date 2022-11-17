@@ -10,6 +10,10 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  seller_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
   quantity: {
     type: Number,
     min: 0
@@ -63,4 +67,4 @@ const orderSchema = mongoose.Schema({
 });
 
 // Export order model
-const Contact = module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model('order', orderSchema);
