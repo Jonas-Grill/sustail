@@ -1,6 +1,8 @@
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
+import Sort_button from "../components/Sort_button";
+import SortButton from "../components/Sort_button";
 import {Product} from "../pages/products/[id]";
 
 const images = {

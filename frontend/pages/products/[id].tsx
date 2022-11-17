@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps<{ data: Product }> = async (context)
 
 export default function Product({data}: InferGetStaticPropsType<typeof getStaticProps>) {
     const [user, setUser] = useState({
-        type: "Producer"
+        type: "USER"
     })
 
     return (

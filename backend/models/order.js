@@ -10,6 +10,14 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  seller_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
+  quantity: {
+    type: Number,
+    min: 0
+  },
   buyer_id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
@@ -36,7 +44,7 @@ const orderSchema = mongoose.Schema({
   },
   state: {
     type: String,
-    enum: ['FULFILLED', 'IN PROCESS', 'CANCELLED'],
+    enum: ['NOT FULFILLED', 'FULFILLED', 'IN PROCESS', 'CANCELLED'],
     default: 'NOT FULFILLED',
     required: true
   },
@@ -59,4 +67,4 @@ const orderSchema = mongoose.Schema({
 });
 
 // Export order model
-const Contact = module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model('order', orderSchema);

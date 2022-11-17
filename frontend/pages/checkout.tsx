@@ -78,7 +78,7 @@ export default function Checkout() {
                             </div>
                             {products.map((product) => (
                                 <li key={product.id} className="flex items-center justify-between py-4 m-3">
-                                    <div className="flex ">
+                                    <div className="flex basis-72">
 
                                         <img
                                             src={product.imageSrc}
@@ -104,6 +104,20 @@ export default function Checkout() {
                                             <small className="text-gray-500"> Quantity: 2</small>
                                         </p>
                                     </div>
+
+                                    <div>
+                                        <p className="mr-1 flex">
+                                            {[0, 1, 2, 3, 4].map((rating) => (
+                                                <GlobeEuropeAfricaIcon
+                                                    key={rating}
+                                                    className={classNames(
+                                                        OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
+                                                        'h-5 w-5 flex-shrink-0'
+                                                    )}
+                                                    aria-hidden="true"
+                                                />))}
+                                        </p>
+                                    </div>
                                 </li>
                             ))}
 
@@ -118,7 +132,7 @@ export default function Checkout() {
 
                                 <div className="flex py-4">
                                     <div>
-                                        <p className="mr-1 flex">
+                                        <p className="mr-4 flex">
                                             {[0, 1, 2, 3, 4].map((rating) => (
                                                 <GlobeEuropeAfricaIcon
                                                     key={rating}
