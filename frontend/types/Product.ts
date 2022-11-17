@@ -2,7 +2,14 @@ export type Product = {
     _id: string,
     name: string,
     seller_id: string,
-    price: number,
+    image: {
+        src: string,
+        alt: string,
+    },
+    price: {
+        amount_in_euros: string,
+        metric: string,
+    },
     type: string,
     sustainability_score: {
         packaging: string,

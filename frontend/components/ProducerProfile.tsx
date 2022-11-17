@@ -51,8 +51,14 @@ export default function ProducerProfile({user}: { user: User }) {
             'Authorization': `Bearer ${user.token}`
         }
     }
+    if (!orders) {
+        fetch(`${BASE_URL}/orders`, options).then(res => res.json().then(data => setOrders(data)));
 
-    fetch(`${BASE_URL}/orders`, options).then(res => res.json().then(data => setOrders(data)));
+    }
+
+    if (!products) {
+        fetch(`${BASE_URL}/products`, options).then(res => res.json().then(data => setProducts(data)));
+    }
 
     return (
         <div className="bg-white">
@@ -109,21 +115,15 @@ export default function ProducerProfile({user}: { user: User }) {
                             <h5 className="text-gray-900 text-xl font-medium mb-1 ml-3">Current Orders</h5>
                         </div>
 
-                        <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                        <div className="grid grid-cols-5 auto-cols-max gap-4 ml-3">
                             <div className="sm-4 text-left font-semibold">
                                 <h6 className="mb-0">Nr.</h6>
                             </div>
                             <div className="sm-4 text-left font-semibold">
-                                <h6 className="mb-0">Progress</h6>
+                                <h6 className="mb-0">Status</h6>
                             </div>
                             <div className="sm-4 text-left font-semibold">
-                                <h6 className="mb-0">Order-ID</h6>
-                            </div>
-                            <div className="sm-4 text-left font-semibold">
-                                <h6 className="mb-0">User-ID</h6>
-                            </div>
-                            <div className="sm-4 text-left font-semibold">
-                                <h6 className="mb-0">User name</h6>
+                                <h6 className="mb-0">Address</h6>
                             </div>
                             <div className="sm-4 text-left font-semibold">
                                 <h6 className="mb-0">Products sold</h6>
@@ -134,55 +134,26 @@ export default function ProducerProfile({user}: { user: User }) {
                         </div>
 
                         <div className="divide-y divide-sustail">
-                            {orders.map((order: Order) => (
-                                <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                            {orders?.map((order: Order, index) => (
+                                <div className="grid grid-cols-5 auto-cols-max gap-4 ml-3">
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">1</h6>
+                                        <h6 className="mb-0">{index}</h6>
                                     </div>
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">Pending</h6>
+                                        <h6 className="mb-0">{order.state}</h6>
                                     </div>
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">1000</h6>
+                                        <h6 className="mb-0">{order.address.street} {order.address.street_number}, {order.address.postal_code}, {order.address.city}</h6>
                                     </div>
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">0301</h6>
+                                        <h6 className="mb-0">{order.quantity}</h6>
                                     </div>
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">Mark</h6>
-                                    </div>
-                                    <div className="sm-4 text-left">
-                                        <h6 className="mb-0">Apples, Carrot, Grapes</h6>
-                                    </div>
-                                    <div className="sm-4 text-left">
-                                        <h6 className="mb-0">10,50</h6>
+                                        <h6 className="mb-0">{order._id}</h6>
                                     </div>
                                 </div>
                             ))}
 
-                            <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">2</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">Shipping</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">1020</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">0401</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">Jacob</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">Apples, Banana, broccoli</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">15,50</h6>
-                                </div>
-                            </div>
                             <div className="flex justify-center mb-3 mr-3">
                                 <Link href="#">
                                     <a className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
@@ -246,20 +217,20 @@ export default function ProducerProfile({user}: { user: User }) {
                         </div>
                         <div
                             className="grid gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 ml-3 mr-3 mb-3">
-                            {products.map((product) => (
-                                <div key={product.id}>
+                            {products?.map((product) => (
+                                <div key={product._id}>
                                     <div
                                         className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
                                         <img
-                                            src={product.imageSrc}
-                                            alt={product.imageAlt}
+                                            src={product.image.src}
+                                            alt={product.image.alt}
                                             className="h-full w-full object-cover object-center group-hover:opacity-75"
                                         />
                                     </div>
                                     <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                                    <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
+                                    <p className="mt-1 text-lg font-medium text-gray-900">{product.price.amount_in_euros}</p>
 
-                                    <Link href={"/products/" + product.id}>
+                                    <Link href={"/products/" + product._id}>
                                         <a className="inline-block rounded-md border border-transparent bg-sustail flex w-full items-center justify-center py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
                                             Edit product
                                         </a>
