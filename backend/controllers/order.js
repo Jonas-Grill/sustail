@@ -5,15 +5,15 @@ const Product = require('../models/product');
 
 // Handle index actions
 exports.index = function (req, res) {
-    Order.find(function (err, order) {
+    Order.find(function (err, orders) {
         if (err) {
             console.log(err);
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: ReasonPhrases.INTERNAL_SERVER_ERROR,
             });
         } else {
-            res.status(StatusCodes.OK).json(order.filter(
-                order => order.seller_id === req.user._id || order.buyer_id === req.user._id
+            res.status(StatusCodes.OK).json(orders.filter(
+                order => order.seller_id.toString() === req.user._id || order.buyer_id.toString() === req.user._id
             ).map(order => {
                 return order;
             }));
@@ -24,12 +24,13 @@ exports.index = function (req, res) {
 // Handle create order actions
 exports.new = function (req, res) {
     Product.findById(req.body.product_id, function (err, product) {
-        if (err) {
+        if (err || !product) {
             console.log(err);
             res.status(StatusCodes.NOT_FOUND).json({
                 message: ReasonPhrases.NOT_FOUND,
             });
         } else {
+            console.log(product);
             const order = new Order({
                 product_id: product._id,
                 seller_id: product.seller_id,
@@ -60,13 +61,13 @@ exports.new = function (req, res) {
 // Handle view order info
 exports.view = function (req, res) {
     Order.findById(req.params.order_id, function (err, order) {
-        if (err) {
+        if (err || !order) {
             console.log(err);
             res.status(StatusCodes.NOT_FOUND).json({
                 message: ReasonPhrases.NOT_FOUND,
             });
         } else {
-            if (order.seller_id === req.user._id || order.buyer_id === req.user._id) {
+            if (order.seller_id === req.user._id.toString() || order.buyer_id.toString() === req.user._id) {
                 res.status(StatusCodes.OK).json(order.toJSON());
             } else {
                 res.status(StatusCodes.FORBIDDEN).json({
@@ -80,7 +81,7 @@ exports.view = function (req, res) {
 // Handle update order info
 exports.update = function (req, res) {
     Order.findById(req.params.order_id, function (err, order) {
-        if (err) {
+        if (err || !order) {
             console.log(err);
             res.status(StatusCodes.NOT_FOUND).json({
                 message: ReasonPhrases.NOT_FOUND,
@@ -89,7 +90,7 @@ exports.update = function (req, res) {
             res.status(StatusCodes.BAD_REQUEST).json({
                 message: ReasonPhrases.BAD_REQUEST,
             });
-        } else if (order.seller_id === req.user._id) {
+        } else if (order.seller_id.toString() === req.user._id) {
             let invalid_change = false;
 
             // more complicated but less hardcoding

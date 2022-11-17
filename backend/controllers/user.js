@@ -64,7 +64,7 @@ exports.new = async function (req, res) {
 // Handle view user info
 exports.view = function (req, res) {
     User.findById(req.user._id, function (err, user) {
-        if (err) {
+        if (err || !user) {
             console.log(err);
             res.status(StatusCodes.UNAUTHORIZED).json({
                 message: ReasonPhrases.UNAUTHORIZED,
@@ -79,7 +79,7 @@ exports.view = function (req, res) {
 // Handle update user info
 exports.update = function (req, res) {
     User.findById(req.user._id, function (err, user) {
-        if (err) {
+        if (err || !user) {
             console.log(err);
             res.status(StatusCodes.UNAUTHORIZED).json({
                 message: ReasonPhrases.UNAUTHORIZED,

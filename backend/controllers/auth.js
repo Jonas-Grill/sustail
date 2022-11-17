@@ -9,7 +9,7 @@ exports.login = async function (req, res) {
     const {email, password} = req.body;
 
     await User.findOne({email: email}, async function (err, user) {
-        if (err) {
+        if (err || !user) {
             console.log(err);
             res.status(StatusCodes.BAD_REQUEST).json({
                 message: 'Username or password incorrect',

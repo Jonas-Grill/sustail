@@ -67,4 +67,4 @@ const orderSchema = mongoose.Schema({
 });
 
 // Export order model
-const Contact = module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model('order', orderSchema);

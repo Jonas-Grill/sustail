@@ -99,4 +99,4 @@ const productSchema = mongoose.Schema({
 });
 
 // Export product model
-const Contact = module.exports = mongoose.model('product', productSchema);
+module.exports = mongoose.model('product', productSchema);

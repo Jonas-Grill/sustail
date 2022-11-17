@@ -13,8 +13,6 @@ exports.authHandler = async function (req, res, next) {
                 return res.sendStatus(StatusCodes.FORBIDDEN);
             }
 
-            console.log(data.user);
-
             req.user = data.user;
             next();
         });

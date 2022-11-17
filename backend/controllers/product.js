@@ -28,7 +28,7 @@ exports.new = function (req, res) {
         const product = new Product(
             {
                 name: req.body.name,
-                seller_id: req.body.seller_id,
+                seller_id: req.user._id,
                 quantity: req.body.quantity,
                 price: {
                     amount_in_euros: req.body.price.amount_in_euros,
@@ -73,7 +73,7 @@ exports.new = function (req, res) {
 // Handle view product info
 exports.view = function (req, res) {
     Product.findById(req.params.product_id, function (err, product) {
-        if (err) {
+        if (err || !product) {
             console.log(err);
             res.status(StatusCodes.NOT_FOUND).json({
                 message: ReasonPhrases.NOT_FOUND,
@@ -86,13 +86,13 @@ exports.view = function (req, res) {
 
 // Handle update product info
 exports.update = function (req, res) {
-    if (req.user._id !== req.body.seller_id) {
+    if (req.user._id !== req.body.seller_id.toString()) {
         res.status(StatusCodes.FORBIDDEN).json({
             message: ReasonPhrases.FORBIDDEN,
         });
     } else {
         Product.findById(req.params.product_id, function (err, product) {
-            if (err) {
+            if (err || !product) {
                 console.log(err);
                 res.status(StatusCodes.NOT_FOUND).json({
                     message: ReasonPhrases.NOT_FOUND,
@@ -121,20 +121,20 @@ exports.update = function (req, res) {
 
 // Handle delete product
 exports.delete = function (req, res) {
-    if (req.user._id !== req.body.seller_id) {
-        res.status(StatusCodes.FORBIDDEN).json({
-            message: ReasonPhrases.FORBIDDEN,
-        });
-    } else {
-        Product.deleteOne({_id: req.params.product_id}, function (err) {
-            if (err) {
-                console.log(err);
-                res.status(StatusCodes.NOT_FOUND).json({
-                    message: ReasonPhrases.NOT_FOUND,
+    Product.findById(req.params.product_id, function (err, product) {
+        if (err || !product) {
+            console.log(err);
+            res.status(StatusCodes.OK).send();
+        } else {
+            if (req.user._id !== product.seller_id.toString()) {
+                res.status(StatusCodes.FORBIDDEN).json({
+                    message: ReasonPhrases.FORBIDDEN,
                 });
             } else {
-                res.status(StatusCodes.OK).send();
+                Product.deleteOne({_id: req.params.product_id}, function () {
+                    res.status(StatusCodes.OK).send();
+                });
             }
-        });
-    }
+        }
+    });
 };
