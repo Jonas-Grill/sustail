@@ -6,6 +6,9 @@ export type User = {
     },
     email: string,
     password: string,
+    banking_info: {
+        iban: string,
+    }
     address: {
         street: string,
         street_number: string,

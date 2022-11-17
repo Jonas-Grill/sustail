@@ -3,6 +3,7 @@ import {Dialog, Popover, Transition} from "@headlessui/react";
 import {Bars3Icon, ShoppingBagIcon, UserCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import {User} from "../types/User";
 
 const navigation = {
     pages: [
@@ -12,7 +13,7 @@ const navigation = {
     ],
 }
 
-export default function Navbar() {
+export default function Navbar({user}: {user: User | undefined}) {
     const [open, setOpen] = useState(false)
     return (
         <div className="bg-white flex-col">
@@ -160,14 +161,20 @@ export default function Navbar() {
                                 </div>
                                 {/* Profile */}
                                 <div className="ml-4 flow-root lg:ml-6">
-                                    <Link href="/profile">
-                                        <a className="group -m-2 flex items-center p-2">
-                                            <UserCircleIcon
-                                                className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
-                                                aria-hidden="true"
-                                            />
-                                        </a>
-                                    </Link>
+                                    {user ?
+                                        <Link href="/profile">
+                                            <a className="group -m-2 flex items-center p-2">
+                                                <UserCircleIcon
+                                                    className="h-6 w-6 flex-shrink-0 text-sustail group-hover:text-gray-500"
+                                                    aria-hidden="true"
+                                                />
+                                            </a>
+                                        </Link> :
+                                        <Link href="/login">
+                                            <a className="h-6 w-6 flex-shrink-0 text-sustail hover:text-gray-500">
+                                                Sign in
+                                            </a>
+                                        </Link>}
                                 </div>
                             </div>
                         </div>

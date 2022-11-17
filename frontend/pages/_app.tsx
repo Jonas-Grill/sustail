@@ -33,7 +33,7 @@ function MyApp({Component, pageProps}: AppProps) {
 
     return (
         <>
-            <Navbar/>
+            <Navbar user={user}/>
             <Component {...pageProps} user={user} setUser={setUser} cart={cart} addProductToCart={addProductToCart} removeProductFromCart={removeProductFromCart}/>
         </>
     )

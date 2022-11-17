@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {User} from "../types/User";
 
 const badges = [
     {
@@ -31,7 +32,9 @@ const badges = [
     }
 ]
 
-export default function UserProfile() {
+export default function UserProfile({user}: {user: User}) {
+    console.log(user);
+
     return (
         <div className="bg-white">
             <div

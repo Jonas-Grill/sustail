@@ -7,20 +7,54 @@ import User from "../components/UserProfile"
 
 import {LockClosedIcon} from '@heroicons/react/20/solid'
 import Navbar from "../components/Navbar";
+import {BASE_URL} from "./_app";
+import {useRouter} from "next/router";
 
-export default function Login({setUser}) {
+export default function Login({setUser}: {setUser: Function}) {
+    const router = useRouter();
+
     const submitLogin = async (event) => {
         event.preventDefault();
 
-        const body = {
-            email: event.target.email.value,
-            password: event.target.password.value,
+        const loginOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: event.target.email.value,
+                password: event.target.password.value,
+            }),
         }
 
-        const res = await fetch(`https://api.agify.io/?name=${name}`);
-        const result = await res.json();
+        const loginRes = await fetch(`${BASE_URL}/login`, loginOptions);
 
-        alert(`So your name is ${event.target.name.value}?`);
+        if (loginRes.status === 400) {
+            alert("Invalid email or password");
+            return;
+        }
+
+        const loginResult = await loginRes.json();
+
+        const userOptions = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${loginResult.token}`
+            },
+        }
+
+        const userRes = await fetch(`${BASE_URL}/users/self`, userOptions);
+        const userResult = await userRes.json();
+
+        console.log(userResult);
+
+        setUser({
+            ...userResult,
+            token: loginResult.token,
+        });
+
+        await router.push("/");
     };
 
     return (
@@ -41,7 +75,7 @@ export default function Login({setUser}) {
                             register as new user
                         </Link>
                     </p>
-                    <form className="mt-8 space-y-6" onSubmit={submitLogin} action="#" method="POST">
+                    <form className="mt-8 space-y-6" onSubmit={submitLogin} method="POST">
                         <div className="-space-y-px rounded-md shadow-sm">
                             <label htmlFor="email-address" className="sr-only">
                                 Email address
@@ -73,7 +107,8 @@ export default function Login({setUser}) {
                             className="group relative flex w-full justify-center rounded-md border border-transparent bg-sustail py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-sustail focus:ring-offset-2"
                         >
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                                <LockClosedIcon className="h-5 w-5 text-gray-300 group-hover:text-sustail-light" aria-hidden="true"/>
+                                <LockClosedIcon className="h-5 w-5 text-gray-300 group-hover:text-sustail-light"
+                                                aria-hidden="true"/>
                             </span>
                             Sign in
                         </button>

@@ -1,4 +1,9 @@
 import Link from "next/link";
+import {User} from "../types/User";
+import {BASE_URL} from "../pages/_app";
+import {Order} from "../types/Order";
+import {useState} from "react";
+import {Product} from "../types/Product";
 
 const products = [
     {
@@ -35,8 +40,20 @@ const products = [
     }
 ]
 
+export default function ProducerProfile({user}: { user: User }) {
+    const [orders, setOrders] = useState<Order[]>();
+    const [products, setProducts] = useState<Product[]>();
 
-export default function ProducerProfile() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
+        }
+    }
+
+    fetch(`${BASE_URL}/orders`, options).then(res => res.json().then(data => setOrders(data)));
+
     return (
         <div className="bg-white">
             <div
@@ -46,19 +63,18 @@ export default function ProducerProfile() {
                     <div className="row-span-2 d-flex flex-column align-items-center text-center shadow-lg shadow-2xl">
                         <img src="/Paul.png" alt="Producer Photo" className="rounded-b-full"></img>
                         <div className="mt-3">
-                            <h4>Paul Producer</h4>
                             <div className="grid grid-cols-2 m-4">
                                 <div className="sm-4 text-left">
                                     <h6 className="mb-0">Full Name</h6>
                                 </div>
                                 <div className="sm-4 text-left">
-                                    Paul Producer
+                                    {user.name.first} {user.name.last}
                                 </div>
                                 <div className="sm-4 text-left">
                                     <h6 className="mb-0">Email</h6>
                                 </div>
                                 <div className="sm-4 text-left">
-                                    paul.producer@gmail.com
+                                    user.email
                                 </div>
                                 <div className="sm-4 text-left">
                                     <h6 className="mb-0">Phone</h6>
@@ -70,13 +86,13 @@ export default function ProducerProfile() {
                                     <h6 className="mb-0">Address</h6>
                                 </div>
                                 <div className="sm-4 text-left">
-                                    Musterstraße 1, Muserstadt, Germany
+                                    {user.address.street} {user.address.street_number}, {user.address.postal_code}, {user.address.city}
                                 </div>
                                 <div className="sm-4 text-left">
                                     <h6 className="mb-0">Bank Account</h6>
                                 </div>
                                 <div className="sm-4 text-left">
-                                    LLXX XXXX XXXX XXXX 6666
+                                    {user.banking_info.iban}
                                 </div>
                             </div>
                         </div>
@@ -93,54 +109,56 @@ export default function ProducerProfile() {
                             <h5 className="text-gray-900 text-xl font-medium mb-1 ml-3">Current Orders</h5>
                         </div>
 
-                        <div className="divide-y divide-sustail">
-                            <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">Nr.</h6>
-                                </div>
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">Progress</h6>
-                                </div>
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">Order-ID</h6>
-                                </div>
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">User-ID</h6>
-                                </div>
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">User name</h6>
-                                </div>
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">Products sold</h6>
-                                </div>
-                                <div className="sm-4 text-left font-semibold">
-                                    <h6 className="mb-0">Total price (EUR)</h6>
-                                </div>
+                        <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">Nr.</h6>
                             </div>
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">Progress</h6>
+                            </div>
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">Order-ID</h6>
+                            </div>
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">User-ID</h6>
+                            </div>
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">User name</h6>
+                            </div>
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">Products sold</h6>
+                            </div>
+                            <div className="sm-4 text-left font-semibold">
+                                <h6 className="mb-0">Total price (EUR)</h6>
+                            </div>
+                        </div>
 
-                            <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">1</h6>
+                        <div className="divide-y divide-sustail">
+                            {orders.map((order: Order) => (
+                                <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">1</h6>
+                                    </div>
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">Pending</h6>
+                                    </div>
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">1000</h6>
+                                    </div>
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">0301</h6>
+                                    </div>
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">Mark</h6>
+                                    </div>
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">Apples, Carrot, Grapes</h6>
+                                    </div>
+                                    <div className="sm-4 text-left">
+                                        <h6 className="mb-0">10,50</h6>
+                                    </div>
                                 </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">Pending</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">1000</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">0301</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">Mark</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">Apples, Carrot, Grapes</h6>
-                                </div>
-                                <div className="sm-4 text-left">
-                                    <h6 className="mb-0">10,50</h6>
-                                </div>
-                            </div>
+                            ))}
 
                             <div className="grid grid-cols-7 auto-cols-max gap-4 ml-3">
                                 <div className="sm-4 text-left">
