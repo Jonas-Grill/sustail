@@ -39,7 +39,6 @@ const products = [
 export default function Cart() {
     return (
         <div className="flex-col">
-            <Navbar/>
             <div className="bg-white px-10 py-10">
                 <div><img src="Sustail.png" width="100" height="100"/>
                     <h3 className="text-lg font-medium leading-6 text-gray-900  grid grid-cols-3 gap-3">Shopping

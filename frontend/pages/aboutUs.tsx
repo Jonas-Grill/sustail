@@ -12,7 +12,6 @@ const features = [
 export default function AboutUs() {
     return (
         <div className="flex-col">
-            <Navbar/>
             <div className="bg-white">
                 {/* Text */}
                 <div className="bg-white">

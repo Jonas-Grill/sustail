@@ -64,7 +64,6 @@ function OverallScore() {
 export default function Checkout() {
     return (
         <div className="flex-col">
-            <Navbar/>
             <h1 className="sr-only">Checkout</h1>
 
             <div className="bg-white">

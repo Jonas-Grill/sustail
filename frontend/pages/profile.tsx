@@ -10,7 +10,6 @@ export default function Profile() {
 
     return (
         <div className="flex-col">
-            <Navbar/>
             {user.type == "User" ? <UserProfile/> : <ProducerProfile/>}
         </div>
     )
