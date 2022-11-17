@@ -32,8 +32,8 @@ router.route('/products')
   .post(authHandler, productController.new);
 router.route('/products/:product_id')
   .get(productController.view)
-  .patch(productController.update)
-  .delete(productController.delete);
+  .patch(authHandler, productController.update)
+  .delete(authHandler, productController.delete);
 
 const orderController = require('./controllers/order');
 
