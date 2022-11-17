@@ -30,6 +30,7 @@ exports.new = function (req, res) {
                 name: req.body.name,
                 seller_id: req.user._id,
                 quantity: req.body.quantity,
+                image: req.body.image,
                 price: {
                     amount_in_euros: req.body.price.amount_in_euros,
                     metric: req.body.price.metric
@@ -100,6 +101,7 @@ exports.update = function (req, res) {
             } else {
                 product.name = req.body.name ? req.body.name : product.name;
                 product.quantity = req.body.quantity ? req.body.quantity : product.quantity;
+                product.image = req.body.image ? req.body.image : product.image;
                 product.price.amount_in_euros = req.body.price.amount_in_euros ? req.body.price.amount_in_euros : product.price.amount_in_euros;
                 product.price.metric = req.body.price.metric ? req.body.price.metric : product.price.metric;
                 product.description = req.body.description ? req.body.description : product.description;
