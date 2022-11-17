@@ -4,18 +4,29 @@ const Product = require('../models/product');
 
 // Handle index actions
 exports.index = function (req, res) {
-    Product.find(function (err, products) {
-        if (err) {
-            console.log(err);
-            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-                message: ReasonPhrases.INTERNAL_SERVER_ERROR,
-            });
-        } else {
-            res.status(StatusCodes.OK).json(products.map(product => {
-                return product;
-            }));
-        }
-    });
+    if (req.user.type === 'PRODUCER') {
+        Product.find({seller_id: req.user._id}, function (err, products) {
+            if (err) {
+                console.log(err);
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+                });
+            } else {
+                res.status(StatusCodes.OK).json(products.map(product => product.toJSON()));
+            }
+        });
+    } else {
+        Product.find(function (err, products) {
+            if (err) {
+                console.log(err);
+                res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    message: ReasonPhrases.INTERNAL_SERVER_ERROR,
+                });
+            } else {
+                res.status(StatusCodes.OK).json(products.map(product => product.toJSON()));
+            }
+        });
+    }
 };
 
 // Handle create product actions
