@@ -38,6 +38,7 @@ router.route('/products/:product_id')
 const orderController = require('./controllers/order');
 
 // Order Routes
+router.use('/orders', authHandler);
 router.route('/orders')
   .get(orderController.index)
   .post(orderController.new);

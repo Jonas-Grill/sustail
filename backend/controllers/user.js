@@ -5,16 +5,14 @@ const bcrypt = require("bcrypt");
 
 // Handle index actions
 exports.index = function (req, res) {
-    User.find(function (err, users) {
+    User.find({type: 'PRODUCER'}, function (err, users) {
         if (err) {
             console.log(err);
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                 message: ReasonPhrases.INTERNAL_SERVER_ERROR,
             });
         } else {
-            res.status(StatusCodes.OK).json(users.filter(
-                user => user.type === 'PRODUCER'
-            ).map(user => {
+            res.status(StatusCodes.OK).json(users.map(user => {
                 user.password = undefined;
                 return user;
             }));
@@ -24,37 +22,43 @@ exports.index = function (req, res) {
 
 // Handle create user actions
 exports.new = async function (req, res) {
-    const user = new User(
-        {
-            name: {
-                first: req.body.name.first,
-                last: req.body.name.last,
-            },
-            email: req.body.email,
-            password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(10)),
-            banking_info: {
-                iban: req.body.banking_info.iban,
-            },
-            address: {
-                street: req.body.address.street,
-                street_number: req.body.address.street_number,
-                city: req.body.address.city,
-                postal_code: req.body.address.postal_code,
-            },
-            type: req.body.type,
-        }
-    );
+    if (await User.find({email: req.body.email}).count() > 0) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+            message: 'User already exists',
+        });
+    } else {
+        const user = new User(
+            {
+                name: {
+                    first: req.body.name.first,
+                    last: req.body.name.last,
+                },
+                email: req.body.email,
+                password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(10)),
+                banking_info: {
+                    iban: req.body.banking_info.iban,
+                },
+                address: {
+                    street: req.body.address.street,
+                    street_number: req.body.address.street_number,
+                    city: req.body.address.city,
+                    postal_code: req.body.address.postal_code,
+                },
+                type: req.body.type,
+            }
+        );
 
-    user.save(function (err, user) {
-        if (err) {
-            console.log(err);
-            res.status(StatusCodes.BAD_REQUEST).json({
-                message: ReasonPhrases.BAD_REQUEST,
-            });
-        } else {
-            res.status(StatusCodes.CREATED).json(user.toJSON());
-        }
-    });
+        user.save(function (err, user) {
+            if (err) {
+                console.log(err);
+                res.status(StatusCodes.BAD_REQUEST).json({
+                    message: ReasonPhrases.BAD_REQUEST,
+                });
+            } else {
+                res.status(StatusCodes.CREATED).json(user.toJSON());
+            }
+        });
+    }
 };
 
 // Handle view user info
