@@ -4,38 +4,8 @@ import {Fragment, useRef, useState} from "react";
 import {EditText, EditTextarea, onSaveProps} from "react-edit-text";
 // import 'react-edit-text/dist/index.css';
 import {Listbox, Transition} from '@headlessui/react'
+import {Product} from "../pages/products/[id]";
 
-const product = {
-    name: '1kg Apples',
-    price: '$2',
-    href: '#',
-    images: [
-        {
-            src: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
-            alt: 'An apple.',
-        },
-    ],
-    description:
-        'Those are the most beautiful apples you will ever see.',
-    transportationMethods: [
-        'electric car',
-        'train',
-        'car',
-        'DHL',
-    ],
-    packaging: [
-        'paper',
-        'plastic',
-        'aluminum',
-        'reusable container',
-    ],
-    highlights: [
-        'local product',
-        'no pesticides used',
-        'no chemicals used',
-        'fair trade',
-    ],
-}
 const score = {href: '#', average: 4, totalCount: 117}
 
 function classNames(...classes: string[]) {
@@ -52,7 +22,38 @@ function onSaveHighlight({name, value}: onSaveProps) {
     product.highlights[name] = value;
 }
 
-export default function ProductDetailEditable() {
+export default function ProductDetailEditable({productData}: {productData: Product}) {
+    const [product, setProduct] = useState({
+        name: productData.name,
+        price: productData.price,
+        href: '#',
+        images: [
+            {
+                src: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
+                alt: 'An apple.',
+            },
+        ],
+        description: productData.description,
+        transportationMethods: [
+            'electric car',
+            'train',
+            'car',
+            'DHL',
+        ],
+        packaging: [
+            'paper',
+            'plastic',
+            'aluminum',
+            'reusable container',
+        ],
+        highlights: [
+            'local product',
+            'no pesticides used',
+            'no chemicals used',
+            'fair trade',
+        ],
+    })
+
 
     const [selectedTransportationMethod, setSelectedTransportationMethod] = useState(product.transportationMethods[0]);
     const [selectedPackaging, setSelectedPackaging] = useState(product.packaging[0]);
@@ -228,7 +229,7 @@ export default function ProductDetailEditable() {
                         <h2 className="sr-only">Product information</h2>
                         <div>
                             <EditText className="text-3xl tracking-tight text-gray-900 hover:text-sustail"
-                                      name="name" type="text" defaultValue={product.price}
+                                      name="name" type="text" defaultValue={product.price.amount_in_euros.toString()}
                                       inputClassName={"text-3xl tracking-tight text-gray-900"}
                                       inline
                                       onSave={onSave}/>

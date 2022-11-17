@@ -1,7 +1,6 @@
 import { GlobeEuropeAfricaIcon } from '@heroicons/react/20/solid'
 import Navbar from "./Navbar";
 
-
 const product = {
     name: '1kg Apples',
     price: '$2',
@@ -29,7 +28,7 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductDetail() {
+export default function ProductDetail({ product }: any) {
     return (
         <div className="bg-white">
             <Navbar/>

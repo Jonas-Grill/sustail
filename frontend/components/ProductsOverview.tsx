@@ -2,8 +2,13 @@ import Navbar from "./Navbar";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
+import {Product} from "../pages/products/[id]";
 
-const products = [
+const images = {
+    apple: "hjreniuaveds"
+}
+
+const products2 = [
     {
         id: 1,
         name: 'Apple',
@@ -38,7 +43,18 @@ const products = [
     }
 ]
 
-export default function ProductsOverview() {
+export default function ProductsOverview({data}: {data: [Product]}) {
+    const products = data.map(value => {
+        return {
+            id: value._id,
+            name: value.name,
+            href: '#',
+            price: value.price.amount_in_euros,
+            imageSrc: 'https://www.thespruceeats.com/thmb/9_VG_uDvGCoqRu1XFIqjpsY8yns=/1000x1000/smart/filters:no_upscale()/potato-milk-5218684-hero-03-9bd26d6a5fd34025b072f6256e039652.jpg',
+            imageAlt: '500 ml milk.',
+        }
+    })
+
     return (
         <div className="flex-col">
             <div className="flex justify-center items-center">
