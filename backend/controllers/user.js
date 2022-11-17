@@ -102,7 +102,7 @@ exports.update = function (req, res) {
 
 // Handle delete user
 exports.delete = function (req, res) {
-    User.remove({id: req.params.user_id}, function (err) {
+    User.deleteOne({_id: req.params.user_id}, function (err) {
         if (err) {
             console.log(err);
             res.status(StatusCodes.NOT_FOUND).json({

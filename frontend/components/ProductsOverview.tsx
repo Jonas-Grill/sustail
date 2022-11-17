@@ -2,6 +2,8 @@ import Navbar from "./Navbar";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import Filter from "./Filter";
+import Sort_button from "../components/Sort_button";
+import SortButton from "../components/Sort_button";
 
 const products = [
     {
