@@ -73,7 +73,7 @@ export default function Login({setUser}: {setUser: Function}) {
                             register as new user
                         </Link>
                     </p>
-                    <form className="mt-8 space-y-6" onSubmit={submitLogin} method="POST">
+                    <form className="mt-8 space-y-6" onSubmit={submitLogin}>
                         <div className="-space-y-px rounded-md shadow-sm">
                             <label htmlFor="email-address" className="sr-only">
                                 Email address

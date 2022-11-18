@@ -13,8 +13,6 @@ export default function Products({products, user}: InferGetServerSidePropsType<t
         }
     }, [user]);
 
-    console.log(user);
-
     return (
         <div className="flex-col">
             {(user && user.type == "PRODUCER") ? <ProductsOverviewEditable products={products}/> : <ProductsOverview products={products}/>}
@@ -31,8 +29,6 @@ export const getServerSideProps: GetServerSideProps<{ products: Product[] }> = a
     });
 
     const products: Product[] = await res.json();
-
-    console.log(products);
 
     return {
         props: {

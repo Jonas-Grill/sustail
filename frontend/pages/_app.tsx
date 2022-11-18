@@ -4,14 +4,14 @@ import Navbar from "../components/Navbar";
 import {useEffect, useState} from "react";
 import {Product} from "../types/Product";
 import {User} from "../types/User";
-import {Cart} from "../types/Cart";
+import {CartItem} from "../types/Cart";
 
 // export const BASE_URL = "http://sustail-api.dvepeygnctercggs.germanywestcentral.azurecontainer.io:3000";
 export const BASE_URL = "http://localhost:5000";
 
 function MyApp({Component, pageProps}: AppProps) {
     const [user, setUser] = useState<User>();
-    const [cart, setCart] = useState<Cart>();
+    const [cart, setCart] = useState<CartItem[]>([]);
 
     const setUserState = (user: User) => {
         setUser(user);
@@ -20,73 +20,74 @@ function MyApp({Component, pageProps}: AppProps) {
 
     const addProductToCart = (product: Product, amount: number = 1) => {
         setCart((prevCart) => {
-            if (!prevCart) {
-                prevCart = {
-                    items: [{
-                        product: product,
-                        quantity: 1
-                    }]
-                }
-            } else if (amount > 0) {
-                if (prevCart.items.find(item => item.product._id === product._id)) {
-                    prevCart.items = prevCart.items.map(item => item.product._id === product._id ? {
+            if (amount > 0) {
+                if (prevCart.find(item => item.product._id === product._id)) {
+                    prevCart = prevCart.map(item => item.product._id === product._id ? {
                         product: item.product,
                         quantity: item.quantity + amount
                     } : item)
                 } else {
-                    prevCart.items.push({
+                    prevCart.push({
                         product: product,
                         quantity: amount
                     })
                 }
             }
+
+            window.localStorage.setItem('CART', JSON.stringify(prevCart));
             return prevCart;
         });
-        window.localStorage.setItem('CART', JSON.stringify(cart));
     }
 
     const removeProductFromCart = (product: Product, amount: number = -1) => {
         setCart((prevCart) => {
             if (prevCart) {
-                if (prevCart.items.find(item => item.product._id === product._id)) {
+                if (prevCart.find(item => item.product._id === product._id)) {
                     if (amount === -1) {
-                        prevCart.items = prevCart.items.filter(item => item.product._id !== product._id);
+                        prevCart = prevCart.filter(item => item.product._id !== product._id);
                     } else if (amount > 0) {
-                        prevCart.items = prevCart.items.map(item => item.product._id === product._id ? {
+                        prevCart = prevCart.map(item => item.product._id === product._id ? {
                             product: item.product,
                             quantity: item.quantity - amount
                         } : item)
                     }
 
-                    prevCart.items = prevCart.items.filter(item => item.quantity > 0);
+                    prevCart = prevCart.filter(item => item.quantity > 0);
                 }
             }
-
+            window.localStorage.setItem('CART', JSON.stringify(prevCart));
             return prevCart;
         });
+    }
 
-        window.localStorage.setItem('CART', JSON.stringify(cart));
+    const clearCart = () => {
+        setCart([]);
+        window.localStorage.removeItem('CART');
     }
 
     useEffect(() => {
-        const cartStorage = window.localStorage.getItem('CART');
-        if (cartStorage != null) {
-            let storageParsed = JSON.parse(cartStorage)
-            setCart(storageParsed)
+        if (cart.length === 0) {
+            const cartStorage = window.localStorage.getItem('CART');
+            if (cartStorage) {
+                let storageParsed = JSON.parse(cartStorage)
+                setCart(storageParsed)
+            }
         }
 
-        const userStorage = window.localStorage.getItem('USER');
-        if (userStorage != null) {
-            let storageParsed = JSON.parse(userStorage)
-            setUser(storageParsed)
+        if (!user) {
+            const userStorage = window.localStorage.getItem('USER');
+            if (userStorage) {
+                let storageParsed = JSON.parse(userStorage)
+                setUser(storageParsed)
+            }
         }
-    }, [])
+    }, [cart, user])
 
     return (
         <>
-            <Navbar user={user} setUser={setUserState}/>
+            <Navbar user={user} setUser={setUserState} cart={cart}/>
             <Component {...pageProps} user={user} setUser={setUserState} cart={cart} addProductToCart={addProductToCart}
-                       removeProductFromCart={removeProductFromCart}/>
+                       removeProductFromCart={removeProductFromCart} clearCart={clearCart}/>
         </>
     )
 }

@@ -1,50 +1,9 @@
-import Navbar from "../components/Navbar";
 import {GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid';
 import React from "react";
-import Link from "next/link";
-
-const products = [
-    {
-        id: 1,
-        name: 'Apple',
-        href: '#',
-        price: '$2',
-        transportationMethod: 'train',
-        packaging: 'plastic',
-        imageSrc: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
-        imageAlt: 'An apple.',
-    },
-    {
-        id: 2,
-        name: 'Banana',
-        href: '#',
-        price: '$3',
-        transportationMethod: 'electric car',
-        packaging: 'paper',
-        imageSrc: 'https://cdn1.sph.harvard.edu/wp-content/uploads/sites/30/2018/08/bananas-1354785_1920.jpg',
-        imageAlt: 'A banana.',
-    },
-    {
-        id: 3,
-        name: 'Orange',
-        href: '#',
-        price: '$2',
-        transportationMethod: 'electric car',
-        packaging: 'plastic',
-        imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Ambersweet_oranges.jpg',
-        imageAlt: 'An orange.',
-    },
-    {
-        id: 4,
-        name: 'Milk',
-        href: '#',
-        price: '$4',
-        transportationMethod: 'car',
-        packaging: 'plastic bottle',
-        imageSrc: 'https://www.thespruceeats.com/thmb/9_VG_uDvGCoqRu1XFIqjpsY8yns=/1000x1000/smart/filters:no_upscale()/potato-milk-5218684-hero-03-9bd26d6a5fd34025b072f6256e039652.jpg',
-        imageAlt: '500 ml milk.',
-    }
-]
+import {CartItem} from "../types/Cart";
+import {BASE_URL} from "./_app";
+import {User} from "../types/User";
+import {useRouter} from "next/router";
 
 const score = [{href: '#', average: 4, totalCount: 117},
     {href: '#', average: 3, totalCount: 117,},
@@ -56,12 +15,47 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-function OverallScore() {
-    const overallScore = score.reduce((a, v) => a = a + v.average, 0,);
-    return (overallScore / products.length)
-}
+export default function Checkout({cart, clearCart, user}: { cart: CartItem[], clearCart: () => void, user: User }) {
+    const router = useRouter();
 
-export default function Checkout() {
+    const overallScore = () => {
+        const overallScore = score.reduce((a, v) => a = a + v.average, 0,);
+        return (overallScore / cart.length)
+    }
+
+    const handlePayNow = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        Promise.all(cart.map((item) => {
+            const body = {
+                address: {
+                    street: event.currentTarget.street.value,
+                    street_number: event.currentTarget.street_number.value,
+                    city: event.currentTarget.city.value,
+                    postal_code: event.currentTarget.postal_code.value,
+                },
+                quantity: item.quantity,
+                product_id: item.product._id,
+            }
+
+            const headers = user ? {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            } : {'Content-Type': 'application/json'}
+
+            const options = {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(body),
+            }
+
+            return fetch(`${BASE_URL}/orders`, options);
+        })).then(r => {
+            clearCart();
+            router.push('/afterCheckout');
+        });
+    }
+
     return (
         <div className="flex-col">
             <h1 className="sr-only">Checkout</h1>
@@ -76,23 +70,23 @@ export default function Checkout() {
                             <div>
                                 <h5 className="flex text-gray-900 text-xl font-medium mt-1 mb-1 ml-3">My products</h5>
                             </div>
-                            {products.map((product) => (
-                                <li key={product.id} className="flex items-center justify-between py-4 m-3">
+                            {cart.map((item) => (
+                                <li key={item.product._id} className="flex items-center justify-between py-4 m-3">
                                     <div className="flex basis-72">
 
                                         <img
-                                            src={product.imageSrc}
+                                            src={item.product.image.src}
                                             className="h-16 w-16 flex-shrink-0 rounded-lg object-cover"
                                         />
 
                                         <div className="ml-4">
-                                            <p className="flex text-sm">{product.name}</p>
+                                            <p className="flex text-sm">{item.product.name}</p>
 
                                             <dl className="mt-1 space-y-1 text-xs text-gray-500">
                                                 <div>
-                                                    <dt className="flex">Packaging: {product.packaging}</dt>
+                                                    <dt className="flex">Packaging: {item.product.sustainability_score.packaging}</dt>
                                                     <dt className="flex">Transportation
-                                                        method: {product.transportationMethod}</dt>
+                                                        method: {item.product.sustainability_score.transportation_type}</dt>
                                                 </div>
                                             </dl>
                                         </div>
@@ -100,8 +94,8 @@ export default function Checkout() {
 
                                     <div>
                                         <p className="text-lg">
-                                            {product.price}
-                                            <small className="text-gray-500"> Quantity: 2</small>
+                                            {item.product.price.amount_in_euros}€
+                                            <small className="text-gray-500"> Quantity: {item.quantity}</small>
                                         </p>
                                     </div>
 
@@ -111,7 +105,7 @@ export default function Checkout() {
                                                 <GlobeEuropeAfricaIcon
                                                     key={rating}
                                                     className={classNames(
-                                                        OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
+                                                        overallScore() > rating ? 'text-sustail' : 'text-gray-200',
                                                         'h-5 w-5 flex-shrink-0'
                                                     )}
                                                     aria-hidden="true"
@@ -137,27 +131,22 @@ export default function Checkout() {
                                                 <GlobeEuropeAfricaIcon
                                                     key={rating}
                                                     className={classNames(
-                                                        OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
+                                                        overallScore() > rating ? 'text-sustail' : 'text-gray-200',
                                                         'h-5 w-5 flex-shrink-0'
                                                     )}
                                                     aria-hidden="true"
                                                 />))}
                                         </p>
-                                        <p className="mt-1 ml-1 flex text-sm text-gray-500"> 9.99$</p>
-                                        <p className="text-2xl ml-1 mt-2 flex font-medium tracking-tight"> 37.99$</p>
+                                        <p className="mt-1 ml-1 flex text-sm text-gray-500"> 5€</p>
+                                        <p className="text-2xl ml-1 mt-2 flex font-medium tracking-tight"> {
+                                            cart.reduce((previousValue, currentValue) => {
+                                                return previousValue + parseInt(currentValue.product.price.amount_in_euros) * currentValue.quantity
+                                            }, 0)}€
+                                        </p>
                                     </div>
                                 </div>
                             </li>
-                            <div>
-                                <Link href="/afterCheckout">
-                                    <a className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
-                                        Pay now
-                                    </a>
-                                </Link>
-                            </div>
                         </div>
-
-
                         <div className="shadow-lg shadow-2xl bg-white">
                             <div>
                                 <h5 className="text-gray-900 text-xl font-medium mt-1 mb-1 ml-3">Payment Method</h5>
@@ -245,106 +234,91 @@ export default function Checkout() {
                         </div>
 
                         <div className="mt-2 shadow-lg shadow-2xl bg-white">
-                            <div>
-                                <h5 className="text-gray-900 text-xl font-medium mt-1 ml-3">Shipping address</h5>
-                            </div>
-
-                            <form action="#" method="POST">
-                                <input type="hidden" name="remember" defaultValue="true"/>
+                            <h5 className="text-gray-900 text-xl font-medium mt-1 ml-3">Shipping address</h5>
+                            <form onSubmit={handlePayNow}>
                                 <div className="-space-y-px rounded-md shadow-sm m-4">
                                     <div className="flex">
                                         <input
                                             id="street"
                                             name="street"
+                                            type="text"
+                                            autoComplete="street"
                                             required
+                                            defaultValue={user?.address.street}
                                             className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="Street"
                                         />
                                         <input
-                                            id="number"
-                                            name="number"
+                                            id="street_number"
+                                            name="street_number"
+                                            type="text"
                                             required
+                                            defaultValue={user?.address.street_number}
                                             className="relative block w-20 appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="Number"
                                         />
                                     </div>
                                     <div className="flex">
                                         <input
-                                            id="postalCode"
-                                            name="postalCode"
+                                            id="postal_code"
+                                            name="postal_code"
+                                            type="text"
                                             required
+                                            defaultValue={user?.address.postal_code}
                                             className="relative block w-32 appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="Postal code"
                                         />
                                         <input
                                             id="city"
                                             name="city"
+                                            type="text"
                                             required
+                                            defaultValue={user?.address.city}
                                             className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="City"
                                         />
                                     </div>
-                                    <div>
-                                        <input
-                                            id="country"
-                                            name="country"
-                                            required
-                                            className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
-                                            placeholder="Country"
-                                        />
-                                    </div>
                                 </div>
-                            </form>
-
-                            <div>
                                 <h5 className="text-gray-900 text-xl font-medium ml-3">Billing address</h5>
-                            </div>
-
-                            <form action="#" method="POST">
-                                <input type="hidden" name="remember" defaultValue="true"/>
-                                <div className="-space-y-px rounded-md shadow-sm mt-4 ml-4 mr-4">
+                                <div className="-space-y-px rounded-md shadow-sm m-4">
                                     <div className="flex">
                                         <input
-                                            id="street"
-                                            name="street"
+                                            type="text"
+                                            autoComplete="street"
                                             required
+                                            defaultValue={user?.address.street}
                                             className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="Street"
                                         />
                                         <input
-                                            id="number"
-                                            name="number"
+                                            type="text"
                                             required
+                                            defaultValue={user?.address.street_number}
                                             className="relative block w-20 appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="Number"
                                         />
                                     </div>
                                     <div className="flex">
                                         <input
-                                            id="postalCode"
-                                            name="postalCode"
+                                            type="text"
                                             required
+                                            defaultValue={user?.address.postal_code}
                                             className="relative block w-32 appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="Postal code"
                                         />
                                         <input
-                                            id="city"
-                                            name="city"
+                                            type="text"
                                             required
+                                            defaultValue={user?.address.city}
                                             className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                             placeholder="City"
                                         />
                                     </div>
-                                    <div>
-                                        <input
-                                            id="country"
-                                            name="country"
-                                            required
-                                            className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
-                                            placeholder="Country"
-                                        />
-                                    </div>
                                 </div>
+                                <button type="submit"
+                                        className="mt-3 inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">
+                                    Pay now
+                                </button>
                             </form>
                         </div>
                     </div>

@@ -40,10 +40,10 @@ router.route('/products/:product_id')
 const orderController = require('./controllers/order');
 
 // Order Routes
-router.use('/orders', authRequired);
 router.route('/orders')
-  .get(orderController.index)
+  .get(authRequired, orderController.index)
   .post(orderController.new);
+router.use('/orders/:order_id', authRequired);
 router.route('/orders/:order_id')
   .get(orderController.view)
   .patch(orderController.update)

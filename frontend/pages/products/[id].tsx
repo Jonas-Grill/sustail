@@ -4,7 +4,6 @@ import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import {ParsedUrlQuery} from "querystring";
 import {Product} from "../../types/Product";
 import {BASE_URL} from "../_app";
-import {User} from "../../types/User";
 
 interface IParams extends ParsedUrlQuery {
     id: string
@@ -32,10 +31,10 @@ export const getStaticProps: GetStaticProps<{ data: Product }> = async (context)
     }
 }
 
-export default function ProductId({data, user}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function ProductId({data, user, addProductToCart}: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div className="flex-col">
-            {user && user.type == "PRODUCER" ? <ProductDetailEditable productData={data}/> : <ProductDetail product={data} />}
+            {user && user.type == "PRODUCER" ? <ProductDetailEditable productData={data}/> : <ProductDetail product={data} addProductToCart={addProductToCart}/>}
         </div>
     )
 }

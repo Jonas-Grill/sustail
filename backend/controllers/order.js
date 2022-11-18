@@ -23,7 +23,7 @@ exports.index = function (req, res) {
 
 // Handle create order actions
 exports.new = function (req, res) {
-    if (req.user.type === "USER") {
+    if (!req.user || req.user.type === "USER") {
         Product.findById(req.body.product_id, function (err, product) {
             if (err || !product) {
                 console.log(err);
@@ -36,7 +36,7 @@ exports.new = function (req, res) {
                     product_id: product._id,
                     seller_id: product.seller_id,
                     quantity: req.body.quantity,
-                    buyer_id: req.user._id,
+                    buyer_id: req.user ? req.user._id : null,
                     address: {
                         street: req.body.address.street,
                         street_number: req.body.address.street_number,

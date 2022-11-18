@@ -4,6 +4,7 @@ import {Bars3Icon, ShoppingBagIcon, UserCircleIcon, XMarkIcon} from "@heroicons/
 import Link from "next/link";
 import Image from "next/image";
 import {User} from "../types/User";
+import {CartItem} from "../types/Cart";
 
 const navigation = {
     pages: [
@@ -13,7 +14,11 @@ const navigation = {
     ],
 }
 
-export default function Navbar({user, setUser}: { user: User | undefined, setUser: Function }) {
+export default function Navbar({
+                                   user,
+                                   setUser,
+                                   cart
+                               }: { user: User | undefined, setUser: (user: User) => void, cart: CartItem[] }) {
     const [open, setOpen] = useState(false)
     return (
         <div className="bg-white flex-col">
@@ -87,8 +92,9 @@ export default function Navbar({user, setUser}: { user: User | undefined, setUse
                                         </>
                                         :
                                         <div className="flow-root">
-                                            <button className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail"
-                                               onClick={event => setUser(undefined)}>
+                                            <button
+                                                className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail"
+                                                onClick={event => setUser(undefined)}>
                                                 Logout
                                             </button>
                                         </div>
@@ -144,12 +150,6 @@ export default function Navbar({user, setUser}: { user: User | undefined, setUse
                                 {!user ?
                                     <div
                                         className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                        <Link href="/login">
-                                            <a className="text-sm font-medium text-gray-700 hover:text-sustail">
-                                                Sign in
-                                            </a>
-                                        </Link>
-                                        <span className="h-6 w-px bg-gray-200" aria-hidden="true"/>
                                         <Link href="/register">
                                             <a className="text-sm font-medium text-gray-700 hover:text-sustail">
                                                 Create account
@@ -174,7 +174,7 @@ export default function Navbar({user, setUser}: { user: User | undefined, setUse
                                             />
                                             <span
                                                 className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-                                            >0</span>
+                                            >{cart.length}</span>
                                             <span className="sr-only">items in cart, view bag</span>
                                         </a>
                                     </Link>
