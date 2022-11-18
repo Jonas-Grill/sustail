@@ -1,65 +1,9 @@
 import Link from "next/link";
 import {User} from "../types/User";
-import {BASE_URL} from "../pages/_app";
 import {Order} from "../types/Order";
-import {useState} from "react";
 import {Product} from "../types/Product";
 
-const products = [
-    {
-        id: 1,
-        name: 'Apple',
-        href: '/productDetail',
-        price: '$2',
-        imageSrc: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
-        imageAlt: 'An apple.',
-    },
-    {
-        id: 2,
-        name: 'Banana',
-        href: '#',
-        price: '$3',
-        imageSrc: 'https://cdn1.sph.harvard.edu/wp-content/uploads/sites/30/2018/08/bananas-1354785_1920.jpg',
-        imageAlt: 'A banana.',
-    },
-    {
-        id: 3,
-        name: 'Orange',
-        href: '#',
-        price: '$2',
-        imageSrc: 'https://upload.wikimedia.org/wikipedia/commons/4/43/Ambersweet_oranges.jpg',
-        imageAlt: 'An orange.',
-    },
-    {
-        id: 4,
-        name: 'Milk',
-        href: '#',
-        price: '$4',
-        imageSrc: 'https://www.thespruceeats.com/thmb/9_VG_uDvGCoqRu1XFIqjpsY8yns=/1000x1000/smart/filters:no_upscale()/potato-milk-5218684-hero-03-9bd26d6a5fd34025b072f6256e039652.jpg',
-        imageAlt: '500 ml milk.',
-    }
-]
-
-export default function ProducerProfile({user}: { user: User }) {
-    const [orders, setOrders] = useState<Order[]>();
-    const [products, setProducts] = useState<Product[]>();
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`
-        }
-    }
-    if (!orders) {
-        fetch(`${BASE_URL}/orders`, options).then(res => res.json().then(data => setOrders(data)));
-
-    }
-
-    if (!products) {
-        fetch(`${BASE_URL}/products`, options).then(res => res.json().then(data => setProducts(data)));
-    }
-
+export default function ProducerProfile({user, orders, products}: { user: User, orders: Order[], products: Product[] }) {
     return (
         <div className="bg-white">
             <div
@@ -126,10 +70,10 @@ export default function ProducerProfile({user}: { user: User }) {
                                 <h6 className="mb-0">Address</h6>
                             </div>
                             <div className="sm-4 text-left font-semibold">
-                                <h6 className="mb-0">Products sold</h6>
+                                <h6 className="mb-0">Amount</h6>
                             </div>
                             <div className="sm-4 text-left font-semibold">
-                                <h6 className="mb-0">Total price (EUR)</h6>
+                                <h6 className="mb-0">Product</h6>
                             </div>
                         </div>
 
@@ -146,10 +90,12 @@ export default function ProducerProfile({user}: { user: User }) {
                                         <h6 className="mb-0">{order.address.street} {order.address.street_number}, {order.address.postal_code}, {order.address.city}</h6>
                                     </div>
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">{order.quantity}</h6>
+                                        <h6 className="mb-0">
+                                            {order.quantity}
+                                        </h6>
                                     </div>
                                     <div className="sm-4 text-left">
-                                        <h6 className="mb-0">{order._id}</h6>
+                                        <h6 className="mb-0">{products?.find((product: Product) => product._id === order.product_id)?.name}</h6>
                                     </div>
                                 </div>
                             ))}

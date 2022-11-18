@@ -1,10 +1,9 @@
 import {CheckIcon, ChevronUpDownIcon, GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
-import Navbar from "./Navbar";
-import {Fragment, useRef, useState} from "react";
+import {Fragment, useState} from "react";
 import {EditText, EditTextarea, onSaveProps} from "react-edit-text";
 // import 'react-edit-text/dist/index.css';
 import {Listbox, Transition} from '@headlessui/react'
-import {Product} from "../pages/products/[id]";
+import {Product} from "../types/Product";
 
 const score = {href: '#', average: 4, totalCount: 117}
 
@@ -22,41 +21,25 @@ function onSaveHighlight({name, value}: onSaveProps) {
     product.highlights[name] = value;
 }
 
-export default function ProductDetailEditable({productData}: {productData: Product}) {
-    const [product, setProduct] = useState({
-        name: productData.name,
-        price: productData.price,
-        href: '#',
-        images: [
-            {
-                src: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
-                alt: 'An apple.',
-            },
-        ],
-        description: productData.description,
-        transportationMethods: [
-            'electric car',
-            'train',
-            'car',
-            'DHL',
-        ],
-        packaging: [
-            'paper',
-            'plastic',
-            'aluminum',
-            'reusable container',
-        ],
-        highlights: [
-            'local product',
-            'no pesticides used',
-            'no chemicals used',
-            'fair trade',
-        ],
-    })
+export default function ProductDetailEditable({productData}: { productData: Product }) {
+    const [product, setProduct] = useState(productData);
 
+    const transportationMethods = [
+        'electric car',
+        'train',
+        'car',
+        'DHL',
+    ]
 
-    const [selectedTransportationMethod, setSelectedTransportationMethod] = useState(product.transportationMethods[0]);
-    const [selectedPackaging, setSelectedPackaging] = useState(product.packaging[0]);
+    const packaging = [
+        'paper',
+        'plastic',
+        'aluminum',
+        'reusable container',
+    ]
+
+    const [selectedTransportationMethod, setSelectedTransportationMethod] = useState(product.sustainability_score.transportation_type);
+    const [selectedPackaging, setSelectedPackaging] = useState(product.sustainability_score.packaging);
 
     return (
         <div className="bg-white">
@@ -67,28 +50,30 @@ export default function ProductDetailEditable({productData}: {productData: Produ
                     <div
                         className="mb-5 aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
                         <img
-                            src={product.images[0].src}
-                            alt={product.images[0].alt}
+                            src={product.image.src}
+                            alt={product.image.alt}
                             className="h-full w-full object-cover object-center"
                         />
                     </div>
                     {/* product info */}
                     <div className="mt-0 lg:border-r lg:border-gray-200 lg:pr-8">
                         <div>
-                            <EditText className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl hover:text-sustail"
-                                      name="name" type="text" defaultValue={product.name}
-                                      inputClassName={"text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"}
-                                      inline
-                                      onSave={onSave}/>
+                            <EditText
+                                className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl hover:text-sustail"
+                                name="name" type="text" defaultValue={product.name}
+                                inputClassName={"text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl"}
+                                inline
+                                onSave={onSave}/>
                         </div>
                         <div className="mt-5 lg:border-r lg:border-gray-200 lg:pr-8">
-                                <EditTextarea className="w-fit space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
-                                              name="name" rows={3} defaultValue={product.description}
-                                              inputClassName={"w-fit space-y-6 text-base tracking-tight text-gray-900"}
-                                              style={{
-                                                  width: "100%",
-                                              }}
-                                              onSave={onSave}/>
+                            <EditTextarea
+                                className="w-fit space-y-6 text-base tracking-tight text-gray-900 hover:text-sustail"
+                                name="name" rows={3} defaultValue={product.description}
+                                inputClassName={"w-fit space-y-6 text-base tracking-tight text-gray-900"}
+                                style={{
+                                    width: "100%",
+                                }}
+                                onSave={onSave}/>
                         </div>
                         <div className="z-5 lg:border-r lg:border-gray-200 lg:pr-8">
                             <h3 className="text-sm font-medium text-gray-900">Transportation method</h3>
@@ -114,7 +99,7 @@ export default function ProductDetailEditable({productData}: {productData: Produ
                                         <Listbox.Options
                                             className="z-5 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                                         >
-                                            {product.transportationMethods.map((method, methodIdx) => (
+                                            {transportationMethods.map((method, methodIdx) => (
                                                 <Listbox.Option
                                                     key={methodIdx}
                                                     className={({active}) =>
@@ -136,7 +121,8 @@ export default function ProductDetailEditable({productData}: {productData: Produ
                                                             {selected ? (
                                                                 <span
                                                                     className="z-5 absolute inset-y-0 left-0 flex items-center pl-3 text-sustail">
-                                                                  <CheckIcon className="z-5 h-5 w-5" aria-hidden="true"/>
+                                                                  <CheckIcon className="z-5 h-5 w-5"
+                                                                             aria-hidden="true"/>
                                                                 </span>
                                                             ) : null}
                                                         </>
@@ -172,7 +158,7 @@ export default function ProductDetailEditable({productData}: {productData: Produ
                                     >
                                         <Listbox.Options
                                             className="z-1 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                            {product.packaging.map((method, methodIdx) => (
+                                            {packaging.map((method, methodIdx) => (
                                                 <Listbox.Option
                                                     key={methodIdx}
                                                     className={({active}) =>
@@ -211,13 +197,16 @@ export default function ProductDetailEditable({productData}: {productData: Produ
 
                         <div className="mt-4">
                             <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                                {product.highlights.map((highlight, index) => (
-                                    <EditText key={index} className="text-gray-600 hover:text-sustail"
-                                              name={index.toString()} type="text" style={{width: '200px'}}
-                                              defaultValue={highlight} inline
-                                              inputClassName={"text-gray-600"}
-                                              onSave={onSaveHighlight}/>
-                                ))}
+                                <EditText className="text-gray-600 hover:text-sustail"
+                                          name="packaging" type="text" style={{width: '200px'}}
+                                          defaultValue={"Packaging: " + product.sustainability_score.packaging} inline
+                                          inputClassName={"text-gray-600"}
+                                          onSave={onSaveHighlight}/>
+                                <EditText className="text-gray-600 hover:text-sustail"
+                                          name="packaging" type="text" style={{width: '200px'}}
+                                          defaultValue={"Transportation type: " + product.sustainability_score.transportation_type} inline
+                                          inputClassName={"text-gray-600"}
+                                          onSave={onSaveHighlight}/>
                             </ul>
                         </div>
                     </div>

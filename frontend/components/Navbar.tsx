@@ -13,7 +13,7 @@ const navigation = {
     ],
 }
 
-export default function Navbar({user}: {user: User | undefined}) {
+export default function Navbar({user, setUser}: { user: User | undefined, setUser: Function }) {
     const [open, setOpen] = useState(false)
     return (
         <div className="bg-white flex-col">
@@ -68,20 +68,31 @@ export default function Navbar({user}: {user: User | undefined}) {
                                 </div>
 
                                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                                    <div className="flow-root">
-                                        <Link href="/login">
-                                            <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
-                                                Sign in
-                                            </a>
-                                        </Link>
-                                    </div>
-                                    <div className="flow-root">
-                                        <Link href="/register">
-                                            <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
-                                                Create account
-                                            </a>
-                                        </Link>
-                                    </div>
+                                    {!user ?
+                                        <>
+                                            <div className="flow-root">
+                                                <Link href="/login">
+                                                    <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
+                                                        Sign in
+                                                    </a>
+                                                </Link>
+                                            </div>
+                                            <div className="flow-root">
+                                                <Link href="/register">
+                                                    <a className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail">
+                                                        Create account
+                                                    </a>
+                                                </Link>
+                                            </div>
+                                        </>
+                                        :
+                                        <div className="flow-root">
+                                            <button className="-m-2 block p-2 font-medium text-gray-900 hover:text-sustail"
+                                               onClick={event => setUser(undefined)}>
+                                                Logout
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
                             </Dialog.Panel>
                         </Transition.Child>
@@ -130,19 +141,28 @@ export default function Navbar({user}: {user: User | undefined}) {
                             </Popover.Group>
 
                             <div className="ml-auto flex items-center">
-                                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <Link href="/login">
-                                        <a className="text-sm font-medium text-gray-700 hover:text-sustail">
-                                            Sign in
-                                        </a>
-                                    </Link>
-                                    <span className="h-6 w-px bg-gray-200" aria-hidden="true"/>
-                                    <Link href="/register">
-                                        <a className="text-sm font-medium text-gray-700 hover:text-sustail">
-                                            Create account
-                                        </a>
-                                    </Link>
-                                </div>
+                                {!user ?
+                                    <div
+                                        className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                                        <Link href="/login">
+                                            <a className="text-sm font-medium text-gray-700 hover:text-sustail">
+                                                Sign in
+                                            </a>
+                                        </Link>
+                                        <span className="h-6 w-px bg-gray-200" aria-hidden="true"/>
+                                        <Link href="/register">
+                                            <a className="text-sm font-medium text-gray-700 hover:text-sustail">
+                                                Create account
+                                            </a>
+                                        </Link>
+                                    </div> :
+                                    <div className="flow-root">
+                                        <button className="text-sm font-medium text-gray-700 hover:text-sustail"
+                                                onClick={event => setUser(undefined)}>
+                                            Logout
+                                        </button>
+                                    </div>
+                                }
 
                                 {/* Cart */}
                                 <div className="ml-4 flow-root lg:ml-6">
@@ -154,7 +174,7 @@ export default function Navbar({user}: {user: User | undefined}) {
                                             />
                                             <span
                                                 className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800"
-                                               >0</span>
+                                            >0</span>
                                             <span className="sr-only">items in cart, view bag</span>
                                         </a>
                                     </Link>

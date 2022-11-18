@@ -1,35 +1,42 @@
-import {useState} from "react";
-import Navbar from "../../components/Navbar";
 import ProductsOverview from "../../components/ProductsOverview";
 import ProductsOverviewEditable from "../../components/ProductsOverviewEditable";
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
-import {Product} from "./[id]";
+import {User} from "../../types/User";
+import {Product} from "../../types/Product";
+import {useEffect} from "react";
+import {BASE_URL} from "../_app";
 
-export default function Products({data}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    const [user, setUser] = useState({
-        type: "Producer"
-    })
+export default function Products({products, user}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    useEffect(() => {
+        if (user && user.type === "PRODUCER") {
+            products = products.filter(product => product.seller_id === user._id)
+        }
+    }, [user]);
+
+    console.log(user);
 
     return (
         <div className="flex-col">
-            <Navbar/>
-            {user.type == "User" ? <ProductsOverview data={data}/> : <ProductsOverviewEditable data={data}/>}
+            {(user && user.type == "PRODUCER") ? <ProductsOverviewEditable products={products}/> : <ProductsOverview products={products}/>}
         </div>
     )
 }
 
-export const getServerSideProps: GetServerSideProps<{ data: [Product] }> = async (context) => {
-    const url = 'http://sustail-api.dvepeygnctercggs.germanywestcentral.azurecontainer.io:3000/products/';
+export const getServerSideProps: GetServerSideProps<{ products: Product[] }> = async (context) => {
+    const url = `${BASE_URL}/products`;
     const res = await fetch(url, {
         headers: {
             Accept: 'application/json',
         },
     });
-    const data: [Product] = await res.json();
+
+    const products: Product[] = await res.json();
+
+    console.log(products);
 
     return {
         props: {
-            data
+            products
         },
     };
 }

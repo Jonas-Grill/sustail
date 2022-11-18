@@ -47,8 +47,6 @@ export default function Login({setUser}: {setUser: Function}) {
         const userRes = await fetch(`${BASE_URL}/users/self`, userOptions);
         const userResult = await userRes.json();
 
-        console.log(userResult);
-
         setUser({
             ...userResult,
             token: loginResult.token,

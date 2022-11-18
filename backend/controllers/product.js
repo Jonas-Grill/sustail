@@ -4,7 +4,7 @@ const Product = require('../models/product');
 
 // Handle index actions
 exports.index = function (req, res) {
-    if (req.user.type === 'PRODUCER') {
+    if (req.user && req.user.type === 'PRODUCER') {
         Product.find({seller_id: req.user._id}, function (err, products) {
             if (err) {
                 console.log(err);

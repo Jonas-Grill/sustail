@@ -1,18 +1,17 @@
-import {useState} from "react";
-import Navbar from "../../components/Navbar";
 import ProductDetail from "../../components/ProductDetail";
 import ProductDetailEditable from "../../components/ProductDetailEditable";
-import {useRouter} from "next/router";
-import {GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, InferGetStaticPropsType} from 'next'
-import {GetServerSideProps} from 'next'
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import {ParsedUrlQuery} from "querystring";
+import {Product} from "../../types/Product";
+import {BASE_URL} from "../_app";
+import {User} from "../../types/User";
 
 interface IParams extends ParsedUrlQuery {
     id: string
 }
 
 export async function getStaticPaths() {
-    const request = await fetch(`http://sustail-api.dvepeygnctercggs.germanywestcentral.azurecontainer.io:3000/products/`)
+    const request = await fetch(`${BASE_URL}/products`)
     const data = await request.json()
 
     const paths = data.map((product: Product) => ({
@@ -25,7 +24,7 @@ export async function getStaticPaths() {
 export const getStaticProps: GetStaticProps<{ data: Product }> = async (context) => {
     const {id} = context.params as IParams
 
-    const request = await fetch(`http://sustail-api.dvepeygnctercggs.germanywestcentral.azurecontainer.io:3000/products/${id}`)
+    const request = await fetch(`${BASE_URL}/products/${id}`)
     const data = await request.json()
 
     return {
@@ -33,15 +32,10 @@ export const getStaticProps: GetStaticProps<{ data: Product }> = async (context)
     }
 }
 
-export default function Product({data}: InferGetStaticPropsType<typeof getStaticProps>) {
-    const [user, setUser] = useState({
-        type: "USER"
-    })
-
+export default function ProductId({data, user}: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div className="flex-col">
-            <Navbar/>
-            {user.type == "User" ? <ProductDetail product={data}/> : <ProductDetailEditable productData={data}/>}
+            {user && user.type == "PRODUCER" ? <ProductDetailEditable productData={data}/> : <ProductDetail product={data} />}
         </div>
     )
 }

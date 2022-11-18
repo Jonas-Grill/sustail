@@ -2,35 +2,15 @@ import {GlobeEuropeAfricaIcon} from '@heroicons/react/20/solid'
 import Navbar from "./Navbar";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import {Product} from "../types/Product";
 
-const product = {
-    name: '1kg Apples',
-    price: '$2',
-    href: '#',
-    images: [
-        {
-            src: 'https://media-cldnry.s-nbcnews.com/image/upload/t_social_share_1024x768_scale,f_auto,q_auto:best/rockcms/2022-09/apples-mc-220921-e7070f.jpg',
-            alt: 'An apple.',
-        },
-    ],
-    description:
-        'Those are the most beautiful apples you will ever see.',
-    highlights: [
-        'Transportation method: electric vehicle',
-        'Packaging: Paper',
-        'local product',
-        'no pesticides used',
-        'no chemicals used',
-        'fair trade',
-    ],
-}
 const score = {href: '#', average: 4, totalCount: 117}
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function ProductDetail({ product }: any) {
+export default function ProductDetail({ product }: { product: Product }) {
     return (
         <div className="bg-white">
             <div className="pt-6 m-2">
@@ -39,8 +19,8 @@ export default function ProductDetail({ product }: any) {
                     {/* Images */}
                     <div className="mb-5 aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
                         <img
-                            src={product.images[0].src}
-                            alt={product.images[0].alt}
+                            src={product.image.src}
+                            alt={product.image.alt}
                             className="h-full w-full object-cover object-center"
                         />
                     </div>
@@ -56,11 +36,12 @@ export default function ProductDetail({ product }: any) {
 
                         <div className="mt-4">
                             <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                                {product.highlights.map((highlight) => (
-                                    <li key={highlight} className="text-gray-400">
-                                        <span className="text-gray-600">{highlight}</span>
-                                    </li>
-                                ))}
+                                <li className="text-gray-400">
+                                    <span className="text-gray-600">Packaging: {product.sustainability_score.packaging}</span>
+                                </li>
+                                <li className="text-gray-400">
+                                    <span className="text-gray-600">Transportation type: {product.sustainability_score.transportation_type}</span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -69,7 +50,7 @@ export default function ProductDetail({ product }: any) {
                     {/* product shopping */}
                     <div className="mt-5 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
-                        <p className="text-3xl tracking-tight text-gray-900">{product.price}</p>
+                        <p className="text-3xl tracking-tight text-gray-900">{product.price.amount_in_euros}</p>
 
                         {/* Score */}
                         <div className="mt-4">
