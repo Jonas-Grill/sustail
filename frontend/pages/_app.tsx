@@ -15,8 +15,13 @@ function MyApp({Component, pageProps}: AppProps) {
 
     const setUserState = (user: User) => {
         setUser(user);
-        localStorage.setItem("USER", JSON.stringify(user));
-    }
+
+        if (user) {
+            localStorage.setItem("USER", JSON.stringify(user));
+        } else {
+            localStorage.removeItem("USER");
+        }
+    };
 
     const addProductToCart = (product: Product, amount: number = 1) => {
         setCart((prevCart) => {
@@ -77,8 +82,22 @@ function MyApp({Component, pageProps}: AppProps) {
         if (!user) {
             const userStorage = window.localStorage.getItem('USER');
             if (userStorage) {
-                let storageParsed = JSON.parse(userStorage)
-                setUser(storageParsed)
+                const storageParsed = JSON.parse(userStorage)
+
+                fetch(`${BASE_URL}/users/self`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${storageParsed.token}`
+                    }
+                }).then(res => {
+                    if (res.status === 200) {
+                        setUser(storageParsed);
+                    } else {
+                        window.localStorage.removeItem('USER');
+                        setUser(undefined);
+                    }
+                })
             }
         }
     }, [cart, user])
