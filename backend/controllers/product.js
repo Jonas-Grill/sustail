@@ -49,6 +49,7 @@ exports.new = function (req, res) {
                 type: req.body.type,
                 weight_in_g: req.body.weight_in_g,
                 sustainability_score: {
+                    score: calculateSustainabilityScore(req.body),
                     packaging: req.body.sustainability_score.packaging,
                     transportation_type: req.body.sustainability_score.transportation_type,
                     organic: req.body.sustainability_score.organic,
@@ -120,6 +121,7 @@ exports.update = function (req, res) {
                 product.sustainability_score.packaging = req.body.sustainability_score.packaging ? req.body.sustainability_score.packaging : product.sustainability_score.packaging;
                 product.sustainability_score.transportation_type = req.body.sustainability_score.transportation_type ? req.body.sustainability_score.transportation_type : product.sustainability_score.transportation_type;
                 product.sustainability_score.organic = req.body.sustainability_score.organic ? req.body.sustainability_score.organic : product.sustainability_score.organic;
+                product.sustainability_score.score = calculateSustainabilityScore(product);
 
                 product.save(function (err, product) {
                     if (err) {
@@ -155,3 +157,35 @@ exports.delete = function (req, res) {
         }
     });
 };
+
+// ------------------- UTILITY -------------------
+const calculateSustainabilityScore = (product) => {
+    let score = 0;
+
+    // Packaging
+    const packagingTypes = Product.schema.path('sustainability_score.packaging').enumValues;
+
+    for (let i = 0; i < packagingTypes.length; i++) {
+        if (product.sustainability_score.packaging === packagingTypes[i]) {
+            score += 12 - i * packagingTypes.length;
+        }
+    }
+
+    // Transportation type
+    const transportationTypes = Product.schema.path('sustainability_score.transportation_type').enumValues;
+
+    if (product.sustainability_score.transportation_type === transportationTypes[0]) {
+        score += 30;
+    } else if (product.sustainability_score.transportation_type === transportationTypes[1]) {
+        score += 30;
+    } else if (product.sustainability_score.transportation_type === transportationTypes[2]) {
+        score += 0;
+    }
+
+    // Organic
+    if (product.sustainability_score.organic) {
+        score += 18;
+    }
+
+    return score / 12;
+}
