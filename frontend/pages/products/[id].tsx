@@ -31,6 +31,7 @@ export const getStaticProps: GetStaticProps<{ data: Product }> = async (context)
     }
 }
 
+// @ts-ignore
 export default function ProductId({data, user, addProductToCart}: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div className="flex-col">

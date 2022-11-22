@@ -54,7 +54,7 @@ export default function ProductDetail({product, addProductToCart}: { product: Pr
                     {/* product shopping */}
                     <div className="mt-5 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
-                        <p className="text-3xl tracking-tight text-gray-900">{product.price.amount_in_euros}</p>
+                        <p className="text-3xl tracking-tight text-gray-900">{product.price.amount_in_euros}€</p>
 
                         {/* Score */}
                         <div className="mt-4">
@@ -92,7 +92,7 @@ export default function ProductDetail({product, addProductToCart}: { product: Pr
                         </div>
                         <form className="mt-10 mb-10" onSubmit={event => {
                             event.preventDefault()
-                            addProductToCart(product, Number(event.target.quantity.value))}
+                            addProductToCart(product, Number(event.currentTarget.quantity.value))}
                         }>
                             <label className="sr-only">
                                 Quantity

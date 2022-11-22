@@ -2,9 +2,16 @@ import React, {useState} from "react";
 import Link from "next/link";
 import {BASE_URL} from "./_app";
 import {useRouter} from "next/router";
+import {login} from "./login";
+import {User} from "../types/User";
 
-export default function Register() {
-    const [userType, setUserType] = useState<string>("PRODUCER")
+const USER_TYPES = {
+    PRODUCER: "PRODUCER",
+    USER: "CUSTOMER"
+}
+
+export default function Register({setUser}: { setUser: (user: User) => void }) {
+    const [userType, setUserType] = useState<string>(USER_TYPES.PRODUCER);
 
     const router = useRouter();
 
@@ -27,7 +34,7 @@ export default function Register() {
             },
             email: event.currentTarget.email.value,
             password: event.currentTarget.password.value,
-            type: userType
+            type: userType === USER_TYPES.PRODUCER ? USER_TYPES.PRODUCER : "USER",
         }
 
         fetch(`${BASE_URL}/users`, {
@@ -38,9 +45,12 @@ export default function Register() {
             body: JSON.stringify(body)
         }).then(res => {
             if (res.status === 201) {
+                login(body.email, body.password, setUser);
                 router.push("/");
             } else {
-                alert("Something went wrong")
+                res.json().then(data => {
+                    alert(data.message);
+                });
             }
         })
     }
@@ -70,18 +80,18 @@ export default function Register() {
                         <button
 
                             type="button"
-                            className={(userType == "CUSTOMER" ? "bg-sustail-dark " : "bg-sustail ") + "group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
+                            className={(userType == USER_TYPES.USER ? "bg-sustail-dark " : "bg-sustail ") + "group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
                             onClick={function () {
-                                setUserType("CUSTOMER")
+                                setUserType(USER_TYPES.USER)
                             }}
                         >
                             Register as customer
                         </button>
                         <button
                             type="button"
-                            className={(userType == "PRODUCER" ? "bg-sustail-dark " : "bg-sustail ") + "group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
+                            className={(userType == USER_TYPES.PRODUCER ? "bg-sustail-dark " : "bg-sustail ") + "group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
                             onClick={function () {
-                                setUserType("PRODUCER")
+                                setUserType(USER_TYPES.PRODUCER)
                             }}
                         >
                             Register as producer
@@ -149,9 +159,9 @@ export default function Register() {
                                     name="iban"
                                     type="text"
                                     autoCapitalize="on"
-                                    maxLength="22"
-                                    minLength="22"
-                                    required={userType == "PRODUCER"}
+                                    maxLength={22}
+                                    minLength={22}
+                                    required={userType == USER_TYPES.PRODUCER}
                                     className="relative mt-4 block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="IBAN"
                                 />
@@ -171,7 +181,7 @@ export default function Register() {
                                     id="password"
                                     name="password"
                                     type="password"
-                                    minLength="8"
+                                    minLength={8}
                                     required
                                     className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="Password"

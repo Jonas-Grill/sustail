@@ -6,6 +6,7 @@ import {Product} from "../../types/Product";
 import {useEffect} from "react";
 import {BASE_URL} from "../_app";
 
+// @ts-ignore
 export default function Products({products, user}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     useEffect(() => {
         if (user && user.type === "PRODUCER") {

@@ -18,7 +18,7 @@ export default function Navbar({
                                    user,
                                    setUser,
                                    cart
-                               }: { user: User | undefined, setUser: (user: User) => void, cart: CartItem[] }) {
+                               }: { user: User | undefined, setUser: (user: User | undefined) => void, cart: CartItem[] }) {
     const [open, setOpen] = useState(false)
     return (
         <div className="bg-white flex-col">

@@ -79,7 +79,7 @@ export default function ProducerProfile({user, orders, products}: { user: User, 
 
                         <div className="divide-y divide-sustail">
                             {orders?.map((order: Order, index) => (
-                                <div className="grid grid-cols-5 auto-cols-max gap-4 ml-3">
+                                <div key={order._id} className="grid grid-cols-5 auto-cols-max gap-4 ml-3">
                                     <div className="sm-4 text-left">
                                         <h6 className="mb-0">{index}</h6>
                                     </div>

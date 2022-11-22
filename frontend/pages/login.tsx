@@ -1,39 +1,28 @@
 import React from "react";
 import Link from "next/link";
-import Head from "next/head";
-import Nav from "../components/Navbar"
-import Pro from "../components/ProducerProfile"
-import User from "../components/UserProfile"
-
 import {LockClosedIcon} from '@heroicons/react/20/solid'
-import Navbar from "../components/Navbar";
 import {BASE_URL} from "./_app";
 import {useRouter} from "next/router";
+import {User} from "../types/User";
 
-export default function Login({setUser}: {setUser: Function}) {
-    const router = useRouter();
+export const login = async (email: string, password: string, setUser: (user: User) => void) => {
+    const loginOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+        }),
+    }
 
-    const submitLogin = async (event) => {
-        event.preventDefault();
+    const loginRes = await fetch(`${BASE_URL}/login`, loginOptions);
 
-        const loginOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: event.target.email.value,
-                password: event.target.password.value,
-            }),
-        }
-
-        const loginRes = await fetch(`${BASE_URL}/login`, loginOptions);
-
-        if (loginRes.status === 400) {
-            alert("Invalid email or password");
-            return;
-        }
-
+    if (loginRes.status === 400) {
+        alert("Invalid email or password");
+        return false;
+    } else {
         const loginResult = await loginRes.json();
 
         const userOptions = {
@@ -44,15 +33,33 @@ export default function Login({setUser}: {setUser: Function}) {
             },
         }
 
-        const userRes = await fetch(`${BASE_URL}/users/self`, userOptions);
-        const userResult = await userRes.json();
-
-        setUser({
-            ...userResult,
-            token: loginResult.token,
+        fetch(`${BASE_URL}/users/self`, userOptions).then(res => {
+            res.json().then(user => {
+                setUser({
+                    ...user,
+                    token: loginResult.token,
+                });
+            });
         });
 
-        await router.push("/");
+        return true;
+    }
+}
+
+export default function Login({setUser}: {setUser: (user: User) => void}) {
+    const router = useRouter();
+
+    const submitLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const email = event.currentTarget.email.value;
+        const password = event.currentTarget.password.value;
+
+        const success = await login(email, password, setUser);
+
+        if (success) {
+            router.push('/');
+        }
     };
 
     return (

@@ -6,14 +6,14 @@ import {Product} from "../types/Product";
 import {User} from "../types/User";
 import {CartItem} from "../types/Cart";
 
-// export const BASE_URL = "http://sustail-api.dvepeygnctercggs.germanywestcentral.azurecontainer.io:3000";
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "http://sustail-api.dvepeygnctercggs.germanywestcentral.azurecontainer.io:3000";
+// export const BASE_URL = "http://localhost:5000";
 
 function MyApp({Component, pageProps}: AppProps) {
     const [user, setUser] = useState<User>();
     const [cart, setCart] = useState<CartItem[]>([]);
 
-    const setUserState = (user: User) => {
+    const setUserState = (user: User | undefined) => {
         setUser(user);
 
         if (user) {

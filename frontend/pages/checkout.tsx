@@ -38,7 +38,7 @@ export default function Checkout({cart, clearCart, user}: { cart: CartItem[], cl
                 product_id: item.product._id,
             }
 
-            const headers = user ? {
+            const headers: {"Content-Type": string, Authorization: string} | {"Content-Type": string} = user ? {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${user.token}`
             } : {'Content-Type': 'application/json'}

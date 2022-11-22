@@ -7,8 +7,8 @@ import {BASE_URL} from "./_app";
 import {Product} from "../types/Product";
 
 export default function Profile({user}: {user: User}) {
-    const [orders, setOrders] = useState<Order[]>();
-    const [products, setProducts] = useState<Product[]>();
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         if (user) {
