@@ -14,6 +14,7 @@ export type Product = {
     sustainability_score: {
         packaging: string,
         transportation_type: string
+        organic: boolean,
     },
     weight_in_g: number,
     nutrition_per_100g: {

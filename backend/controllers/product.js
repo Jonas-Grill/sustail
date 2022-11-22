@@ -50,7 +50,8 @@ exports.new = function (req, res) {
                 weight_in_g: req.body.weight_in_g,
                 sustainability_score: {
                     packaging: req.body.sustainability_score.packaging,
-                    transportation_type: req.body.sustainability_score.transportation_type
+                    transportation_type: req.body.sustainability_score.transportation_type,
+                    organic: req.body.sustainability_score.organic,
                 },
                 nutrition_per_100g: {
                     energy: req.body.nutrition_per_100g.energy,
@@ -116,6 +117,9 @@ exports.update = function (req, res) {
                 product.price.amount_in_euros = req.body.price.amount_in_euros ? req.body.price.amount_in_euros : product.price.amount_in_euros;
                 product.price.metric = req.body.price.metric ? req.body.price.metric : product.price.metric;
                 product.description = req.body.description ? req.body.description : product.description;
+                product.sustainability_score.packaging = req.body.sustainability_score.packaging ? req.body.sustainability_score.packaging : product.sustainability_score.packaging;
+                product.sustainability_score.transportation_type = req.body.sustainability_score.transportation_type ? req.body.sustainability_score.transportation_type : product.sustainability_score.transportation_type;
+                product.sustainability_score.organic = req.body.sustainability_score.organic ? req.body.sustainability_score.organic : product.sustainability_score.organic;
 
                 product.save(function (err, product) {
                     if (err) {

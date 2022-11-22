@@ -55,6 +55,10 @@ const productSchema = mongoose.Schema({
             type: String,
             enum: ['ELECTRIC CAR', 'CAR', 'CAR CARBON NEUTRAL'],
             required: true
+        },
+        organic: {
+            type: Boolean,
+            required: true
         }
     },
     weight_in_g: {

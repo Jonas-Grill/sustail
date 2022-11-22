@@ -48,7 +48,7 @@ export default function ProductDetailEditable(
         setImageSrc(productData.image.src);
     }
 
-    const onSave = ({name, value}: onSaveProps) => {
+    const onSave = ({name, value}: {name: string, value: string | boolean | number}) => {
         const newProduct = product;
 
         for (let key in newProduct) {
@@ -91,6 +91,7 @@ export default function ProductDetailEditable(
                 sustainability_score: {
                     transportation_type: selectedTransportationType.toUpperCase(),
                     packaging: selectedPackaging.toUpperCase(),
+                    organic: product.sustainability_score.organic,
                 },
                 nutrition_per_100g: product.nutrition_per_100g,
                 description: product.description,
@@ -128,6 +129,7 @@ export default function ProductDetailEditable(
                 sustainability_score: {
                     transportation_type: selectedTransportationType.toUpperCase(),
                     packaging: selectedPackaging.toUpperCase(),
+                    organic: product.sustainability_score.organic,
                 },
                 description: product.description,
             }
@@ -158,7 +160,8 @@ export default function ProductDetailEditable(
 
                 <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
                     {/* Images */}
-                    <div className="mb-5 aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
+                    <div
+                        className="mb-5 aspect-w-4 aspect-h-5 sm:overflow-hidden sm:rounded-lg lg:aspect-w-3 lg:aspect-h-4">
                         <img
                             width={500}
                             height={500}
@@ -196,13 +199,20 @@ export default function ProductDetailEditable(
                                 inline
                                 onSave={onSave}/>
                         </div>
+                        <div className="flex mt-4 mb-4">
+                            <label className="block text-sm font-medium text-gray-700 mr-2">
+                                Organic?:
+                            </label>
+                            <input defaultChecked={product.sustainability_score.organic} name="organic" type="checkbox" onChange={event => {
+                                onSave({name: 'organic', value: event.target.checked})
+                            }}/>
+                        </div>
                         <div className="z-5 lg:border-r lg:border-gray-200 lg:pr-8">
                             <h3 className="text-sm font-medium text-gray-900">Transportation method</h3>
                             <Listbox name="transportation_type" value={selectedTransportationType}
                                      onChange={value => {
                                          onSave(
                                              {
-                                                 previousValue: product.sustainability_score.transportation_type,
                                                  name: "transportation_type",
                                                  value: value
                                              }
@@ -271,7 +281,6 @@ export default function ProductDetailEditable(
                             <Listbox value={selectedPackaging} onChange={value => {
                                 onSave(
                                     {
-                                        previousValue: product.sustainability_score.packaging,
                                         name: "packaging",
                                         value: value
                                     }
