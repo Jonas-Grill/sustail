@@ -4,12 +4,10 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import {Product} from "../types/Product";
 import React from "react";
+import Score from "./Score";
+import ScoreWithInfo from "./ScoreWithInfo";
 
 const score = {href: '#', average: 4, totalCount: 117}
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
 
 export default function ProductDetail({product, addProductToCart}: { product: Product, addProductToCart: (product: Product, amount: number) => void }) {
     return (
@@ -49,47 +47,13 @@ export default function ProductDetail({product, addProductToCart}: { product: Pr
                             </ul>
                         </div>
                     </div>
-
-
                     {/* product shopping */}
                     <div className="mt-5 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Product information</h2>
                         <p className="text-3xl tracking-tight text-gray-900">{product.price.amount_in_euros}€</p>
 
                         {/* Score */}
-                        <div className="mt-4">
-                            <h3 className="sr-only">Score</h3>
-                            <div className="flex items-center">
-                                <p className="mr-3 text-xl font-medium text-sustail">Sustainability Score:</p>
-                                <div className="flex items-center">
-                                    {[0, 1, 2, 3, 4].map((rating) => (
-                                        <GlobeEuropeAfricaIcon
-                                            key={rating}
-                                            className={classNames(
-                                                score.average > rating ? 'text-sustail' : 'text-gray-200',
-                                                'h-5 w-5 flex-shrink-0'
-                                            )}
-                                            aria-hidden="true"
-                                        />
-                                    ))}
-                                </div>
-                                <p className="sr-only">{score.average} out of 5 stars</p>
-                            </div>
-                            <Popup trigger={<button
-                                className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark"> Score
-                                Calculation Info </button>}
-                                   position="right center">
-                                {/* Pop Up Content */}
-                                <div className="px-4 text-sm">
-                                    <p className="font-medium">How our score is calculated:</p>
-                                    <ul className="list-disc text-gray-600">
-                                        <li>Organic Label (30%)</li>
-                                        <li>Packaging (20%)</li>
-                                        <li>Transportation Method (50%)</li>
-                                    </ul>
-                                </div>
-                            </Popup>
-                        </div>
+                        <ScoreWithInfo score={product.sustainability_score.score}/>
                         <form className="mt-10 mb-10" onSubmit={event => {
                             event.preventDefault()
                             addProductToCart(product, Number(event.currentTarget.quantity.value))}

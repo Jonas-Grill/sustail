@@ -4,6 +4,7 @@ import React from "react";
 import {CartItem} from "../types/Cart";
 import Image from "next/image";
 import {Product} from "../types/Product";
+import Score from "../components/Score";
 
 const score = [{href: '#', average: 4, totalCount: 117},
     {href: '#', average: 3, totalCount: 117,},
@@ -25,10 +26,18 @@ export default function Cart(
         addProductToCart: (product: Product, amount: number) => void,
         removeProductFromCart: (product: Product, amount: number) => void
     }) {
+    const shippingCost = 5.00;
 
-    function OverallScore() {
-        const overallScore = score.reduce((a, v) => a = a + v.average, 0,);
-        return (overallScore / cart.length)
+    const overallScore = () => {
+        if (cart.length == 0) {
+            return 5;
+        } else {
+            const amount = cart.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
+
+            return (cart.reduce((previousValue, currentValue) => {
+                return previousValue + currentValue.product.sustainability_score.score * currentValue.quantity
+            }, 0) / amount)
+        }
     }
 
     return (
@@ -83,15 +92,7 @@ export default function Cart(
                             </div>
                             <div>
                                 <p className="mr-1 flex">
-                                    {[0, 1, 2, 3, 4].map((rating) => (
-                                        <GlobeEuropeAfricaIcon
-                                            key={rating}
-                                            className={classNames(
-                                                OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
-                                                'h-5 w-5 flex-shrink-0'
-                                            )}
-                                            aria-hidden="true"
-                                        />))}
+                                    <Score score={item.product.sustainability_score.score}/>
                                 </p>
                             </div>
                         </div>
@@ -108,21 +109,13 @@ export default function Cart(
                         </div>
                         <div>
                             <p className="mr-4 flex">
-                                {[0, 1, 2, 3, 4].map((rating) => (
-                                    <GlobeEuropeAfricaIcon
-                                        key={rating}
-                                        className={classNames(
-                                            OverallScore() > rating ? 'text-sustail' : 'text-gray-200',
-                                            'h-5 w-5 flex-shrink-0'
-                                        )}
-                                        aria-hidden="true"
-                                    />))}
+                                <Score score={overallScore()}/>
                             </p>
-                            <p className="font-bold text-gray-900">5€</p>
+                            <p className="font-bold text-gray-900">{shippingCost}€</p>
                             <p className="font-bold text-gray-900 mb-2">{
                                 cart.reduce((previousValue, currentValue) => {
-                                    return previousValue + parseInt(currentValue.product.price.amount_in_euros) * currentValue.quantity
-                                }, 0)}€
+                                    return previousValue + currentValue.product.price.amount_in_euros * currentValue.quantity
+                                }, shippingCost)}€
                             </p>
                             <Link href="/checkout">
                                 <a className="inline-block rounded-md border border-transparent bg-sustail py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">

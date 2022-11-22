@@ -7,6 +7,7 @@ import {BASE_URL} from "../pages/_app";
 import {User} from "../types/User";
 import {useRouter} from "next/router";
 import Image from "next/image";
+import ScoreWithInfo from "./ScoreWithInfo";
 
 const score = {href: '#', average: 4, totalCount: 117}
 
@@ -355,28 +356,7 @@ export default function ProductDetailEditable(
                             <p className="mt-1 text-sm text-gray-500">€</p>
                         </div>
                         {/* Score */}
-                        <div className="mt-4">
-                            <h3 className="sr-only">Score</h3>
-                            <div className="flex items-center">
-                                <p className="mr-3 text-xl font-medium text-sustail">Sustainability Score:</p>
-                                <div className="flex items-center">
-                                    {[0, 1, 2, 3, 4].map((rating) => (
-                                        <GlobeEuropeAfricaIcon
-                                            key={rating}
-                                            className={classNames(
-                                                score.average > rating ? 'text-sustail' : 'text-gray-200',
-                                                'h-5 w-5 flex-shrink-0'
-                                            )}
-                                            aria-hidden="true"
-                                        />
-                                    ))}
-                                </div>
-                                <p className="sr-only">{score.average} out of 5 stars</p>
-                            </div>
-                            <a href='#' className="mt-3 text-sm font-medium text-sustail hover:text-sustail-dark">
-                                Score calculation info
-                            </a>
-                        </div>
+                        <ScoreWithInfo score={product.sustainability_score.score}/>
                     </div>
                     <div></div>
                     <form className="mt-20 mb-10">

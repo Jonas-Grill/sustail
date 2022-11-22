@@ -1,3 +1,6 @@
+import {Product} from "../types/Product";
+import {Dispatch, SetStateAction} from "react";
+
 export default function SearchBar() {
     return (
         <div className="mt-5 flex items-center">

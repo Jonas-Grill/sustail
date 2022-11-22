@@ -1,7 +1,6 @@
 import ProductsOverview from "../../components/ProductsOverview";
 import ProductsOverviewEditable from "../../components/ProductsOverviewEditable";
 import {GetServerSideProps, InferGetServerSidePropsType} from "next";
-import {User} from "../../types/User";
 import {Product} from "../../types/Product";
 import {useEffect} from "react";
 import {BASE_URL} from "../_app";
@@ -16,7 +15,7 @@ export default function Products({products, user}: InferGetServerSidePropsType<t
 
     return (
         <div className="flex-col">
-            {(user && user.type == "PRODUCER") ? <ProductsOverviewEditable products={products}/> : <ProductsOverview products={products}/>}
+            {(user && user.type == "PRODUCER") ? <ProductsOverviewEditable products={products}/> : <ProductsOverview productData={products}/>}
         </div>
     )
 }

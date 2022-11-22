@@ -4,6 +4,7 @@ import {CartItem} from "../types/Cart";
 import {BASE_URL} from "./_app";
 import {User} from "../types/User";
 import {useRouter} from "next/router";
+import Score from "../components/Score";
 
 const score = [{href: '#', average: 4, totalCount: 117},
     {href: '#', average: 3, totalCount: 117,},
@@ -17,10 +18,18 @@ function classNames(...classes: string[]) {
 
 export default function Checkout({cart, clearCart, user}: { cart: CartItem[], clearCart: () => void, user: User }) {
     const router = useRouter();
+    const shippingCost = 5.00;
 
     const overallScore = () => {
-        const overallScore = score.reduce((a, v) => a = a + v.average, 0,);
-        return (overallScore / cart.length)
+        if (cart.length == 0) {
+            return 5;
+        } else {
+            const amount = cart.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
+
+            return (cart.reduce((previousValue, currentValue) => {
+                return previousValue + currentValue.product.sustainability_score.score * currentValue.quantity
+            }, 0) / amount)
+        }
     }
 
     const handlePayNow = (event: React.FormEvent<HTMLFormElement>) => {
@@ -101,15 +110,7 @@ export default function Checkout({cart, clearCart, user}: { cart: CartItem[], cl
 
                                     <div>
                                         <p className="mr-1 flex">
-                                            {[0, 1, 2, 3, 4].map((rating) => (
-                                                <GlobeEuropeAfricaIcon
-                                                    key={rating}
-                                                    className={classNames(
-                                                        overallScore() > rating ? 'text-sustail' : 'text-gray-200',
-                                                        'h-5 w-5 flex-shrink-0'
-                                                    )}
-                                                    aria-hidden="true"
-                                                />))}
+                                            <Score score={item.product.sustainability_score.score}/>
                                         </p>
                                     </div>
                                 </li>
@@ -127,21 +128,13 @@ export default function Checkout({cart, clearCart, user}: { cart: CartItem[], cl
                                 <div className="flex py-4">
                                     <div>
                                         <p className="mr-4 flex">
-                                            {[0, 1, 2, 3, 4].map((rating) => (
-                                                <GlobeEuropeAfricaIcon
-                                                    key={rating}
-                                                    className={classNames(
-                                                        overallScore() > rating ? 'text-sustail' : 'text-gray-200',
-                                                        'h-5 w-5 flex-shrink-0'
-                                                    )}
-                                                    aria-hidden="true"
-                                                />))}
+                                            <Score score={overallScore()}/>
                                         </p>
-                                        <p className="mt-1 ml-1 flex text-sm text-gray-500"> 5€</p>
+                                        <p className="mt-1 ml-1 flex text-sm text-gray-500">{shippingCost}€</p>
                                         <p className="text-2xl ml-1 mt-2 flex font-medium tracking-tight"> {
                                             cart.reduce((previousValue, currentValue) => {
-                                                return previousValue + parseInt(currentValue.product.price.amount_in_euros) * currentValue.quantity
-                                            }, 0)}€
+                                                return previousValue + currentValue.product.price.amount_in_euros * currentValue.quantity
+                                            }, shippingCost)}€
                                         </p>
                                     </div>
                                 </div>

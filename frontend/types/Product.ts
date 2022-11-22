@@ -12,6 +12,7 @@ export type Product = {
     },
     type: string,
     sustainability_score: {
+        score: number,
         packaging: string,
         transportation_type: string
         organic: boolean,
