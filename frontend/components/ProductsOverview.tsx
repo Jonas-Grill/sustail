@@ -15,7 +15,7 @@ export default function ProductsOverview({productData}: { productData: Product[]
     return (
         <div className="flex-col">
             <div className="flex justify-center items-center">
-                <SearchBar/>
+                <SearchBar filterProducts={filterProducts}/>
             </div>
             <div className="flex justify-center items-center">
                 <Filter products={products} setProducts={setProducts}  filterProducts={filterProducts}/>
