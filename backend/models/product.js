@@ -48,12 +48,12 @@ const productSchema = mongoose.Schema({
     sustainability_score: {
         packaging: {
             type: String,
-            enum: ['PLASTIC', 'CARTON', 'PAPER', 'GLASS'],
+            enum: ['PLASTIC', 'ALUMINUM', 'PAPER', 'GLASS', 'REUSABLE CONTAINER'],
             required: true
         },
         transportation_type: {
             type: String,
-            enum: ['ELECTRIC CAR', 'FUEL DRIVEN', 'BIKE'],
+            enum: ['ELECTRIC CAR', 'CAR', 'CAR CARBON NEUTRAL'],
             required: true
         }
     },

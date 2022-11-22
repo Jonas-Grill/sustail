@@ -7,14 +7,13 @@ export default function ProductsOverviewEditable({products}: {products: Product[
             <div className="bg-white">
                 <div className="mx-auto max-w-2xl py-16 px-4 sm:py-0 sm:px-6 lg:max-w-7xl lg:px-8">
 
-                    <div className="mb-10">
-                        <button
-                            type="submit"
+                    <form className="mb-10">
+                        <button formAction="/products/new" type="submit"
                             className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-sustail py-3 px-8 text-base font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                         >
                             Add new product
                         </button>
-                    </div>
+                    </form>
 
 
                     <div
@@ -30,7 +29,7 @@ export default function ProductsOverviewEditable({products}: {products: Product[
                                     />
                                 </div>
                                 <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
-                                <p className="mt-1 text-lg font-medium text-gray-900">{product.price.amount_in_euros}</p>
+                                <p className="mt-1 text-lg font-medium text-gray-900">{product.price.amount_in_euros}€</p>
 
                                 <Link href={"/products/" + product._id}>
                                     <a className="inline-block rounded-md border border-transparent bg-sustail flex w-full items-center justify-center py-3 px-8 text-center font-medium text-white hover:bg-sustail-dark">

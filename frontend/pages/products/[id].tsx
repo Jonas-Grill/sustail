@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps<{ data: Product }> = async (context)
 export default function ProductId({data, user, addProductToCart}: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <div className="flex-col">
-            {user && user.type == "PRODUCER" ? <ProductDetailEditable productData={data}/> : <ProductDetail product={data} addProductToCart={addProductToCart}/>}
+            {user && user.type == "PRODUCER" ? <ProductDetailEditable productData={data} user={user}/> : <ProductDetail product={data} addProductToCart={addProductToCart}/>}
         </div>
     )
 }

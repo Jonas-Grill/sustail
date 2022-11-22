@@ -98,16 +98,16 @@ exports.view = function (req, res) {
 
 // Handle update product info
 exports.update = function (req, res) {
-    if (req.user._id !== req.body.seller_id.toString()) {
-        res.status(StatusCodes.FORBIDDEN).json({
-            message: ReasonPhrases.FORBIDDEN,
-        });
-    } else {
-        Product.findById(req.params.product_id, function (err, product) {
-            if (err || !product) {
-                console.log(err);
-                res.status(StatusCodes.NOT_FOUND).json({
-                    message: ReasonPhrases.NOT_FOUND,
+    Product.findById(req.params.product_id, function (err, product) {
+        if (err || !product) {
+            console.log(err);
+            res.status(StatusCodes.NOT_FOUND).json({
+                message: ReasonPhrases.NOT_FOUND,
+            });
+        } else {
+            if (req.user._id !== product.seller_id.toString()) {
+                res.status(StatusCodes.FORBIDDEN).json({
+                    message: ReasonPhrases.FORBIDDEN,
                 });
             } else {
                 product.name = req.body.name ? req.body.name : product.name;
@@ -128,8 +128,8 @@ exports.update = function (req, res) {
                     }
                 });
             }
-        });
-    }
+        }
+    });
 };
 
 // Handle delete product

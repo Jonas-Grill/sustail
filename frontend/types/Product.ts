@@ -6,8 +6,8 @@ export type Product = {
         src: string,
         alt: string,
     },
-    price: {
-        amount_in_euros: string,
+    "price": {
+        amount_in_euros: number,
         metric: string,
     },
     type: string,
