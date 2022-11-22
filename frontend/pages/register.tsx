@@ -1,16 +1,62 @@
 import React, {useState} from "react";
-import Navbar from "../components/Navbar";
 import Link from "next/link";
+import {BASE_URL} from "./_app";
+import {useRouter} from "next/router";
+import {login} from "./login";
+import {User} from "../types/User";
 
-export default function Register() {
+const USER_TYPES = {
+    PRODUCER: "PRODUCER",
+    USER: "CUSTOMER"
+}
 
-    const [user, setUser] = useState({
-        type: "PRODUCER"
-    })
+export default function Register({setUser}: { setUser: (user: User) => void }) {
+    const [userType, setUserType] = useState<string>(USER_TYPES.PRODUCER);
+
+    const router = useRouter();
+
+    const handleRegisterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const body = {
+            name: {
+                first: event.currentTarget.firstName.value,
+                last: event.currentTarget.lastName.value
+            },
+            banking_info: {
+                iban: event.currentTarget.iban.value ? event.currentTarget.iban.value : null,
+            },
+            address: {
+                street: event.currentTarget.street.value,
+                street_number: event.currentTarget.streetNumber.value,
+                postal_code: event.currentTarget.postalCode.value,
+                city: event.currentTarget.city.value,
+            },
+            email: event.currentTarget.email.value,
+            password: event.currentTarget.password.value,
+            type: userType === USER_TYPES.PRODUCER ? USER_TYPES.PRODUCER : "USER",
+        }
+
+        fetch(`${BASE_URL}/users`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        }).then(res => {
+            if (res.status === 201) {
+                login(body.email, body.password, setUser);
+                router.push("/");
+            } else {
+                res.json().then(data => {
+                    alert(data.message);
+                });
+            }
+        })
+    }
 
     return (
         <>
-            <Navbar></Navbar>
             <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md space-y-8">
                     <div>
@@ -34,56 +80,56 @@ export default function Register() {
                         <button
 
                             type="button"
-                            className={(user.type=="CUSTOMER" ? "bg-sustail-dark " : "bg-sustail ")+"group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
+                            className={(userType == USER_TYPES.USER ? "bg-sustail-dark " : "bg-sustail ") + "group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
                             onClick={function () {
-                                setUser({type: "CUSTOMER"})
+                                setUserType(USER_TYPES.USER)
                             }}
                         >
                             Register as customer
                         </button>
                         <button
                             type="button"
-                            className={(user.type=="PRODUCER" ? "bg-sustail-dark " : "bg-sustail ")+"group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
+                            className={(userType == USER_TYPES.PRODUCER ? "bg-sustail-dark " : "bg-sustail ") + "group relative flex w-full justify-center rounded-md border border-transparent py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mr-2"}
                             onClick={function () {
-                                setUser({type: "PRODUCER"})
+                                setUserType(USER_TYPES.PRODUCER)
                             }}
                         >
                             Register as producer
                         </button>
                     </div>
 
-                    <form className="mt-8 space-y-6" action="#" method="POST">
+                    <form className="mt-8 space-y-6" onSubmit={handleRegisterSubmit}>
                         <input type="hidden" name="remember" defaultValue="true"/>
                         <div className="-space-y-px rounded-md shadow-sm">
-                            <div>
-                                <input
-                                    id="firstName"
-                                    name="firstName"
-                                    required
-                                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
-                                    placeholder="First name"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    id="lastName"
-                                    name="lastName"
-                                    required
-                                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
-                                    placeholder="Last name"
-                                />
-                            </div>
+                            <input
+                                id="firstName"
+                                name="firstName"
+                                type="text"
+                                required
+                                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
+                                placeholder="First name"
+                            />
+                            <input
+                                id="lastName"
+                                name="lastName"
+                                type="text"
+                                required
+                                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
+                                placeholder="Last name"
+                            />
                             <div className="flex">
                                 <input
                                     id="street"
                                     name="street"
+                                    type="text"
                                     required
                                     className="relative mt-4 block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="Street"
                                 />
                                 <input
-                                    id="number"
-                                    name="number"
+                                    id="streetNumber"
+                                    name="streetNumber"
+                                    type="text"
                                     required
                                     className="relative mt-4 block w-20 appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="Number"
@@ -93,6 +139,7 @@ export default function Register() {
                                 <input
                                     id="postalCode"
                                     name="postalCode"
+                                    type="text"
                                     required
                                     className="relative block w-32 appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="Postal code"
@@ -100,6 +147,7 @@ export default function Register() {
                                 <input
                                     id="city"
                                     name="city"
+                                    type="text"
                                     required
                                     className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="City"
@@ -107,18 +155,13 @@ export default function Register() {
                             </div>
                             <div>
                                 <input
-                                    id="country"
-                                    name="country"
-                                    required
-                                    className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
-                                    placeholder="Country"
-                                />
-                            </div>
-                            <div>
-                                <input
                                     id="iban"
                                     name="iban"
-                                    required={user.type == "PRODUCER"}
+                                    type="text"
+                                    autoCapitalize="on"
+                                    maxLength={22}
+                                    minLength={22}
+                                    required={userType == USER_TYPES.PRODUCER}
                                     className="relative mt-4 block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="IBAN"
                                 />
@@ -138,19 +181,19 @@ export default function Register() {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    minLength={8}
+                                    required
                                     className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-sustail focus:outline-none focus:ring-sustail sm:text-sm"
                                     placeholder="Password"
                                 />
                             </div>
-
                         </div>
-
                         <div>
                             <button
                                 type="submit"
                                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-sustail py-2 px-4 text-sm font-medium text-white hover:bg-sustail-dark focus:outline-none focus:ring-2 focus:ring-sustail focus:ring-offset-2"
                             >
-                                Register as {user.type.toLowerCase()}
+                                Register as {userType.toLowerCase()}
                             </button>
                         </div>
                     </form>

@@ -1,9 +1,17 @@
-export default function SearchBar() {
+import {Product} from "../types/Product";
+
+export default function SearchBar({filterProducts}: { filterProducts: (filterMethod: (product: Product) => boolean) => void }) {
+
+    const filterProductsByName = (name: string) => {
+        filterProducts((product) => product.name.toLowerCase().includes(name.toLowerCase()));
+    }
+
     return (
         <div className="mt-5 flex items-center">
             <div className="flex space-x-1">
                 <input
                     type="text"
+                    onChange={(e) => filterProductsByName(e.target.value)}
                     className="block w-full px-4 py-2 text-sustail bg-white border border-gray-400 rounded-full focus:border-sustail focus:outline-none focus:ring-opacity-40"
                     placeholder="Search..."
                 />

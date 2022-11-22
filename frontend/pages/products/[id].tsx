@@ -1,31 +1,41 @@
-import {useState} from "react";
-import Navbar from "../../components/Navbar";
 import ProductDetail from "../../components/ProductDetail";
 import ProductDetailEditable from "../../components/ProductDetailEditable";
-import {useRouter} from "next/router";
+import {GetStaticProps, InferGetStaticPropsType} from 'next'
+import {ParsedUrlQuery} from "querystring";
+import {Product} from "../../types/Product";
+import {BASE_URL} from "../_app";
 
-export default function Product() {
-    const [user, setUser] = useState({
-        type: "USER"
-    })
+interface IParams extends ParsedUrlQuery {
+    id: string
+}
 
-    const router = useRouter()
-    const {id}= router.query
-    // const product = api.getProductById(id)
+export async function getStaticPaths() {
+    const request = await fetch(`${BASE_URL}/products`)
+    const data = await request.json()
 
-    if (id != undefined) {
-        return (
-            <div className="flex-col">
-                <Navbar/>
-                {user.type == "USER" ? <ProductDetail id={id.toString()}/> : <ProductDetailEditable/>}
-            </div>
-        )
-    } else {
-        return (
-            <div className="flex-col">
-                <Navbar/>
-                <h1>There is no product with the id: {id}</h1>
-            </div>
-        )
+    const paths = data.map((product: Product) => ({
+        params: {id: String(product._id)}
+    }))
+
+    return {paths, fallback: false}
+}
+
+export const getStaticProps: GetStaticProps<{ data: Product }> = async (context) => {
+    const {id} = context.params as IParams
+
+    const request = await fetch(`${BASE_URL}/products/${id}`)
+    const data = await request.json()
+
+    return {
+        props: {data}
     }
+}
+
+// @ts-ignore
+export default function ProductId({data, user, addProductToCart}: InferGetStaticPropsType<typeof getStaticProps>) {
+    return (
+        <div className="flex-col">
+            {user && user.type == "PRODUCER" ? <ProductDetailEditable productData={data} user={user}/> : <ProductDetail product={data} addProductToCart={addProductToCart}/>}
+        </div>
+    )
 }

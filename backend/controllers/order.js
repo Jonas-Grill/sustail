@@ -23,39 +23,45 @@ exports.index = function (req, res) {
 
 // Handle create order actions
 exports.new = function (req, res) {
-    Product.findById(req.body.product_id, function (err, product) {
-        if (err || !product) {
-            console.log(err);
-            res.status(StatusCodes.NOT_FOUND).json({
-                message: ReasonPhrases.NOT_FOUND,
-            });
-        } else {
-            console.log(product);
-            const order = new Order({
-                product_id: product._id,
-                seller_id: product.seller_id,
-                quantity: req.body.quantity,
-                buyer_id: req.user._id,
-                address: {
-                    street: req.body.address.street,
-                    street_number: req.body.address.street_number,
-                    city: req.body.address.city,
-                    postal_code: req.body.address.postal_code,
-                }
-            });
+    if (!req.user || req.user.type === "USER") {
+        Product.findById(req.body.product_id, function (err, product) {
+            if (err || !product) {
+                console.log(err);
+                res.status(StatusCodes.NOT_FOUND).json({
+                    message: ReasonPhrases.NOT_FOUND,
+                });
+            } else {
+                console.log(product);
+                const order = new Order({
+                    product_id: product._id,
+                    seller_id: product.seller_id,
+                    quantity: req.body.quantity,
+                    buyer_id: req.user ? req.user._id : null,
+                    address: {
+                        street: req.body.address.street,
+                        street_number: req.body.address.street_number,
+                        city: req.body.address.city,
+                        postal_code: req.body.address.postal_code,
+                    }
+                });
 
-            order.save(function (err, order) {
-                if (err) {
-                    console.log(err);
-                    res.status(StatusCodes.BAD_REQUEST).json({
-                        message: ReasonPhrases.BAD_REQUEST,
-                    });
-                } else {
-                    res.status(StatusCodes.CREATED).json(order.toJSON());
-                }
-            });
-        }
-    });
+                order.save(function (err, order) {
+                    if (err) {
+                        console.log(err);
+                        res.status(StatusCodes.BAD_REQUEST).json({
+                            message: ReasonPhrases.BAD_REQUEST,
+                        });
+                    } else {
+                        res.status(StatusCodes.CREATED).json(order.toJSON());
+                    }
+                });
+            }
+        });
+    } else {
+        res.status(StatusCodes.FORBIDDEN).json({
+            message: ReasonPhrases.FORBIDDEN,
+        });
+    }
 };
 
 // Handle view order info

@@ -21,9 +21,11 @@ const productSchema = mongoose.Schema({
     image: {
         src: {
             type: String,
+            required: true
         },
         alt: {
             type: String,
+            required: true
         }
     },
     price: {
@@ -44,14 +46,23 @@ const productSchema = mongoose.Schema({
         required: true
     },
     sustainability_score: {
+        score: {
+            type: Number,
+            min: 0,
+            max: 5
+        },
         packaging: {
             type: String,
-            enum: ['PLASTIC', 'CARTON', 'PAPER', 'GLASS'],
+            enum: ['REUSABLE CONTAINER', 'PAPER', 'GLASS', 'ALUMINUM', 'PLASTIC'],
             required: true
         },
         transportation_type: {
             type: String,
-            enum: ['ELECTRIC CAR', 'FUEL DRIVEN', 'BIKE'],
+            enum: ['ELECTRIC CAR', 'CAR CARBON NEUTRAL', 'CAR'],
+            required: true
+        },
+        organic: {
+            type: Boolean,
             required: true
         }
     },
