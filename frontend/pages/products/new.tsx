@@ -11,12 +11,14 @@ export default function NewProduct({user}: { user: User }) {
             alt: "An example image"
         },
         price: {
-            amount_in_euros: "2",
+            amount_in_euros: 2,
             metric: "UNIT"
         },
         sustainability_score: {
             packaging: "PAPER",
-            transportation_type: "ELECTRIC CAR"
+            transportation_type: "ELECTRIC CAR",
+            organic: true,
+            score: 3
         },
         nutrition_per_100g: {
             fat: {
