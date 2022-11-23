@@ -6,14 +6,14 @@ A webapp to make logistics information of online grocery shopping more transpare
 
 ## Team
 
-**Andrea:** Frontend, Mock ups, Virtual Store Runs    
-**Franziska:** Backend, Viability, Marketing Video  
-**Gina:** Frontend, Mock ups, Questionnaire, Marketing Video, User Research   
-**Hadrien:** Frontend, Mock ups, Algorithm concept, In-Store concept   
-**Jonas:** Backend, Tech stack, Questionnaire, Backend-Frontend Connection   
-**Sophie:** Frontend, Mock ups, Business Case Calculation   
-**Will:** Frontend, Mock ups, Business Case Calculation   
-**Yvonne:** Frontend, Mock ups, PowerPoint Agenda   
+**Andrea:** Frontend, Mock ups, Virtual store runs    
+**Franziska:** Backend, Viability, Marketing video  
+**Gina:** Frontend, Mock ups, Questionnaire, Marketing video, User research, User acceptance test, Feedback with Jens   
+**Hadrien:** Frontend, Mock ups, Algorithm concept, In-store concept   
+**Jonas:** Backend, Tech stack, Questionnaire, Backend-Frontend connection, User acceptance test, Feedback with Jens   
+**Sophie:** Frontend, Mock ups, Business case calculation   
+**Will:** Frontend, Mock ups, Business case calculation   
+**Yvonne:** Frontend, Mock ups, Powerpoint agenda   
 
 ## Our app
 
