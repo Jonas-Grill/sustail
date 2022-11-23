@@ -6,13 +6,14 @@ A webapp to make logistics information of online grocery shopping more transpare
 
 ## Team
 
-**Andrea:** Frontend, Mock ups    
-**Franziska:** Backend, Viability  
-**Gina:** Frontend, Mock ups   
-**Jonas:** Backend, Tech stack  
-**Sophie:** Frontend, Mock ups   
-**Will:** Frontend, Mock ups   
-**Yvonne:** Frontend, Mock ups   
+**Andrea:** Frontend, Mock ups, Virtual store runs    
+**Franziska:** Backend, Viability, Marketing video  
+**Gina:** Frontend, Mock ups, Questionnaire, Marketing video, User research, User acceptance test, Feedback with Jens   
+**Hadrien:** Frontend, Mock ups, Algorithm concept, In-store concept   
+**Jonas:** Backend, Tech stack, Questionnaire, Backend-Frontend connection, User acceptance test, Feedback with Jens   
+**Sophie:** Frontend, Mock ups, Business case calculation   
+**Will:** Frontend, Mock ups, Business case calculation   
+**Yvonne:** Frontend, Mock ups, Powerpoint agenda   
 
 ## Our app
 
@@ -32,3 +33,10 @@ http://sustail.fkexckhtaea3cnfb.germanywestcentral.azurecontainer.io:3000/
 **Deployment:**
 - Hyperscaler: Microsoft Azure
 - Docker
+
+## Videos
+- [Rewe Virtual Store Run](https://github.com/Jonas-Grill/sustail/blob/video-integration/videos/Rewe_Virtual_Store_Run.mp4)
+- [Edeka Virtual Store Run](https://github.com/Jonas-Grill/sustail/blob/video-integration/videos/Edeka_Virtual_Store_Run.mp4)
+- [Sustail Marketing Video](https://github.com/Jonas-Grill/sustail/blob/video-integration/videos/Sustail_Marketing_Video.mp4)
+
+## Presentation
