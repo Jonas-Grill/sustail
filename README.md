@@ -35,8 +35,9 @@ http://sustail.fkexckhtaea3cnfb.germanywestcentral.azurecontainer.io:3000/
 - Docker
 
 ## Videos
-- [Rewe Virtual Store Run](https://github.com/Jonas-Grill/sustail/blob/video-integration/videos/Rewe_Virtual_Store_Run.mp4)
-- [Edeka Virtual Store Run](https://github.com/Jonas-Grill/sustail/blob/video-integration/videos/Edeka_Virtual_Store_Run.mp4)
-- [Sustail Marketing Video](https://github.com/Jonas-Grill/sustail/blob/video-integration/videos/Sustail_Marketing_Video.mp4)
+- [Rewe Virtual Store Run](https://github.com/Jonas-Grill/sustail/blob/main/videos/Rewe_Virtual_Store_Run.mp4)
+- [Edeka Virtual Store Run](https://github.com/Jonas-Grill/sustail/blob/main/videos/Edeka_Virtual_Store_Run.mp4)
+- [Sustail Marketing Video](https://github.com/Jonas-Grill/sustail/blob/main/videos/Sustail_Marketing_Video.mp4)
 
 ## Presentation
+- [Sustail final presentation](https://github.com/Jonas-Grill/sustail/blob/main/presentation/Sustail.pptx)
