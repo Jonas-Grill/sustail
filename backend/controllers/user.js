@@ -1,10 +1,11 @@
 const ReasonPhrases = require('http-status-codes').ReasonPhrases;
 const StatusCodes = require('http-status-codes').StatusCodes;
 const User = require('../models/user');
+const bcrypt = require("bcrypt");
 
 // Handle index actions
 exports.index = function (req, res) {
-    User.find(function (err, users) {
+    User.find({type: 'PRODUCER'}, function (err, users) {
         if (err) {
             console.log(err);
             res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
@@ -20,49 +21,56 @@ exports.index = function (req, res) {
 };
 
 // Handle create user actions
-exports.new = function (req, res) {
-    const user = new User(
-        {
-            name: {
-                first: req.body.name.first,
-                last: req.body.name.last,
-            },
-            email: req.body.email,
-            password: req.body.password,
-            banking_info: {
-                iban: req.body.banking_info.iban,
-            },
-            address: {
-                street: req.body.address.street,
-                street_number: req.body.address.street_number,
-                city: req.body.address.city,
-                postal_code: req.body.address.postal_code,
-            },
-            type: req.body.type,
-        }
-    );
+exports.new = async function (req, res) {
+    if (await User.find({email: req.body.email}).count() > 0) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+            message: 'User already exists',
+        });
+    } else {
+        const user = new User(
+            {
+                name: {
+                    first: req.body.name.first,
+                    last: req.body.name.last,
+                },
+                email: req.body.email,
+                password: await bcrypt.hash(req.body.password, await bcrypt.genSalt(10)),
+                banking_info: {
+                    iban: req.body.banking_info.iban,
+                },
+                address: {
+                    street: req.body.address.street,
+                    street_number: req.body.address.street_number,
+                    city: req.body.address.city,
+                    postal_code: req.body.address.postal_code,
+                },
+                type: req.body.type,
+            }
+        );
 
-    user.save(function (err, user) {
-        if (err) {
-            console.log(err);
-            res.status(StatusCodes.BAD_REQUEST).json({
-                message: ReasonPhrases.BAD_REQUEST,
-            });
-        } else {
-            res.status(StatusCodes.CREATED).json(user.toJSON());
-        }
-    });
+        user.save(function (err, user) {
+            if (err) {
+                console.log(err);
+                res.status(StatusCodes.BAD_REQUEST).json({
+                    message: ReasonPhrases.BAD_REQUEST,
+                });
+            } else {
+                res.status(StatusCodes.CREATED).json(user.toJSON());
+            }
+        });
+    }
 };
 
 // Handle view user info
 exports.view = function (req, res) {
-    User.findById(req.params.user_id, function (err, user) {
-        if (err) {
+    User.findById(req.user._id, function (err, user) {
+        if (err || !user) {
             console.log(err);
-            res.status(StatusCodes.NOT_FOUND).json({
-                message: ReasonPhrases.NOT_FOUND,
+            res.status(StatusCodes.UNAUTHORIZED).json({
+                message: ReasonPhrases.UNAUTHORIZED,
             });
         } else {
+            user.password = undefined;
             res.status(StatusCodes.OK).json(user.toJSON());
         }
     });
@@ -70,11 +78,11 @@ exports.view = function (req, res) {
 
 // Handle update user info
 exports.update = function (req, res) {
-    User.findById(req.params.user_id, function (err, user) {
-        if (err) {
+    User.findById(req.user._id, function (err, user) {
+        if (err || !user) {
             console.log(err);
-            res.status(StatusCodes.NOT_FOUND).json({
-                message: ReasonPhrases.NOT_FOUND,
+            res.status(StatusCodes.UNAUTHORIZED).json({
+                message: ReasonPhrases.UNAUTHORIZED,
             });
         } else {
             user.name.first = req.body.name.first ? req.body.name.first : user.name.first;
@@ -93,6 +101,7 @@ exports.update = function (req, res) {
                         message: ReasonPhrases.INTERNAL_SERVER_ERROR,
                     });
                 } else {
+                    user.password = undefined;
                     res.status(StatusCodes.OK).json(user.toJSON());
                 }
             });
@@ -102,11 +111,11 @@ exports.update = function (req, res) {
 
 // Handle delete user
 exports.delete = function (req, res) {
-    User.remove({id: req.params.user_id}, function (err) {
+    User.deleteOne({_id: req.user._id}, function (err) {
         if (err) {
             console.log(err);
-            res.status(StatusCodes.NOT_FOUND).json({
-                message: ReasonPhrases.NOT_FOUND,
+            res.status(StatusCodes.UNAUTHORIZED).json({
+                message: ReasonPhrases.UNAUTHORIZED,
             });
         } else {
             res.status(StatusCodes.OK).send();

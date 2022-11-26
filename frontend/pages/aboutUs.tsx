@@ -1,18 +1,17 @@
 import Navbar from "../components/Navbar";
 
 const features = [
-    {name: 'Transparency', description: 'description'},
-    {name: 'Sustainability', description: 'description'},
-    {name: 'Support', description: 'description'},
-    {name: 'Fair Trade', description: 'description'},
-    {name: 'Flexibility', description: 'description'},
-    {name: 'Community', description: 'description'},
+    {name: 'Transparency', description: 'Our algorithm and all information is transparently provided to customers'},
+    {name: 'Sustainability', description: 'We love sustainability and want to change the world to the better'},
+    {name: 'Support', description: 'We support local farmers by providing an easy platform'},
+    {name: 'Fair Trade', description: 'We are against low prices that are not possible to provide by sustainable farmers'},
+    {name: 'Flexibility', description: 'Everyone can join and learn'},
+    {name: 'Community', description: 'We love our community and want to grow day by day'},
 ]
 
-export default function aboutUs() {
+export default function AboutUs() {
     return (
         <div className="flex-col">
-            <Navbar/>
             <div className="bg-white">
                 {/* Text */}
                 <div className="bg-white">
@@ -38,21 +37,6 @@ export default function aboutUs() {
                             <img
                                 src="/Sustail.png"
                                 alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
-                                className="rounded-lg bg-gray-100"
-                            />
-                            <img
-                                src="/Sustail.png"
-                                alt="Top down view of walnut card tray with embedded magnets and card groove."
-                                className="rounded-lg bg-gray-100"
-                            />
-                            <img
-                                src="/Sustail.png"
-                                alt="Side of walnut card tray with card groove and recessed card area."
-                                className="rounded-lg bg-gray-100"
-                            />
-                            <img
-                                src="/Sustail.png"
-                                alt="Walnut card tray filled with cards and card angled in dedicated groove."
                                 className="rounded-lg bg-gray-100"
                             />
                         </div>
